@@ -1,7 +1,3 @@
-## Vilket ticket?
-
-<!-- TICKET-1, TICKET-2 eller TICKET-3 -->
-
 ## Vad ändrades?
 
 <!-- Kort beskrivning av själva ändringen. -->
