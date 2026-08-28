@@ -11,6 +11,13 @@ Ilona, Natassja, Truc, Jennifer stämde av vad vi alla hade hittat under skuldin
 **Gjort:** Vi började dagen med att gå igenom vad vi tidigare fått gjort eftersom alla i gruppe inte varit med, så att vi alla var uppsjungna på det senaste. Vi jobbade också vidare på gårdagens uppgift. Sen satt vi individuellt och letade efter tester som vi skulle kunna skriva i M1. Vi gjorde sen 2 tester, varav det ena var ett enhetstest och det andra ett komponenttest. Eftersom det andra var ett komponenttest har vi också satt upp jsdom osv för att få komponenttestning att fungera. Vi har ockås testat E2E i både Cypress och Playwright där vi tillslut valde Cypress och motiverade det. När vi testade så jämförde vi de olika verktygen och satte tillsammans upp båda verktygen då vi inte var tillräckligt många för att dela upp oss.
 
 **Grönt:** … (länkar till PR:ar)
+- https://github.com/gahnejennifer/Kraftly_Watt/pull/11 
+- https://github.com/gahnejennifer/Kraftly_Watt/pull/12
+- https://github.com/gahnejennifer/Kraftly_Watt/pull/13
+- https://github.com/gahnejennifer/Kraftly_Watt/pull/14 
+- https://github.com/gahnejennifer/Kraftly_Watt/pull/15
+- https://github.com/gahnejennifer/Kraftly_Watt/pull/16 
+
 Kvar till M1-taggen tisdag: 
 - 3st test på egna findings (7/10 klara)
 - Minst ett regressionstest på en bugg ur vår docs/debt.md
@@ -18,4 +25,5 @@ Kvar till M1-taggen tisdag:
 - Teststrategi i docs/testing.md
 
 **E2E:** valde Cypress · smoke + mockat test gröna: ja
-**Fastnat på:** …
+
+**Fastnat på:** Att hitta rätt bland instruktionerna, det var lite uppdelat och därmed svårt att helt förstå uppgifterna. Vi fastnade vid E2E på att det saknades beskrivning på hur exakt man skulle gå tillväga med att lägga upp mapparna, vart script skulle läggas in osv. Vi hade gärna velat få en genomgång på hur E2E-testning fungerar i praktiken innan vi gjorde detta själva, men vi förstår att det var en del av uppgiften att försöka sätta upp det själva. 
