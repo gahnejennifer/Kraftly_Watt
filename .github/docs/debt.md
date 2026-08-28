@@ -19,6 +19,7 @@
 
 ## Fakturor:
 - Göra så att man kan ladda ner fakturan eller så skulle vi kunna dölja knappen.
+- Varningen om <tr> cannot be child of <table> är en riktig bugg i InvoicesView.vue (troligen saknas <tbody>)
 
 ## Flyttanmälan:
 - Vi skulle behöva ändra så att det inte går att göra flyttanmälan tidigare år som tex 2020. 
