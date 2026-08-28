@@ -24,12 +24,17 @@
 import { ref, reactive } from 'vue'
 import BaseButton from '../components/BaseButton.vue'
 import { submitMove } from '../services/api'
+import {validateMove} from '../utils/validateMove.js'
 
 const form = reactive({ address: '', zip: '', city: '', date: '', contract: '' })
 const reference = ref(null)
 
 const submit = async () => {
-  // TODO validation
+  const validation = validateMove(form)
+  if (!validation.address || !validation.zip || !validation.city || !validation.date || !validation.contract) {
+    alert('Vänligen fyll i alla fält')
+    return
+  }
   const res = await submitMove(form)
   reference.value = res.ref
 }
