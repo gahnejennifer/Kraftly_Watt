@@ -10,15 +10,16 @@ E2E (Cypress): …
 Prisformattering		    Enhet         Specifik ändring, tydligt att mäta med enhetstest  	                              Ja
 Förnamn i hälsning		    Enhet         Det är en avgränsad funktion som inte är beroende av andra delar av koden	          Ja
 Fakturastatus (förfallen?)	Komponent     Eftersom den är beroende av flera funktioner (dagens datum, förfallodatum, status)  Ja		
-Validering flyttanmälan		Enhet         Funktion som går igenom objekt, den är avgränsad och går inte igenom något annat    Nej	
+Validering flyttanmälan		Enhet         Funktion som går igenom objekt, den är avgränsad och går inte igenom något annat    Ja	
 StatusChip			        Enhet         En del av större test men kan köras separat också                                   Ja
 Flyttanmälans formulär		E2E           Vi behöver testa hela flödet och beteendet i webbläsaren där formuläret fylls i     Nej	
 Förbrukningsdiagrammet	    Komponent     Det är en ensild vue-komponent som inte är beroende av hela flödet för att testas   Nej		
 Stores (user, consumption)	E2E           Kritisk del av applikationen som måste fungera för att användaren ska komma in	  Nej	
-API-klienten (api.js)			
+API-klienten (api.js)		
 Inloggningsflödet			
 Navigation mellan sidor			
-… era egna tillägg
+… era egna tillägg:
+Ladda ner fakturan-knapp    Komponent?
 
 ## Regler
 - PR mergas bara när …
