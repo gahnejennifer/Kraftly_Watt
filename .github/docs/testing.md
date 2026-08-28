@@ -20,6 +20,8 @@ Inloggningsflödet
 Navigation mellan sidor			
 … era egna tillägg:
 Ladda ner fakturan-knapp    Komponent?
+OnMounted i ConsumtionChart Komponent     Vi ska testa att den hämtar data och kör när komponenten monterar.                  Ja
+Consumtionjs i dashboard    Enhet         En isolerad funktion som sätter loading till true medan hämtningen pågår            Ja
 
 ## Regler
 - PR mergas bara när …
