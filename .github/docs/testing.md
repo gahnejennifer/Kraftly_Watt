@@ -6,22 +6,25 @@ Komponent (Vitest + Vue Testing Library): …
 E2E (Cypress): …
 
 ## Karta: vad testas var
-**Del av portalen**	      **Nivå**      **Varför just där?**                                                                **Finns test idag?**
-Prisformattering		    Enhet         Specifik ändring, tydligt att mäta med enhetstest  	                              Ja
-Förnamn i hälsning		    Enhet         Det är en avgränsad funktion som inte är beroende av andra delar av koden	          Ja
-Fakturastatus (förfallen?)	Komponent     Eftersom den är beroende av flera funktioner (dagens datum, förfallodatum, status)  Ja		
-Validering flyttanmälan		Enhet         Funktion som går igenom objekt, den är avgränsad och går inte igenom något annat    Ja	
-StatusChip			        Enhet         En del av större test men kan köras separat också                                   Ja
-Flyttanmälans formulär		E2E           Vi behöver testa hela flödet och beteendet i webbläsaren där formuläret fylls i     Nej	
-Förbrukningsdiagrammet	    Komponent     Det är en ensild vue-komponent som inte är beroende av hela flödet för att testas   Nej		
-Stores (user, consumption)	E2E           Kritisk del av applikationen som måste fungera för att användaren ska komma in	  Nej	
+**Del av portalen**	      **Nivå**      **Varför just där?**                                                                                    **Finns test idag?**
+Prisformattering		    Enhet         Specifik ändring, tydligt att mäta med enhetstest  	                                                Ja
+Förnamn i hälsning		    Enhet         Det är en avgränsad funktion som inte är beroende av andra delar av koden	                            Ja
+Fakturastatus (förfallen?)	Komponent     Eftersom den är beroende av flera funktioner (dagens datum, förfallodatum, status)                    Ja		
+Validering flyttanmälan		Enhet         Funktion som går igenom objekt, den är avgränsad och går inte igenom något annat                      Ja	
+StatusChip			        Enhet         En del av större test men kan köras separat också                                                     Ja
+Flyttanmälans formulär		E2E           Vi behöver testa hela flödet och beteendet i webbläsaren där formuläret fylls i                       Nej	
+Förbrukningsdiagrammet	    Komponent     Det är en ensild vue-komponent som inte är beroende av hela flödet för att testas                     Nej		
+Stores (user, consumption)	E2E           Kritisk del av applikationen som måste fungera för att användaren ska komma in	                    Nej	
 API-klienten (api.js)		
-Inloggningsflödet			
+Inloggningsflödet			E2E           Ett helt kritiskt flöde eftersom det har flera saker kopplat till sig. Simulerar användarbeteenden.   Nej
 Navigation mellan sidor			
 … era egna tillägg:
 Ladda ner fakturan-knapp    Komponent?
-OnMounted i ConsumtionChart Komponent     Vi ska testa att den hämtar data och kör när komponenten monterar.                  Ja
-Consumtionjs i dashboard    Enhet         En isolerad funktion som sätter loading till true medan hämtningen pågår            Ja
+OnMounted i ConsumtionChart Komponent     Vi ska testa att den hämtar data och kör när komponenten monterar.                                    Ja
+Consumtionjs i dashboard    Enhet         En isolerad funktion som sätter loading till true medan hämtningen pågår                              Ja
+Test 8
+Test 9
+Test 10
 
 ## Regler
 - PR mergas bara när …
