@@ -1,7 +1,7 @@
 // @vitest-environment jsdom
 import { mount } from '@vue/test-utils'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
-import ConsumptionChart from './ConsumptionChart.vue'
+import ConsumptionChart from '../components/ConsumptionChart.vue'
 
 // 1. Skapa en mock-funktion för destroy så vi kan kontrollera om den anropas
 const mockDestroy = vi.fn()
