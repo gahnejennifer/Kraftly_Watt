@@ -32,6 +32,11 @@ const reference = ref(null)
 const submit = async () => {
   const validation = validateMove(form)
   if (!validation.address || !validation.zip || !validation.city || !validation.date || !validation.contract) {
+    if (!validation.date) {
+      alert('Flyttdatumet måste vara minst 14 dagar från idag.')
+      return
+    }
+
     alert('Vänligen fyll i alla fält')
     return
   }
