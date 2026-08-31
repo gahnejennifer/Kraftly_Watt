@@ -13,7 +13,7 @@ describe('consumption store', () => {
     // Arrange: mocka fetchConsumption så vi slipper anropa riktiga API:et
     vi.spyOn(api, 'fetchConsumption').mockResolvedValue({
       months: ['Jan', 'Feb'],
-      values: [120, 98]
+      values: [120, 98],
     })
 
     const store = useConsumptionStore()

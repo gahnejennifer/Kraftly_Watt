@@ -4,15 +4,35 @@
     <div class="card">
       <table>
         <tr>
-          <th>Faktura</th><th>Period</th><th>Belopp</th><th>Förfaller</th><th>Status</th><th></th>
+          <th>Faktura</th>
+          <th>Period</th>
+          <th>Belopp</th>
+          <th>Förfaller</th>
+          <th>Status</th>
+          <th></th>
         </tr>
         <tr v-for="invoice in invoices" :key="invoice.id">
           <td>{{ invoice.id }}</td>
           <td>{{ invoice.period }}</td>
           <td>{{ invoice.amount }} kr</td>
           <td>{{ invoice.due }}</td>
-          <td><span :class="['status-chip', invoiceStatus(invoice, new Date()) === 'Betald' ? 'status-betald' : 'status-obetald']">{{ invoice.status }}</span></td>
-          <td><div class="download" @click="downloadInvoice(invoice)">Ladda ner</div></td>
+          <td>
+            <span
+              :class="[
+                'status-chip',
+                invoiceStatus(invoice, new Date()) === 'Betald'
+                  ? 'status-betald'
+                  : 'status-obetald',
+              ]"
+              >{{ invoice.status }}</span
+            >
+          </td>
+          <td>
+            <div v-if="invoice.downloadable" class="download" @click="downloadInvoice(invoice)">
+              Ladda ner
+            </div>
+          </td>
+          <!-- Bara synas om fakturan finns som URL -->
         </tr>
       </table>
     </div>
@@ -38,5 +58,9 @@ const downloadInvoice = (invoice) => {
 </script>
 
 <style scoped>
-.download { color: #2f54eb; cursor: pointer; font-size: 14px; }
+.download {
+  color: #2f54eb;
+  cursor: pointer;
+  font-size: 14px;
+}
 </style>
