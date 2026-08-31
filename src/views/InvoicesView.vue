@@ -12,7 +12,7 @@
           <td>{{ invoice.amount }} kr</td>
           <td>{{ invoice.due }}</td>
           <td><span :class="['status-chip', invoiceStatus(invoice, new Date()) === 'Betald' ? 'status-betald' : 'status-obetald']">{{ invoice.status }}</span></td>
-          <td><div class="download" @click="downloadInvoice(invoice)">Ladda ner</div></td>
+          <td><div v-if="invoice.downloadable" class="download" @click="downloadInvoice(invoice)">Ladda ner</div></td> <!-- Bara synas om fakturan finns som URL -->
         </tr>
       </table>
     </div>

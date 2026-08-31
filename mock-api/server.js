@@ -23,12 +23,12 @@ const user = {
 }
 
 const invoices = [
-  { id: 'F-2026-06', period: 'Juni 2026', amount: 412, status: 'Obetald', due: '2026-07-31' },
-  { id: 'F-2026-05', period: 'Maj 2026', amount: 486, status: 'Betald', due: '2026-06-30' },
-  { id: 'F-2026-04', period: 'April 2026', amount: 655, status: 'Betald', due: '2026-05-31' },
-  { id: 'F-2026-03', period: 'Mars 2026', amount: 918, status: 'Betald', due: '2026-04-30' },
-  { id: 'F-2026-02', period: 'Februari 2026', amount: 1204, status: 'Betald', due: '2026-03-31' },
-  { id: 'F-2026-01', period: 'Januari 2026', amount: 1345, status: 'Betald', due: '2026-02-28' }
+  { id: 'F-2026-06', period: 'Juni 2026', amount: 412, status: 'Obetald', due: '2026-07-31', downloadable: false },
+  { id: 'F-2026-05', period: 'Maj 2026', amount: 486, status: 'Betald', due: '2026-06-30', downloadable: false },
+  { id: 'F-2026-04', period: 'April 2026', amount: 655, status: 'Betald', due: '2026-05-31', downloadable: false },
+  { id: 'F-2026-03', period: 'Mars 2026', amount: 918, status: 'Betald', due: '2026-04-30', downloadable: false },
+  { id: 'F-2026-02', period: 'Februari 2026', amount: 1204, status: 'Betald', due: '2026-03-31', downloadable: false },
+  { id: 'F-2026-01', period: 'Januari 2026', amount: 1345, status: 'Betald', due: '2026-02-28', downloadable: true }
 ]
 
 const consumption = {
