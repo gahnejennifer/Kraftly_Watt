@@ -23,6 +23,6 @@ export const validateMove = (moveForm, currentDate = new Date()) => {
     zip: moveForm.zip && moveForm.zip.length === 5,
     city: moveForm.city && moveForm.city.length > 0,
     date: !!moveDate && !Number.isNaN(moveDate.getTime()) && moveDate >= minimumMoveDate,
-    contract: moveForm.contract && moveForm.contract.length > 0
+    contract: moveForm.contract && moveForm.contract.length > 0,
   }
 }

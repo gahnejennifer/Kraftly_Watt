@@ -19,23 +19,65 @@ const user = {
   email: 'anna.andersson@example.com',
   address: 'Solvägen 12, 802 67 Gävle',
   contract: 'Rörligt pris',
-  customerNo: 'K-104233'
+  customerNo: 'K-104233',
 }
 
 const invoices = [
-  { id: 'F-2026-06', period: 'Juni 2026', amount: 412, status: 'Obetald', due: '2026-07-31', downloadable: false },
-  { id: 'F-2026-05', period: 'Maj 2026', amount: 486, status: 'Betald', due: '2026-06-30', downloadable: false },
-  { id: 'F-2026-04', period: 'April 2026', amount: 655, status: 'Betald', due: '2026-05-31', downloadable: false },
-  { id: 'F-2026-03', period: 'Mars 2026', amount: 918, status: 'Betald', due: '2026-04-30', downloadable: false },
-  { id: 'F-2026-02', period: 'Februari 2026', amount: 1204, status: 'Betald', due: '2026-03-31', downloadable: false },
-  { id: 'F-2026-01', period: 'Januari 2026', amount: 1345, status: 'Betald', due: '2026-02-28', downloadable: true }
+  {
+    id: 'F-2026-06',
+    period: 'Juni 2026',
+    amount: 412,
+    status: 'Obetald',
+    due: '2026-07-31',
+    downloadable: false,
+  },
+  {
+    id: 'F-2026-05',
+    period: 'Maj 2026',
+    amount: 486,
+    status: 'Betald',
+    due: '2026-06-30',
+    downloadable: false,
+  },
+  {
+    id: 'F-2026-04',
+    period: 'April 2026',
+    amount: 655,
+    status: 'Betald',
+    due: '2026-05-31',
+    downloadable: false,
+  },
+  {
+    id: 'F-2026-03',
+    period: 'Mars 2026',
+    amount: 918,
+    status: 'Betald',
+    due: '2026-04-30',
+    downloadable: false,
+  },
+  {
+    id: 'F-2026-02',
+    period: 'Februari 2026',
+    amount: 1204,
+    status: 'Betald',
+    due: '2026-03-31',
+    downloadable: false,
+  },
+  {
+    id: 'F-2026-01',
+    period: 'Januari 2026',
+    amount: 1345,
+    status: 'Betald',
+    due: '2026-02-28',
+    downloadable: true,
+  },
 ]
 
 const consumption = {
   unit: 'kWh',
   months: ['Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'Maj', 'Jun'],
   values: [210, 195, 260, 340, 520, 680, 730, 640, 470, 320, 240, 205],
-  pricePerKwh: 1.42
+  pricePerKwh: 1.42,
 }
 
 // anyone gets in, we'll add real auth later(TM)

@@ -17,12 +17,12 @@ const mockDestroy = vi.fn()
 
 // 2.1 Uppdaterad mock som fungerar med "new" (Constructor)
 vi.mock('chart.js/auto', () => {
-  const MockChart = vi.fn(function() {
+  const MockChart = vi.fn(function () {
     return { destroy: mockDestroy }
   })
-  
+
   return {
-    default: MockChart
+    default: MockChart,
   }
 })
 
@@ -36,18 +36,18 @@ describe('ConsumptionChart.vue', () => {
 
   it('renderar ett canvas-element', () => {
     const wrapper = mount(ConsumptionChart, {
-      props: { months: ['Jan', 'Feb'], values: [10, 20] }
+      props: { months: ['Jan', 'Feb'], values: [10, 20] },
     })
-    
+
     expect(wrapper.find('canvas').exists()).toBe(true)
   })
 
   it('initierar Chart.js med rätt props på onMounted', () => {
     const months = ['Jan', 'Feb', 'Mar']
     const values = [100, 200, 150]
-    
+
     mount(ConsumptionChart, {
-      props: { months, values }
+      props: { months, values },
     })
 
     // Kontrollera att Chart-konstruktorn anropades exakt 1 gång
@@ -66,7 +66,7 @@ describe('ConsumptionChart.vue', () => {
 
   it('anropar chart.destroy() när komponenten avmonteras (onBeforeUnmount)', () => {
     const wrapper = mount(ConsumptionChart, {
-      props: { months: ['Jan'], values: [100] }
+      props: { months: ['Jan'], values: [100] },
     })
 
     // Avmontera komponenten för att trigga onBeforeUnmount
