@@ -30,12 +30,14 @@ Vem gör vad, inom vilken tid. Laga framåt eller revert – var går gränsen? 
 
 | Steg             | Utan cache | Med cache |
 | ---------------- | ---------- | --------- |
-| npm ci (quality) | 31s        |           |
-| npm ci (build)   | 29s        |           |
-| Hela körningen   | 1m         |           |
+| npm ci (quality) | 31s        | 29s       |
+| npm ci (build)   | 29s        | 25s       |
+| Hela körningen   | 1m0s       | 54s       |
 
-Skärmdumpar: ![time build, quality](<Skärmavbild 2026-09-03 kl. 13.53.24-1.png>)
+Skärmdumpar:
+![time without cache build, quality](./screenshots/Skärmavbild%202026-09-03%20kl.%2013.53.24-1.png)
+![time with cache build, quality](./screenshots/Skärmavbild%202026-09-03%20kl.%2013.57.37.png)
 
 ## Skärmdump: låst merge-knapp
 
-![npm run format:check gick ej igenom](image.png)
+![npm run format:check gick ej igenom](./screenshots/image.png)
