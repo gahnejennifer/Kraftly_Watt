@@ -1,6 +1,6 @@
 export const formatAmount = (amount) => {
   const hasDecimals = amount % 1 !== 0
-  if (amount === undefined) {
+  if (amount == undefined) {
     return '-'
   }
   return (
