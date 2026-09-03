@@ -43,3 +43,5 @@ Skärmdumpar:
 ## Skärmdump: låst merge-knapp
 
 ![npm run format:check gick ej igenom](./screenshots/image.png)
+![satt upp Cypress E2E och säg till att need funkar på Action/github](./screenshots/Screenshot%202026-09-03%20at%2014.18.09.png)
+![hela körningen](./screenshots/Screenshot%202026-09-03%20at%2014.21.36.png)
