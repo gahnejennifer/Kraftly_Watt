@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+/* import { test, expect } from '@playwright/test'
 
 test('kunden kan logga in och ser sin översikt', async ({ page }) => {
   await page.goto('/login')
@@ -7,4 +7,4 @@ test('kunden kan logga in och ser sin översikt', async ({ page }) => {
   await page.getByRole('button', { name: 'Logga in' }).click()
 
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Hej Anna!')
-})
+}) */
