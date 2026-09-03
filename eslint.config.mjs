@@ -25,7 +25,7 @@ export default [
     files: ['cypress/**/*.cy.js', 'cypress.config.js'],
     languageOptions: {
       globals: {
-        ...globals.mocha,   // ger er describe, it, beforeEach, afterEach osv.
+        ...globals.mocha, // ger er describe, it, beforeEach, afterEach osv.
         cy: 'readonly',
         Cypress: 'readonly',
       },
