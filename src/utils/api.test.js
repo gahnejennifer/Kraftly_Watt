@@ -16,4 +16,4 @@ describe('api.js – env-konfiguration', () => {
 
     expect(api.getBaseUrl()).toBe('https://mocked-test-url.example.com')
   })
-}) 
+})
