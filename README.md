@@ -1,3 +1,5 @@
+[![CI](https://github.com/gahnejennifer/Kraftly_Watt/actions/workflows/ci.yml/badge.svg)](https://github.com/gahnejennifer/Kraftly_Watt/actions/workflows/ci.yml)
+
 # kraftly-portal
 
 Customer portal for Kraftly. Delivered by Webbmakarna AB 2026-06-30.
