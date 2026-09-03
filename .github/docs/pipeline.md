@@ -16,7 +16,9 @@ flowchart LR
 
 ## Beslut 1 · Jobb: parallellt eller i serie?
 
-Hur ni delade upp jobben och varför. Vad kostar det i minuter, vad ger det i svarstid?
+**Hur ni delade upp jobben och varför. Vad kostar det i minuter, vad ger det i svarstid?**
+
+Vi valde att köra e2e i serie efter quality och build via needs, eftersom det sparar CI-minuter — en PR med lintfel eller trasigt bygge stoppas innan vi lägger tid på att starta mock-API, dev-server och Cypress. Nackdelen är längre svarstid: en PR som redan är grön på quality/build väntar ändå ut de jobben innan e2e ens börjar, istället för att köra allt samtidigt.
 
 ## Beslut 2 · Vad krävs för merge?
 
