@@ -48,4 +48,16 @@ Truc, Ilona och Jennifer jobbade under lektionstid på Övning 3 som innehöll d
 
 ## Datum: 2026-09-04
 
-Truc och Jennifer hördes på Slack för att jobba vidare på M2 på de delar som kvarstår.
+Truc och Jennifer hördes på Slack för att jobba vidare på M2 på de delar som kvarstår vilket var att lägga in PR på när grinden stoppade vårt medvetna lintfel, samt strukturera upp de printar vi tog igår så att allt låg rätt i pipeline.md och logen. Vi testade även att kika på hur lång tid npm ci tog på build och quality eftersom vi ville vara säkra på att vi kört flera gånger med cache igår när vi skulle skriva upp tiderna i tabellen. Eftersom det är fredag verkar det som att många kör Github Actions och därför tog det runt 6-7 minuter när vi körde, vilket inte riktigt gick att använda till mätningen. Vi såg i alla fall att cachen fungerar perfekt. På rad 24–25: "Cache restored successfully" och "Cache restored from key: node-cache-Linux-x64-npm-...", med en cache på ~36MB nedladdad på under en sekund (29.8 MB/sec). Det är alltså inte ett cache-miss-problem. Nu har vi redan gjort en mätning tidigare när vi körde med cache två ggr men vi ville testa en gång till för att säkerställa mätningen.
+
+## Överlämning techlead - V3, inför M3
+
+Jag (Jennifer) har nu varit techlead i tre veckor under M0, M1 och M2 och kommer nu lämna över till Natassja som techlead.
+**Vad som är igång:**
+CI-pipelinen (quality, build, e2e) är uppe och grön på main, med ruleset, badge och grinden verifierad via en riktig röd→grön PR (#28). Alla DoD-punkter för M2 är uppfyllda, inklusive npm-cache-mätningen i docs/pipeline.md. Däremot så upplevde vi att mätningen visade minimal skillnad mellan med/utan cache och därför vill vi köra om den mätningen. Cachen fungerar (bekräftat i loggarna, Cache restored successfully), men npm ci-tiderna har varit ovanligt höga (5–6 min) nu vid senaste körningarna, troligen på grund av hög belastning på GitHub Actions/npm-registret en fredag. Därför kan det vara bra att göra en ny körning för att säkerställa att print två som vi har i pipeline.md inte är från första körningen efter att cachen slogs på (den som fyller cachen).
+
+**Vad som skaver:**
+Vi tappade bort ändringar en gång genom att fortsätta committa på en branch (E2E-jobbet) efter att den redan var mergad — de nya commiterna (skärmdumpar, dokumentation) hamnade aldrig på main förrän vi upptäckte det och öppnade en ny PR. Vi behöver bli bättre på att radera feature-branches direkt efter merge och skapa en ny branch per uppgift, istället för att återanvända en gammal. Kanske kan det även vara en idé att radera gamla branches i VS-code lokalt?
+
+**Beslut att ompröva:**
+Beslut 3 (protokoll vid röd main: 15 minuter att laga framåt, annars revert) är hittills bara teori — vi har inte haft en riktig incident att testa det på. Nästa tech lead bör hålla koll på om 15 minuter känns rimligt i praktiken första gången main faktiskt blir röd på riktigt, och justera om det behövs.
