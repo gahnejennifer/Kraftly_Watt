@@ -42,13 +42,12 @@ Vid nästa arbetstillfälle (tisdag eller fredag 10.00) tas det upp kort i retro
 | npm ci (build)   | 29s        | 25s       |
 | Hela körningen   | 1m0s       | 54s       |
 
-Skärmdumpar:
+**Skärmdumpar:**
 ![time without cache build, quality](./screenshots/Skärmavbild%202026-09-03%20kl.%2013.53.24-1.png)
 ![time with cache build, quality](./screenshots/Skärmavbild%202026-09-03%20kl.%2013.57.37.png)
 
 ## Skärmdump: låst merge-knapp
 
-![npm run format:check gick ej igenom](./screenshots/image.png)
-![satt upp Cypress E2E och säg till att need funkar på Action/github](./screenshots/Screenshot%202026-09-03%20at%2014.18.09.png)
-![hela körningen](./screenshots/Screenshot%202026-09-03%20at%2014.21.36.png)
+**PR med medvetet lintfel: https://github.com/gahnejennifer/Kraftly_Watt/pull/28**
+
 ![merge med medvetet lint fel blockerad](./screenshots/Знімок%20екрана%202026-09-03%20151851.png)

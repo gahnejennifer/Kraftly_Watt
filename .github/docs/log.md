@@ -36,3 +36,16 @@ Kvar till M1-taggen tisdag:
 ## Datum: 2026-08-31
 
 Truc, Ilona & Jennifer sågs i skolan och jobbade tillsammans på branch "Teamdag" där vi fyllde i teststrategin med alla parametrar. Vi gjorde även resterande tester som vi hade kvar på M1 (varav 1 regressionstest). Vi fyllde i milestones för M1 och blev klara med samtliga delar. Vi gick också igenom PR som vi hade för vissa fixar.
+
+## Datum: 2026-09-03
+
+Truc, Ilona och Jennifer jobbade under lektionstid på Övning 3 som innehöll delar av M2. Vi satte upp pipelinen för Kraftlyprojektet, såg till att Cypress E2E fungerar på Github Actions, satte upp grinden med rulesets och skrev pipeline.md. Sen testade vi också att grinden fungerar genom att verifiera det live med ett medvetet lintfel. Det fungerade! Vi la också till en badge överst i vår README som blir grön/röd live utifrån om main är grön eller inte.
+
+**Screenshots från delar av det vi gjorde:**
+![npm run format:check gick ej igenom](./screenshots/image.png)
+![satt upp Cypress E2E och säg till att need funkar på Action/github](./screenshots/Screenshot%202026-09-03%20at%2014.18.09.png)
+![hela körningen](./screenshots/Screenshot%202026-09-03%20at%2014.21.36.png)
+
+## Datum: 2026-09-04
+
+Truc och Jennifer hördes på Slack för att jobba vidare på M2 på de delar som kvarstår.
