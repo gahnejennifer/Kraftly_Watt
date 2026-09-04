@@ -26,3 +26,7 @@
 [x] docs/pipeline.md enligt strukturen från workshopen: Mermaid-diagram över ert flöde, tre beslut (jobbindelning, mergekrav, protokoll vid röd main), mätvärdena, skärmdump av låst merge-knapp
 [x] CI-badge överst i README som visar passing
 [x] Logg i docs/log.md: en post per arbetsdag, inklusive vem som gjorde vad
+[x] npm-cache aktiverad och uppmätt: tiden för npm ci (och hela körningen) före och efter, med skärmdumpar, i docs/pipeline.md
+[x] docs/pipeline.md enligt strukturen från workshopen: Mermaid-diagram över ert flöde, tre beslut (jobbindelning, mergekrav, protokoll vid röd main), mätvärdena, skärmdump av låst merge-knapp
+[x] CI-badge överst i README som visar passing
+[x] Logg i docs/log.md: en post per arbetsdag, inklusive vem som gjorde vad
