@@ -61,3 +61,7 @@ Vi tappade bort ändringar en gång genom att fortsätta committa på en branch 
 
 **Beslut att ompröva:**
 Beslut 3 (protokoll vid röd main: 15 minuter att laga framåt, annars revert) är hittills bara teori — vi har inte haft en riktig incident att testa det på. Nästa tech lead bör hålla koll på om 15 minuter känns rimligt i praktiken första gången main faktiskt blir röd på riktigt, och justera om det behövs.
+
+## Datum: 2026-09-10
+
+Truc, Ilona och Natassja genomförde övning 1 och 2 i skolan på plats. Truc och Ilona satte upp Docker i projektet, skapade filer som Dockerfile, .dockerignore och nginx.conf, och arbetade med att minska image-storleken för att säkerställa att den är under 100 MB. Vi körde docker compose up --build för att bygga och starta projektet och verifierade att det räcker för att köra både frontend och API lokalt via localhost. Vi skapade även .env-filer med de nödvändiga nycklarna på alla datorer, så att docker compose up fungerar korrekt för alla i projektet.
