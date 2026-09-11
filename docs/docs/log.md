@@ -68,4 +68,4 @@ Ny techlead skulle vara Natassja men vi har bytt och det blir istället Truc som
 
 ## Datum: 2026-09-11
 
-Jennifer var inte med igår och försökte idag köra docker compose up --build vilket inte fungerade: docker compose up fungerar hos den som skrev filen men inte i ett rent klon. Efter att vi pushat instuktionerna i README fungerade det. Vi har nu säkrat att tilläggen i M3 fungerar för samtliga i teamet.
+Jennifer var inte med igår och försökte idag köra docker compose up --build vilket inte fungerade: docker compose up fungerar hos den som skrev filen men inte i ett rent klon. Efter att vi pushat instuktionerna i README fungerade det. Vi har nu säkrat att tilläggen i M3 fungerar för samtliga i teamet. Vi löste också mappstrukturen så att pull_request_template.md triggas igen när en PR skapas.
