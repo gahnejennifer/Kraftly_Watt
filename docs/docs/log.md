@@ -61,3 +61,11 @@ Vi tappade bort ändringar en gång genom att fortsätta committa på en branch 
 
 **Beslut att ompröva:**
 Beslut 3 (protokoll vid röd main: 15 minuter att laga framåt, annars revert) är hittills bara teori — vi har inte haft en riktig incident att testa det på. Nästa tech lead bör hålla koll på om 15 minuter känns rimligt i praktiken första gången main faktiskt blir röd på riktigt, och justera om det behövs.
+
+## Datum: 2026-09-10
+
+Ny techlead skulle vara Natassja men vi har bytt och det blir istället Truc som tar över kommande 3 veckor. Vi satte upp Docker i projektet och då fastnade vi på att få docker compose up --build att fungera. Eftersom vårt API inte låg i nginx.conf och att vi behövde lägga till .env-files i docker.compose.yml göt att få det att fungera. När vi skulle få det att fungera på de andra datorerna som inte skrivit koden under dagens uppgifter så stötte vi på problem. En i teamet hade då en annan server uppe på docker och då kunde docker inte nå 4000 eftersom den var upptagen. Vi fick då köra netstat -ano | findstr :4000 och taskkill /PID 40244 /F. För att vara lite proaktiva såg vi till att lägga till tydliga instruktioner i README så att nästa teammedlem enkelt kan sätta upp docker på deras dator och få allt att fungera direkt.
+
+## Datum: 2026-09-11
+
+Jennifer var inte med igår och försökte idag köra docker compose up --build vilket inte fungerade: docker compose up fungerar hos den som skrev filen men inte i ett rent klon. Efter att vi pushat instuktionerna i README fungerade det. Vi har nu säkrat att tilläggen i M3 fungerar för samtliga i teamet.
