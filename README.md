@@ -6,8 +6,40 @@ Customer portal for Kraftly. Delivered by Webbmakarna AB 2026-06-30.
 
 ## Getting started
 
-    npm install
-    npm start
+Use without docker:
+
+1. Open a terminal and write: npm install
+2. Write: npm run api
+3. Open a second terminal and write: npm run dev
+4. Open the Vite URL shown in the terminal.
+
+Use with docker:
+
+1. Create a file named .env in the root directory of the project. Paste the key into this file.
+2. Open the Docker Desktop program on your computer. (You can find it here https://docs.docker.com/get-started/get-docker/)
+3. Open a powershell terminal and run: docker compose up --build
+4. In Docker Desktop you can now click on krafty_watt and open the site.
+
+Note! Your 4000 and 8000 ports must not already be in use.
+
+Solution Windows:
+
+1. Stop the Docker containers by running: docker compose down
+2. Check if port 4000 in use by running: netstat -ano | findstr :4000
+   Check if port 8000 in use by running: netstat -ano | findstr :8000
+   If in use the port will then show: TCP 0.0.0.0:<port> 0.0.0.0:0 LISTENING <PID>
+3. Close port by: taskkill /PID <PID> /F
+
+Solution Mac:
+
+1. Stop the Docker containers by running: docker compose down
+2. Check if port 4000 in use by running: lsof -i :4000
+   Check if port 8000 in use by running: lsof -i :8000
+   If the port is in use the terminal will show:
+   node <pid> user 23u IPv6 ... TCP *:<port> (LISTEN)
+3. Close port by: kill <PID>
+
+## Notes
 
 TODO: write proper documentation
 
@@ -18,7 +50,7 @@ TODO: write proper documentation
 - Mötestider utanför schemat: 10.00 digitalt fredagar (avstämning och arbetar tillsammans), 10.00 digitalt tisdagar vid behov.
 - Kommunikationsvägar: Grupp i Slack. Vi håller en god kommunikation men förväntas inte svara utanför skoltider.
 - Definition of done: Kod ska vara testad och grön samt reviewad av tech-lead
-- Tech lead-schema: Jennifer v.1-3, Natassja v.4-6, Illona v.7-9, Truc v.10-12
+- Tech lead-schema: Jennifer v.1-3, Truc v.4-6, Illona v.7-9, Natassja v.10-12
 - Hur säger man till när något skaver: Vi pratar med varandra öppet och tänker på vår ton gentemot varandra, väntar inte för länge med att ta upp något vid behov. Vi håller även i korta retros på fredagarna där man ges tillfälle att ta upp hur veckan gått och vad vi tar med oss till nästa vecka, då kan man ta upp om något skaver.
 
 # Motivering till våra ESLint-regler
