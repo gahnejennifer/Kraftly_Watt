@@ -36,4 +36,7 @@
    Mock-API:t körs i en separat container (med Node.js som basimage) via Docker Compose snarare än att bakas in i samma container som frontenden. Detta ger en renare separation av ansvarsområden och speglar en mer verklighetstrogen mikrotjänstarkitektur där frontend och backend lever i varsin miljö.
 
 3. **Hur webbläsaren når API:t:**
-   Frontenden kommunicerar med API:t genom en konfigurerad Nginx-proxy (/api) i stället för att använda hårdkodade absoluta URL:er till `localhost:4000`. Detta löser eventuella CORS-problem och gör att applikationen dynamiskt kan skicka vidare anropen inom Docker-nätverket till rätt tjänstnamn (`api`).
+   Proxy via nginx (`/api`) - vi valde detta framför publicerad port (localhost:4000) därför att det separerar klienten från infrastrukturen och gör att anropen kan ske relativt.
+
+   _Konsekvens för vecka 5 (staging utan localhost):_
+   Eftersom vi använder en relativ sökväg (`/api`) och Nginx som proxy, behöver vi inte hårdkoda någon `localhost`-adress i frontend-koden. När applikationen flyttas till en riktig server eller staging-miljö (utan `localhost`) kommer Nginx i container-nätverket automatiskt att styra om trafiken till rätt backend-tjänst baserat på domännamn eller container-namn. Detta gör att builden förblir helt miljöoberoende och inte bryts när `localhost` försvinner.
