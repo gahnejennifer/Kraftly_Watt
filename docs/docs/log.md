@@ -69,3 +69,7 @@ Ny techlead skulle vara Natassja men vi har bytt och det blir istället Truc som
 ## Datum: 2026-09-11
 
 Jennifer var inte med igår och försökte idag köra docker compose up --build vilket inte fungerade: docker compose up fungerar hos den som skrev filen men inte i ett rent klon. Efter att vi pushat instuktionerna i README fungerade det. Vi har nu säkrat att tilläggen i M3 fungerar för samtliga i teamet. Vi löste också mappstrukturen så att pull_request_template.md triggas igen när en PR skapas.
+
+## Datum: 2026-09-14
+
+Vi taggade M3 innan lunch men fick sen nya instruktioner. Efter att ha läst igenom allt insåg vi att det såg bra ut förutom lite småfix i vår README (vi hade råkat skriva port 8000 ist för 8080), samt att vi missat bocka i en del i milestones efter att vi la in containers.md. Vi ändrade också lite i vårt beslut nr 3 i containers.md.
