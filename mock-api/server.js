@@ -29,6 +29,8 @@ if (keys.size === 0) {
 const app = express()
 app.use(express.json())
 
+app.get('/healthz', (req, res) => res.sendStatus(200))
+
 // CORS -- opens everything so it just works
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*')
