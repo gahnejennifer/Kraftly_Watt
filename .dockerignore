@@ -8,4 +8,4 @@ playwright-report
 cypress/videos
 cypress/screenshots
 docs
-*.md
+*.md.env

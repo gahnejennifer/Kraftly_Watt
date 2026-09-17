@@ -54,6 +54,9 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run e2e:cy
+        env:
+          E2E_SERVER: preview
+          API_KEY: e2e-testnyckel # ingen hemlighet – ett API som lever två minuter på en slit-och-släng-maskin
       - uses: actions/upload-artifact@v4
         if: failure()
         with:
