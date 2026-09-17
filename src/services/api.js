@@ -4,7 +4,7 @@
 // ner – en nyckel här är publik för alla som trycker F12. Appen anropar /api relativt.
 // Servern framför appen (Vite lokalt, nginx i containern) lägger på nyckeln.
 
-const BASE_URL = ''
+const BASE_URL = import.meta.env.VITE_API_URL || ''
 
 export const getBaseUrl = () => BASE_URL // exporteras enbart för att kunna testas
 
