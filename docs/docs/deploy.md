@@ -36,6 +36,10 @@ PS /Users/jennifergahne/Documents/GitHub/Kraftly_Watt> curl -s -w " %{http_code}
 
 ## Rollback
 
+**Renderkonto**
+Kontot ägs av techlead som roterar var tredje vecka.
+I dagsläget ägs det av Jennifer eftersom techlead för denna vecka inte var på plats när vi satte upp kontot.
+
 **Två sätt, steg för steg**
 
 1. **Via Render-dashboarden (snabbast):** gå till tjänsten → Events/Deploys → hitta senaste fungerande deploy → klicka Rollback to this deploy. Render pekar om trafiken till den gamla imagen/committen direkt, utan ny build.
