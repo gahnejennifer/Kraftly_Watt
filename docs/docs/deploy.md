@@ -6,9 +6,9 @@
 
 ## Miljöer
 
-| Miljö | URL          | Image                                                | API                                          | Uppdateras                                    |
-| ----- | ------------ | ---------------------------------------------------- | -------------------------------------------- | --------------------------------------------- |
-|       | Staging URL: | Image: "Render bygger direkt från Dockerfile i main" | API: "pekar mot mock-API:t, inte skarpt API" | Uppdateras: "automatiskt vid merge till main" |
+| Miljö | URL                                                 | Image                                                | API                                          | Uppdateras                                    |
+| ----- | --------------------------------------------------- | ---------------------------------------------------- | -------------------------------------------- | --------------------------------------------- |
+|       | Staging URL: https://kraftly-watt-main.onrender.com | Image: "Render bygger direkt från Dockerfile i main" | API: "pekar mot mock-API:t, inte skarpt API" | Uppdateras: "automatiskt vid merge till main" |
 
 ## Konfiguration – var bor vad?
 
