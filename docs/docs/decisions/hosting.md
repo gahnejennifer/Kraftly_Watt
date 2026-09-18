@@ -11,7 +11,7 @@ Kraftly_Watt (`kraftly-mina-sidor`) är en Vite + Vue 3-app. Enligt `package.jso
 
 Det här är den viktigaste tekniska förutsättningen för hela beslutet: **vi behöver något som kan köra en långlivad Node-process (eller vår Docker-image), inte bara servera statiska filer.** Kursen kör Render idag, satt via Environment-variabler i Render-dashboarden (samma variabler som lokalt i `.env`).
 
-## Vad vi såg (era observationer – inte tutorialens)
+## Vad vi såg (våra observationer – inte tutorialens)
 
 |                               | **Render** (nuvarande)                                                                                           | **Azure Container Apps**                                                                                                          | **Google Cloud Run**                                                                                 | **Vercel**                                                                                                                                             |
 | ----------------------------- | ---------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |

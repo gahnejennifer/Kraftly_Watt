@@ -1,6 +1,6 @@
 [![CI](https://github.com/gahnejennifer/Kraftly_Watt/actions/workflows/ci.yml/badge.svg)](https://github.com/gahnejennifer/Kraftly_Watt/actions/workflows/ci.yml)
 
-# kraftly-portal
+# Kraftly-portal
 
 Customer portal for Kraftly. Delivered by Webbmakarna AB 2026-06-30.
 
@@ -8,14 +8,15 @@ Customer portal for Kraftly. Delivered by Webbmakarna AB 2026-06-30.
 
 Use without docker:
 
-1. Open a terminal and write: npm install
-2. Write: npm run api
-3. Open a second terminal and write: npm run dev
-4. Open the Vite URL shown in the terminal.
+1. Copy the environment file (required — the API won't start without it): cp .env.example .env
+2. Open a terminal and write: npm install
+3. Write: npm run api
+4. Open a second terminal and write: npm run dev
+5. Open the Vite URL shown in the terminal.
 
 Use with docker:
 
-1. Create a file named .env in the root directory of the project. Paste the key into this file.
+1. Copy the environment file (required — neither the API nor compose starts without it): cp .env.example .en
 2. Open the Docker Desktop program on your computer. (You can find it here https://docs.docker.com/get-started/get-docker/)
 3. Open a powershell terminal and run: docker compose up --build
 4. In Docker Desktop you can now click on krafty_watt and open the site.
@@ -39,11 +40,17 @@ Solution Mac:
    node <pid> user 23u IPv6 ... TCP *:<port> (LISTEN)
 3. Close port by: kill <PID>
 
+## Staging
+
+Staging environment: https://kraftly-watt-main.onrender.com
+
+The service runs on Render's free tier and spins down after 15 minutes
+of inactivity. The first request after idle time can take up to a
+minute to respond.
+
 ## Notes
 
 TODO: write proper documentation
-
-# kraftly-mina-sidor
 
 # Working agreement
 

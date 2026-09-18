@@ -8,7 +8,7 @@
 Vi behöver ett E2E-smoketest i CI (M2) och vill kunna mocka API:et.
 Teamet kan Cypress sedan tidigare. Playwright utvärderades idag.
 
-## Vad vi såg (era observationer – inte tutorialens)
+## Vad vi såg (våra observationer – inte tutorialens)
 
 |                            | Cypress                                                                                                                    | Playwright                                                                                                                                                                   |
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

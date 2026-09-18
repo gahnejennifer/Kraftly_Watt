@@ -76,8 +76,9 @@ Vi taggade M3 innan lunch men fick sen nya instruktioner. Efter att ha läst ige
 
 ## Datum: 2026-09-17
 
-Vi...
+Vi delade upp oss för att dels ta ur nyckeln ur koden som vi ärvt samtidigt som vi satte upp pipelinens deployflöde. Tillsammans satte vi upp ett renderkonto på Jennifer och la in API-nyckeln och API-url:en. För att testa att gamla API-nyckeln är död så gjorde vi ett curltest både med och utan nyckeln. Vi la till Image → GHCR som ytterligare en check i vårt ruleset på Github och såg till att det blev grönt. Därefter testade vi också att vi fick grönt i Pipelinen på deployflödet med Render. Eftersom vi hade skrivit ett test (api.js) för att kolla om API hämtas från env och inte är hårdkodad, så failade testet efter att vi gjorde ändringarna för API. Lösningen blev att lägga till ett värde för BASE_URL istället för ''. Efter det blev pipelinen grön.
 
 ## Datum: 2026-09-18
 
 Idag arbetade vi vidare med M4 och dokumentationen för deployment. Vi färdigställde och gick igenom docs/deploy.md, där vi kollade på tidsåtgången för testerna vid deploy. Vi jämförde olika hostingalternativ och tog beslutet att använda oss av Render för produktionen.
+Vi tog beslutet att ta bort testet api.test.js eftersom det testet inte längre tillför något nu när vi flyttat API-nyckeln. Det var en snabbfix vi gjorde igår men vi vill säkerställa att vi inte har onödiga test/inaktuella test. För att säkerställa att alla delar av M4 var kara så checkade vi av milestones också. Uppdatering av getting started är nu uppdaterat med cp .env.example .env och vi la till en stagingdel också i README.
