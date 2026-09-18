@@ -6,12 +6,17 @@
 
 ## Miljöer
 
-| Miljö | URL | Image | API | Uppdateras |
+| Miljö | URL          | Image                                                | API                                          | Uppdateras                                    |
+| ----- | ------------ | ---------------------------------------------------- | -------------------------------------------- | --------------------------------------------- |
+|       | Staging URL: | Image: "Render bygger direkt från Dockerfile i main" | API: "pekar mot mock-API:t, inte skarpt API" | Uppdateras: "automatiskt vid merge till main" |
 
 ## Konfiguration – var bor vad?
 
-| Variabel | Hemlig? | Lokalt | Staging | Används av |
 (API_KEY, API_URL, PORT, RENDER_DEPLOY_HOOK, STAGING_URL, GITHUB_TOKEN)
+
+| Variabel | Hemlig?                                              | Lokalt                                                                    | Staging                                                                | Används av                                                                             |
+| -------- | ---------------------------------------------------- | ------------------------------------------------------------------------- | ---------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+|          | PORT: "läses från process.env.PORT, sätts av Render" | RENDER_DEPLOY_HOOK: "GitHub Actions secret, triggar deploy efter publish" | STAGING_URL: "hårdkodad i workflow-filen .github/workflows/deploy.yml" | GITHUB_TOKEN: "autogenererad av GitHub Actions, används för att pusha image till GHCR" |
 
 ## API-nyckeln
 
@@ -31,13 +36,29 @@ PS /Users/jennifergahne/Documents/GitHub/Kraftly_Watt> curl -s -w " %{http_code}
 
 ## Rollback
 
-Två sätt, steg för steg. Hur ni kontrollerar att det lyckades.
+**Två sätt, steg för steg**
+
+1. **Via Render-dashboarden (snabbast):** gå till tjänsten → Events/Deploys → hitta senaste fungerande deploy → klicka Rollback to this deploy. Render pekar om trafiken till den gamla imagen/committen direkt, utan ny build.
+2. **Via git (mer spårbart):** git revert av den trasiga committen (eller git reset + force-push om ni tillåter det) → pusha till main → låt CI/CD-flödet bygga och deploya om som vanligt.
+
+**Hur ni kontrollerar att det lyckades.**
+Vi kollar att /healthz svarar 200 och att kolla att version/commit-SHA i sidfoten matchar den gamla committen.
 
 ## Tider (uppmätta)
 
-| Steg | Tid |
 (merge → publish klar · hook → rätt sha svarar · totalt · kallstart)
+
+| Steg                                                                 | Tid       |
+| -------------------------------------------------------------------- | --------- |
+| Merge → publish klar:                                                | 1m 45s    |
+| Hook → rätt SHA svarar:                                              | 31s       |
+| Totalt: summan, t.ex.                                                | 2 min 16s |
+| Kallstart: gör ett anrop efter 15+ min inaktivitet, ta tid till svar | 38 sek    |
 
 ## Kända begränsningar
 
 (kallstart, vem som äger Render-kontot, arm64 vs amd64, ingen prod ännu)
+
+Kallstart: 38 sek efter 15 min inaktivitet på gratisnivån — accepterat i staging
+Vem äger kontot: Jennifer, admin på Render-teamet
+arm64 vs amd64: vi bygger på Apple Silicon lokalt men Render kör amd64, så vi kör docker buildx build --platform linux/amd64 i CI
