@@ -73,3 +73,11 @@ Jennifer var inte med igår och försökte idag köra docker compose up --build 
 ## Datum: 2026-09-14
 
 Vi taggade M3 innan lunch men fick sen nya instruktioner. Efter att ha läst igenom allt insåg vi att det såg bra ut förutom lite småfix i vår README (vi hade råkat skriva port 8000 ist för 8080), samt att vi missat bocka i en del i milestones efter att vi la in containers.md. Vi ändrade också lite i vårt beslut nr 3 i containers.md.
+
+## Datum: 2026-09-17
+
+Vi...
+
+## Datum: 2026-09-18
+
+Vi...
