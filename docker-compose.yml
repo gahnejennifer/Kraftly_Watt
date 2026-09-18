@@ -9,12 +9,8 @@ services:
     depends_on:
       - api
   api:
-    image: node:22-alpine
-    working_dir: /app
-    volumes:
-      - .:/app
-    command: npm run api
+    build:
+      context: .
+      dockerfile: mock-api/Dockerfile
     environment:
       API_KEY: ${API_KEY:?API_KEY saknas – kör cp .env.example .env}
-    env_file:
-      - .env
