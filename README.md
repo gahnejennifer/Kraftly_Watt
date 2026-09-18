@@ -16,7 +16,7 @@ Use without docker:
 
 Use with docker:
 
-1. Copy the environment file (required — neither the API nor compose starts without it): cp .env.example .en
+1. Copy the environment file (required — neither the API nor compose starts without it): cp .env.example .env
 2. Open the Docker Desktop program on your computer. (You can find it here https://docs.docker.com/get-started/get-docker/)
 3. Open a powershell terminal and run: docker compose up --build
 4. In Docker Desktop you can now click on krafty_watt and open the site.
