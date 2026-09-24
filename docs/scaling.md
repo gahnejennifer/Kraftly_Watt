@@ -33,18 +33,21 @@ lokalt och staging kommer från infrastrukturen, inte från applikationskoden.
 
 ## Vad vi gjorde
 
-**Cache-headers** (bevis under M5 i milestones.md). Sparar en hämtning helt för
-återkommande användare på hashade filer (JS/CSS) tack vare `immutable` — deras
-browser behöver aldrig ens fråga servern efter första besöket. `index.html`,
-`config.js` och `version.txt` kontrolleras alltid mot servern (snabbt, via ETag)
-så att ingen fastnar med gammal kod efter en deploy. 2. **CDN:** [nu / senare / aldrig] — <fyll i beslut här. Om "senare": vad krävs?
-T.ex. registrera domän hos Cloudflare/Fastly, peka DNS dit, ingen kodändring
-behövs eftersom cache-headers redan finns på plats.> 3. **Fler instanser:** vid vilken siffra? <Baserat på dagens mätning: staging klarar
-~207 req/s med en instans. Om trafiktoppen (från avsnitt 1) överstiger det med
-marginal, är det dags att skala horisontellt.> 4. **Det vi inte kan påverka (API:et):** `/api/user` kunde inte lasttestas korrekt
-(kräver auth, se `Vad vi mätte`). Vi bör be backend-teamet om deras egna
-lasttestsiffror för den endpointen, samt fråga om den har någon egen cache-
-eller rate-limit-strategi.
+1. **Cache-headers** (bevis under M5 i milestones.md). Sparar en hämtning helt för
+   återkommande användare på hashade filer (JS/CSS) tack vare `immutable` — deras
+   browser behöver aldrig ens fråga servern efter första besöket. `index.html`,
+   `config.js` och `version.txt` kontrolleras alltid mot servern (snabbt, via ETag)
+   så att ingen fastnar med gammal kod efter en deploy.
+2. **CDN:** [nu / senare / aldrig] — <fyll i beslut här. Om "senare": vad krävs?
+   T.ex. registrera domän hos Cloudflare/Fastly, peka DNS dit, ingen kodändring
+   behövs eftersom cache-headers redan finns på plats.>
+3. **Fler instanser:** vid vilken siffra? <Baserat på dagens mätning: staging klarar
+   ~207 req/s med en instans. Om trafiktoppen (från avsnitt 1) överstiger det med
+   marginal, är det dags att skala horisontellt.>
+4. **Det vi inte kan påverka (API:et):** `/api/user` kunde inte lasttestas korrekt
+   (kräver auth, se `Vad vi mätte`). Vi bör be backend-teamet om deras egna
+   lasttestsiffror för den endpointen, samt fråga om den har någon egen cache-
+   eller rate-limit-strategi.
 
 ## Varför (inte) Kubernetes
 

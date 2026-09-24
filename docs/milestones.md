@@ -80,3 +80,31 @@ etag: W/"6ab515b1-46"
 cache-control: no-cache
 etag: W/"6ab5159c-29"
 ```
+
+**Staging:**
+
+window.**KRAFTLY** = {
+env: 'lokal',
+features: { norway: true }
+}
+
+**Prod:**
+
+window.**KRAFTLY** = {
+env: 'production',
+features: { norway: false }
+}
+
+[] Prod-jobbet bygger imagen igen, eller deployar :main → det är inte samma image som testades. Hooken ska få ghcr.io/…:${GITHUB_SHA}, och needs: ska peka på staging-jobbet
+[] Godkännandet är påslaget men jobbet kör direkt → Save protection rules trycktes aldrig, eller miljön skapades efter körningen. Kör om
+[] RENDER_DEPLOY_HOOK i miljön production är staging-hooken → varje "prod-deploy" deployar staging. Kontrollera i Render → Events på prod-tjänsten
+[] Flaggan sattes som VITE_FEATURE_NORWAY → den bakas in vid bygget: två images, och den som testades är inte den som körs. Flaggan ska läsas av containern vid start
+[] FEATURE_NORWAY=True eller "true " med mellanslag i Render → skriptet räknar bara exakt true som på. Det är meningen, kontrollera config.js
+[] Kortet syns på staging först efter hård omladdning → config.js saknar no-cache. Cache-blocket är inte mergat, eller location = /config.js är felstavat
+[] curl -I på /assets/… visar ingen Cache-Control → blocket ligger efter location /api/ och matchar aldrig, eller imagen som kör är från före mergen. version.txt!
+[] Rollbacken "gjordes" med Renders knapp och det finns ingen körning i Actions → DoD säger workflowen, med länk till körningen. Renders knapp på en :main-deploy hämtar dessutom senaste imagen, inte den gamla
+[] scaling.md har siffror men ingen säger var de kommer ifrån → skriv kommandot ni körde och mot vad (lokalt/staging), annars kan ingen upprepa mätningen
+[] scaling.md säger "vi skalar horisontellt med fler containrar" utan att någon mätning visar att det behövs → det är den muntliga frågan på onsdag
+[] Efter rollbacken i staging kör staging fortfarande den gamla sha:n → kör CI/CD → Run workflow på main så att staging kommer ikapp. Annars är taggen inte det som ligger i staging
+[] Hela teamet står som reviewers men Prevent self-review är av → den som mergar godkänner sig själv, och grinden är bara en knapp
+[] Bevisen ligger i egna filer eller i PR-beskrivningar → de ska stå under DoD-punkten i milestones.md, det är där jag tittar
