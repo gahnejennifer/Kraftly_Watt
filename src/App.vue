@@ -1,4 +1,5 @@
 <template>
+  <div v-if="appEnv !== 'production'" class="env-banner">{{ appEnv.toUpperCase() }}</div>
   <div>
     <header v-if="$route.path !== '/login'" class="topbar">
       <div class="topbar-inner container">
@@ -20,6 +21,8 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
+
+const appEnv = window.__KRAFTLY__?.env ?? 'lokal'
 
 const router = useRouter()
 
@@ -54,5 +57,17 @@ const logout = () => {
 .topbar nav a.router-link-active {
   color: #fff;
   font-weight: 600;
+}
+.env-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #ffcc00;
+  color: #000;
+  text-align: center;
+  padding: 5px;
+  font-weight: bold;
+  z-index: 1000;
 }
 </style>
