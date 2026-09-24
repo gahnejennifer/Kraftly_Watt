@@ -56,3 +56,27 @@ docker compose up --build från ett rent klon startar frontend (localhost:8080) 
 [x] docs/deploy.md enligt mallen från workshopen (flöde, miljöer, var varje variabel bor, nyckeln, rollback, uppmätta tider, kända begränsningar) + beslutsdokument docs/decisions/hosting.md med minst tre jämförda alternativ
 [x] README med staging-adressen och Kom igång som börjar med cp .env.example .env · logg i docs/log.md, en post per arbetsdag, med vem som gjorde vad
 [] Valfritt (räknas inte i DoD): skriv om git-historiken så att den gamla nyckeln försvinner ur repot (git filter-repo) – och skriv i docs/deploy.md varför det inte ersätter rotationen · rollback-workflow med valfri sha (övning 2 A) · miljöbanner via config.js (övning 2 B – krävs i M5).
+
+# M5
+
+**Före:**
+
+```
+etag: W/"6aad3de5-5f605"
+etag: W/"6aad3de5-1b4"
+etag: W/"6aad3de5-1b4"
+etag: W/"6aad3de6-29"
+```
+
+**Efter:**
+
+```
+cache-control: public, max-age=31536000, immutable
+etag: W/"6ab5159b-5f949"
+cache-control: no-cache
+etag: W/"6ab5159b-1db"
+cache-control: no-cache
+etag: W/"6ab515b1-46"
+cache-control: no-cache
+etag: W/"6ab5159c-29"
+```
