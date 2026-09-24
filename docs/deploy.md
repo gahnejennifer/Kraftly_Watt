@@ -6,9 +6,12 @@
 
 ## Miljöer
 
-| Miljö | URL                                                 | Image                                                | API                                          | Uppdateras                                    |
-| ----- | --------------------------------------------------- | ---------------------------------------------------- | -------------------------------------------- | --------------------------------------------- |
-|       | Staging URL: https://kraftly-watt-main.onrender.com | Image: "Render bygger direkt från Dockerfile i main" | API: "pekar mot mock-API:t, inte skarpt API" | Uppdateras: "automatiskt vid merge till main" |
+| Miljö                             | URL                                    | Image                                                                               | API                                                                                       | Uppdateras                                     |
+| --------------------------------- | -------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| Staging (`APP_ENV=staging`)       | https://kraftly-watt-main.onrender.com | `ghcr.io/gahnejennifer/kraftly_watt:<sha>`, byggs en gång i CI och pushas till GHCR | Test-API:t, inte skarpt API. Nyckeln sätts i Render, inte i imagen. `FEATURE_NORWAY=true` | Automatiskt vid merge till main                |
+| Produktion (`APP_ENV=production`) | https://kraftly-watt.onrender.com      | Samma image och sha som staging just verifierat, ingen ny build                     | Test-API:t (i verkligheten en egen prod-nyckel). Ingen `FEATURE_NORWAY`                   | Efter godkännande i GitHub-miljön `production` |
+
+Render-tjänsterna ligger på Jennifers konto (Hobby-planen tillåter inte fler medlemmar). Pipelinen når dem via deploy-hooks i GitHub-miljöerna.
 
 ## Konfiguration – var bor vad?
 
