@@ -40,11 +40,13 @@ Solution Mac:
    node <pid> user 23u IPv6 ... TCP *:<port> (LISTEN)
 3. Close port by: kill <PID>
 
-## Staging
+## Environments
 
-Staging environment: https://kraftly-watt-main.onrender.com
+**Staging environment:** https://kraftly-watt-main.onrender.com
 
-The service runs on Render's free tier and spins down after 15 minutes
+**Production environment:** https://kraftly-watt.onrender.com (deployed after approval)
+
+Both services runs on Render's free tier and spins down after 15 minutes
 of inactivity. The first request after idle time can take up to a
 minute to respond.
 
