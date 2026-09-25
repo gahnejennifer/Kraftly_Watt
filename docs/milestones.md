@@ -59,52 +59,72 @@ docker compose up --build från ett rent klon startar frontend (localhost:8080) 
 
 # M5
 
+[x] Produktion skild från staging: en egen Render-tjänst på egen adress, APP_ENV=production, ingen miljöbanner. Samma image som staging: version.txt visar samma sha på båda efter en deploy
+[x] Godkännande före prod: GitHub-miljön production har required reviewers (hela teamet) och Prevent self-review. Jobbet deploy-production har needs: på staging-jobbet, deployar ghcr.io/…:<sha> via hook, väntar på /version.txt och gör ett röktest som blir rött om flaggan är på i prod
+[x] Norge-stödet bakom en feature flag: en synlig förändring på översikten, styrd av FEATURE_NORWAY som containern läser vid start. På i staging, av i prod. Två tester: flaggan och komponenten. Bevis: curl <miljö>/config.js från båda
+
+**Staging:**
+
+```
+$ curl https://kraftly-watt-main.onrender.com/config.js
+window.__KRAFTLY__ = {
+  env: 'staging',
+  features: { norway: true }
+}
+```
+
+**Prod:**
+
+```
+$ curl https://kraftly-watt.onrender.com/config.js
+window.__KRAFTLY__ = {
+  env: 'production',
+  features: { norway: false }
+}
+```
+
+[x] Beslutsdokument docs/decisions/feature-flags.md: minst tre alternativ (branch, byggtidsflagga, körtidsflagga), motivering, och när flaggan ska bort
+[x] Cache-headers konfigurerade och verifierade: /assets/ med public, max-age=31536000, immutable, index.html/config.js/version.txt med no-cache. Bevis: curl -I före och efter, den faktiska utskriften
+
 **Före:**
 
 ```
-etag: W/"6aad3de5-5f605"
-etag: W/"6aad3de5-1b4"
-etag: W/"6aad3de5-1b4"
-etag: W/"6aad3de6-29"
+  $ curl -sI https://kraftly-watt-main.onrender.com/assets/index-AjMTpzRI.js | grep -i -E "cache-control|etag"
+  etag: W/"6aad3de5-5f605"
+  $ curl -sI https://kraftly-watt-main.onrender.com/ | grep -i -E "cache-control|etag"
+  etag: W/"6aad3de5-1b4"
+  $ curl -sI https://kraftly-watt-main.onrender.com/config.js | grep -i -E "cache-control|etag"
+  etag: W/"6aad3de5-1b4"
+  $ curl -sI https://kraftly-watt-main.onrender.com/version.txt | grep -i -E "cache-control|etag"
+  etag: W/"6aad3de6-29"
 ```
 
 **Efter:**
 
 ```
+$ curl -sI https://kraftly-watt-main.onrender.com/assets/index-CbPMTORC.js | grep -i -E "cache-control|etag" | Out-File -Append efter.txt
 cache-control: public, max-age=31536000, immutable
 etag: W/"6ab5159b-5f949"
+$ curl -sI https://kraftly-watt-main.onrender.com/ | grep -i -E "cache-control|etag"
 cache-control: no-cache
 etag: W/"6ab5159b-1db"
+$ curl -sI https://kraftly-watt-main.onrender.com/config.js | grep -i -E "cache-control|etag"
 cache-control: no-cache
 etag: W/"6ab515b1-46"
+$ curl -sI https://kraftly-watt-main.onrender.com/version.txt | grep -i -E "cache-control|etag"
 cache-control: no-cache
 etag: W/"6ab5159c-29"
 ```
 
-**Staging:**
+[x] Rollback genomförd i praktiken: rollback.yml med val av miljö, körd mot staging. Bevis: länk till Actions-körningen och tiden från start till ✅ … kör <sha> igen
 
-window.**KRAFTLY** = {
-env: 'lokal',
-features: { norway: true }
-}
+- **Miljö och sha:** staging · `af6194dfed5d5ef8a96b54047531226f96b898dc` (M4), `version.txt` på staging visade samma sha efter körningen
+- **Länk till Actions-körningen:** https://github.com/gahnejennifer/Kraftly_Watt/actions/runs/36113248484, tid: 25s
+- **Norge-kortet:** försvann från staging, men inte för att flaggan ändrades. `FEATURE_NORWAY=true` står kvar i Render. Kortet försvann för att `NorwayNotice.vue` och `40-runtime-config.sh` inte fanns i M4-koden. Imagen från M4 har ingen kod som läser flaggan.
+- **Vad som inte backade:** miljövariablerna i Render (`FEATURE_NORWAY`, `APP_ENV`, `API_KEY`), koden på main och imagerna i GHCR. En rollback byter bara vilken image som körs. Hade vi haft en databas hade den inte backat heller. Data som skrivits eller migrerats efter M4 finns kvar, och den gamla koden måste klara av den.
+- **Om vi valt production:** jobbet hade stannat på Review pending tills någon annan i teamet godkänt (Prevent self-review), precis som en vanlig prod-deploy. Rollbacken hade dessutom påverkat riktiga kunder.
+- **Tillbaka:** CI → Run workflow på main, staging kör `1c456e053c3e074646febeb14ce5715142676aaa` igen
 
-**Prod:**
-
-window.**KRAFTLY** = {
-env: 'production',
-features: { norway: false }
-}
-
-[] Prod-jobbet bygger imagen igen, eller deployar :main → det är inte samma image som testades. Hooken ska få ghcr.io/…:${GITHUB_SHA}, och needs: ska peka på staging-jobbet
-[] Godkännandet är påslaget men jobbet kör direkt → Save protection rules trycktes aldrig, eller miljön skapades efter körningen. Kör om
-[] RENDER_DEPLOY_HOOK i miljön production är staging-hooken → varje "prod-deploy" deployar staging. Kontrollera i Render → Events på prod-tjänsten
-[] Flaggan sattes som VITE_FEATURE_NORWAY → den bakas in vid bygget: två images, och den som testades är inte den som körs. Flaggan ska läsas av containern vid start
-[] FEATURE_NORWAY=True eller "true " med mellanslag i Render → skriptet räknar bara exakt true som på. Det är meningen, kontrollera config.js
-[] Kortet syns på staging först efter hård omladdning → config.js saknar no-cache. Cache-blocket är inte mergat, eller location = /config.js är felstavat
-[] curl -I på /assets/… visar ingen Cache-Control → blocket ligger efter location /api/ och matchar aldrig, eller imagen som kör är från före mergen. version.txt!
-[] Rollbacken "gjordes" med Renders knapp och det finns ingen körning i Actions → DoD säger workflowen, med länk till körningen. Renders knapp på en :main-deploy hämtar dessutom senaste imagen, inte den gamla
-[] scaling.md har siffror men ingen säger var de kommer ifrån → skriv kommandot ni körde och mot vad (lokalt/staging), annars kan ingen upprepa mätningen
-[] scaling.md säger "vi skalar horisontellt med fler containrar" utan att någon mätning visar att det behövs → det är den muntliga frågan på onsdag
-[] Efter rollbacken i staging kör staging fortfarande den gamla sha:n → kör CI/CD → Run workflow på main så att staging kommer ikapp. Annars är taggen inte det som ligger i staging
-[] Hela teamet står som reviewers men Prevent self-review är av → den som mergar godkänner sig själv, och grinden är bara en knapp
-[] Bevisen ligger i egna filer eller i PR-beskrivningar → de ska stå under DoD-punkten i milestones.md, det är där jag tittar
+[x] docs/scaling.md enligt mallen från workshopen: era mätvärden (autocannon, tre anrop, req/s + p99, kommandot ni körde), vad de säger om flaskhalsen, vad ni gjorde, varför (inte) Kubernetes, och regeln för flagga kontra rollback med tider. Granskas muntligt på avstämningen
+[x] Adresserna: prod-raden i miljötabellen i docs/deploy.md och prod-adressen i README. En rad var
+[] Valfritt (räknas inte i DoD): k8s/kraftly.yaml i repot med ett stycke i scaling.md om vad ni såg i klustret · en stale-while-revalidate-header på /api/consumption med motivering (browsern får visa en gammal kopia medan den hämtar en ny i bakgrunden, för data som tål att vara någon minut gammal) · en egen prod-nyckel till test-API:t (be mig).
