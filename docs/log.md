@@ -81,4 +81,13 @@ Vi delade upp oss för att dels ta ur nyckeln ur koden som vi ärvt samtidigt so
 ## Datum: 2026-09-18
 
 Idag arbetade vi vidare med M4 och dokumentationen för deployment. Vi färdigställde och gick igenom docs/deploy.md, där vi kollade på tidsåtgången för testerna vid deploy. Vi jämförde olika hostingalternativ och tog beslutet att använda oss av Render för produktionen.
-Vi tog beslutet att ta bort testet api.test.js eftersom det testet inte längre tillför något nu när vi flyttat API-nyckeln. Det var en snabbfix vi gjorde igår men vi vill säkerställa att vi inte har onödiga test/inaktuella test. För att säkerställa att alla delar av M4 var kara så checkade vi av milestones också. Uppdatering av getting started är nu uppdaterat med cp .env.example .env och vi la till en stagingdel också i README. Den sista delen vi hade kvar i M4 var att testa på en ren klon. Vi upptäckte då att vi inte kunde logga in och började felsökning. Vi har efter lite fix insett att vi gjort något steg tokigt igår (1.7) och
+Vi tog beslutet att ta bort testet api.test.js eftersom det testet inte längre tillför något nu när vi flyttat API-nyckeln. Det var en snabbfix vi gjorde igår men vi vill säkerställa att vi inte har onödiga test/inaktuella test. För att säkerställa att alla delar av M4 var kara så checkade vi av milestones också. Uppdatering av getting started är nu uppdaterat med cp .env.example .env och vi la till en stagingdel också i README. Den sista delen vi hade kvar i M4 var att testa på en ren klon. Vi upptäckte då att vi inte kunde logga in och började felsökning. Vi har efter lite fix insett att vi gjort något steg tokigt igår (1.7).
+
+## Datum: 2026-09-24
+
+Vi arbetade parallellt på tre spår där en person (med tillgång till Render-kontot) satte vi upp produktionsmiljön i Render. En annan la till en norge-flagga på staging och kontrollerade att den inte syntes i prod. En tredje la till cache-mätning och gjorde mätning på före och efter cache. Tillsammans skrev vi sen allihop på scaling.md samt feature-flags.md utifrån våra beslut och hur vi arbetat.
+
+## Datum: 2026-09-25
+
+Samlades digitalt vid 9 och fyllde på milestones med DoD för M5, checkade av det vi gjort hitintills och la in bevisen från gårdagen.
+Chechpoint 9:00 - Prod visar samma innehåll som staging förutom Norge-flaggan och bannern högst upp, samt prod-deployen med godkännande och rollback.yml finns på main och visas i Github. Vi är redo inför förmiddagens rollback och kommer att göra den tillsammans eftersom vi igår blev klara med de delar av M5 som kunde delas upp.
