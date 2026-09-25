@@ -90,4 +90,7 @@ Vi arbetade parallellt på tre spår där en person (med tillgång till Render-k
 ## Datum: 2026-09-25
 
 Samlades digitalt vid 9 och fyllde på milestones med DoD för M5, checkade av det vi gjort hitintills och la in bevisen från gårdagen.
-Chechpoint 9:00 - Prod visar samma innehåll som staging förutom Norge-flaggan och bannern högst upp, samt prod-deployen med godkännande och rollback.yml finns på main och visas i Github. Vi är redo inför förmiddagens rollback och kommer att göra den tillsammans eftersom vi igår blev klara med de delar av M5 som kunde delas upp.
+
+**Chechpoint 9:00** - Prod visar samma innehåll som staging förutom Norge-flaggan och bannern högst upp, samt prod-deployen med godkännande och rollback.yml finns på main och visas i Github. Vi är redo inför förmiddagens rollback och kommer att göra den tillsammans eftersom vi igår blev klara med de delar av M5 som kunde delas upp.
+
+**Checkpoint 12:00** - https://github.com/gahnejennifer/Kraftly_Watt/actions/runs/36113248484 Rollbacken är gjord och vi har gått tillbaka till nya versionen igen.
