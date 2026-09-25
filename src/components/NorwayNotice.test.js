@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, it } from 'vitest'
 import '@testing-library/jest-dom/vitest'
 import { render, screen } from '@testing-library/vue'
-import NorwayNotice from '../components/NorwayNotice.vue'
+import NorwayNotice from './NorwayNotice.vue'
 
 describe('NorwayNotice', () => {
   afterEach(() => {
