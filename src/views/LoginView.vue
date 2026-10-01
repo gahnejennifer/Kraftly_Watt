@@ -5,7 +5,12 @@
       <h1>Logga in på Mina sidor</h1>
       <input v-model="email" type="text" placeholder="E-postadress" />
       <input v-model="password" type="password" placeholder="Lösenord" />
-      <button class="btn" style="width: 100%" @click="handleLogin">Logga in</button>
+      <button class="btn" style="width: 100%" @click="handleLogin" :disabled="loading">
+        Logga in
+      </button>
+      <p v-if="error" role="alert" class="hint" style="color: #c0392b; margin-top: 10px">
+        {{ error }}
+      </p>
       <p class="hint" style="margin-top: 10px">
         Problem att logga in? Ring kundservice 020-123 456
       </p>
@@ -17,16 +22,26 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { login } from '../services/api'
+import { setAccessToken } from '../services/token'
 
 const email = ref('')
 const password = ref('')
+const error = ref('')
+const loading = ref(false)
 const router = useRouter()
 
 const handleLogin = async () => {
-  // validation coming in v2 :)
-  await login(email.value, password.value)
-  localStorage.setItem('kraftly_logged_in', 'true')
-  router.push('/')
+  error.value = ''
+  loading.value = true
+  try {
+    const { accessToken } = await login(email.value, password.value)
+    setAccessToken(accessToken)
+    router.push('/')
+  } catch (e) {
+    error.value = 'Fel e-postadress eller lösenord.'
+  } finally {
+    loading.value = false
+  }
 }
 </script>
 
