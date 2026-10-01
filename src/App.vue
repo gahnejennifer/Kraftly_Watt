@@ -20,16 +20,28 @@
 </template>
 
 <script setup>
+import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { refresh } from './services/api'
+import { setAccessToken } from './services/token'
 
 const appEnv = window.__KRAFTLY__?.env ?? 'lokal'
 
 const router = useRouter()
 
 const logout = () => {
-  localStorage.removeItem('kraftly_logged_in')
+  setAccessToken(null)
   router.push('/login')
 }
+
+onMounted(async () => {
+  try {
+    const { accessToken } = await refresh()
+    setAccessToken(accessToken)
+  } catch {
+    // ingen giltig refresh-cookie, användaren är helt enkelt utloggad
+  }
+})
 </script>
 
 <style>

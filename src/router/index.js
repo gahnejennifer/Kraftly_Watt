@@ -5,6 +5,7 @@ import DashboardView from '../views/DashboardView.vue'
 import InvoicesView from '../views/InvoicesView.vue'
 import MoveFormView from '../views/MoveFormView.vue'
 import ProfileView from '../views/ProfileView.vue'
+import { getAccessToken } from '../services/token'
 
 const router = createRouter({
   history: createWebHistory(),
@@ -17,9 +18,10 @@ const router = createRouter({
   ],
 })
 
-// "auth" -- keeps unauthorized users out :)
+// Guarden är UX: den skickar utloggade till /login så de slipper se en tom/trasig sida.
+// Det riktiga skyddet sitter i API:t (v2 svarar 401 utan giltig token), inte här.
 router.beforeEach((to) => {
-  if (to.path !== '/login' && localStorage.getItem('kraftly_logged_in') !== 'true') {
+  if (to.path !== '/login' && !getAccessToken()) {
     return '/login'
   }
 })
