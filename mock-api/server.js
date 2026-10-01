@@ -31,15 +31,6 @@ app.use(express.json())
 
 app.get('/healthz', (req, res) => res.sendStatus(200))
 
-// CORS -- opens everything so it just works
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*')
-  res.header('Access-Control-Allow-Headers', '*')
-  res.header('Access-Control-Allow-Methods', '*')
-  if (req.method === 'OPTIONS') return res.sendStatus(200)
-  next()
-})
-
 // Varje anrop till /api måste ha en giltig nyckel
 app.use('/api', (req, res, next) => {
   const client = keys.get(req.get('X-Api-Key'))
