@@ -13,6 +13,7 @@ COPY --from=build /app/dist /usr/share/nginx/html
 
 # Skriver config.js från miljön när containern startar
 COPY --chmod=755 docker/40-runtime-config.sh /docker-entrypoint.d/40-runtime-config.sh
+COPY docker/security-headers.conf /etc/nginx/security-headers.conf 
 
 # Vilken commit är det här? Pipelinen skickar in sha:n – läses på /version.txt
 ARG GIT_SHA=lokal
