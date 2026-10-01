@@ -5,7 +5,7 @@
       <h1>Logga in på Mina sidor</h1>
       <input v-model="email" type="text" placeholder="E-postadress" />
       <input v-model="password" type="password" placeholder="Lösenord" />
-      <button class="btn" style="width: 100%" @click="handleLogin" :disabled="loading">
+      <button class="btn" style="width: 100%" :disabled="loading" @click="handleLogin">
         Logga in
       </button>
       <p v-if="error" role="alert" class="hint" style="color: #c0392b; margin-top: 10px">
@@ -37,7 +37,7 @@ const handleLogin = async () => {
     const { accessToken } = await login(email.value, password.value)
     setAccessToken(accessToken)
     router.push('/')
-  } catch (e) {
+  } catch {
     error.value = 'Fel e-postadress eller lösenord.'
   } finally {
     loading.value = false
