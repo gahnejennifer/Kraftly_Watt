@@ -139,3 +139,9 @@ alt-svc: h3=":443"; ma=86400
 1. Style-src 'unsafe-inline' är kvar eftersom appen (Vue) behöver inline-stilar. Det försvagar CSP för stilar, men skript är fortfarande låsta till 'self'.
 2. HSTS är satt utan includeSubDomains och preload, eftersom vi inte kontrollerar hela domänen.
 3. Express-API:t skickar X-Powered-By: Express och egna CSP-headrar på felsvar (observerat med curl). Ofarligt, men inte städat.
+
+## Motivering kring token
+
+Access token lagras i en JS-variabel i minnet (token.js), inte i localStorage, eftersom allt i localStorage är läsbart för valfri kod på sidan (t.ex. vid XSS). Nackdelen är att token försvinner vid omladdning, vilket löses genom att en HttpOnly-cookie (oläsbar för JavaScript) används för att hämta ett nytt token via /api/v2/auth/refresh vid appstart.
+
+**Kontroll:** DevTools → Local Storage är tom efter inloggning. F5 på en skyddad sida loggar inte ut.

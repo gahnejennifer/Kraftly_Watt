@@ -95,4 +95,10 @@ Samlades digitalt vid 9 och fyllde på milestones med DoD för M5, checkade av d
 
 **Checkpoint 12:00** - https://github.com/gahnejennifer/Kraftly_Watt/actions/runs/36113248484 Rollbacken är gjord och vi har gått tillbaka till nya versionen igen.
 
-## Datum: 2026-09-31
+## Datum: 2026-10-01
+
+Från idag är Ilona nästa tech-lead för kommande 3 veckor. Spår 1 och spår 3 körde vi parallelt, men väntade med spår 2 för att udvika en merge konflikt. Jennifer satt med spår 2 och fixade att appen pratar med v2 och att API:et släpper inte fram data utan token. Ilona satt med spår 1 och gjorde så att token ligger i minnet inte i localStorage. Truc gjorde spår 3 där hon satte upp CSP med säkerhetsheaders på varje spår och CORS så att en sida inte får läsa svar från en annan adress om inte API:et tillåter just den adressen (CSRF attacken ex.).
+
+## Datum: 2026-10-02
+
+Samlades digitalt vid 9 och fyllde på milestones med DoD för M6, checkade av det vi gjort hitintills och la in bevisen från gårdagen. Vi fyllde tokenlagring.md med våra beslut och motiveringar.
