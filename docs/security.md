@@ -2,11 +2,11 @@
 
 ## Hotbilden i en mening
 
-<Vad är värt att skydda i portalen, och vem är angriparen? En eller två meningar.>
+Det vi skyddar är kundernas personuppgifter och fakturor på Mina sidor. Angriparen är i första hand någon som vill komma åt en annan kunds data eller agera i kundens namn – antingen genom en stulen/förfalskad token, ett öppet API-anrop, eller injicerad kod (XSS) i webbläsaren.
 
 ## Autentiseringen (M6)
 
-<Hur loggar en kund in, var ligger access token, hur fungerar refresh, hur skyddas API:t?>
+En kund loggar in i LoginView mot POST /api/v2/auth/login med e-post och lösenord. Lyckad inloggning ger en kortlivad access token (JWT, 10 min) i svaret, som vi håller i en JS-variabel i minnet (src/services/token.js) – aldrig i localStorage, eftersom allt där är läsbart för valfri kod på sidan (t.ex. vid XSS). Refresh-token sätts av API:t i en HttpOnly-cookie som JavaScript inte kan läsa. Nackdelen med minne är att token försvinner vid omladdning; det löser vi genom att appen vid start hämtar en ny access token via POST /api/v2/auth/refresh mot cookien (App.vue), så en F5 inte loggar ut användaren. Själva skyddet sitter i API:t, som kräver Authorization: Bearer <token> och väljer data ur token – en route guard skickar bara utloggade till /login för UX:ens skull.
 
 ## OWASP Top 10 – genomgång
 
@@ -134,14 +134,6 @@ alt-svc: h3=":443"; ma=86400
 
 ## Kända brister (medvetet kvar)
 
-<Det ni valt att inte laga än, och varför. Ärlighet ger poäng.>
-
 1. Style-src 'unsafe-inline' är kvar eftersom appen (Vue) behöver inline-stilar. Det försvagar CSP för stilar, men skript är fortfarande låsta till 'self'.
 2. HSTS är satt utan includeSubDomains och preload, eftersom vi inte kontrollerar hela domänen.
 3. Express-API:t skickar X-Powered-By: Express och egna CSP-headrar på felsvar (observerat med curl). Ofarligt, men inte städat.
-
-## Motivering kring token
-
-Access token lagras i en JS-variabel i minnet (token.js), inte i localStorage, eftersom allt i localStorage är läsbart för valfri kod på sidan (t.ex. vid XSS). Nackdelen är att token försvinner vid omladdning, vilket löses genom att en HttpOnly-cookie (oläsbar för JavaScript) används för att hämta ett nytt token via /api/v2/auth/refresh vid appstart.
-
-**Kontroll:** DevTools → Local Storage är tom efter inloggning. F5 på en skyddad sida loggar inte ut.
