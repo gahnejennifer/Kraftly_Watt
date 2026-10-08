@@ -90,6 +90,18 @@ till den nya importen (`vi.mock('chart.js', …)`). PR: 81
 | JS dashboarden totalt (gzip) | 140,64 kB | 119,43 kB             |
 | JS /login (gzip)             | 41,42 kB  | 41,42 kB (oförändrad) |
 
+### 2.3 Lodash: bort med hela paketet
+
+`DashboardView.vue` importerade hela lodash (`import _ from 'lodash'`) för att använda
+en enda funktion, `debounce`. Vi ersatte den med en egen `debounce` i
+`src/utils/debounce.js` (6 rader) och avinstallerade `lodash`. PR: 83
+
+|                              | Före      | Efter    |
+| ---------------------------- | --------- | -------- |
+| DashboardView-chunk (gzip)   | 78.92 kB  | 51.72 kB |
+| JS dashboarden totalt (gzip) | 119.43 kB | 92.22 kB |
+| JS /login (gzip)             | 41.42 kB  | 41.41 kB |
+
 ### Hur optimeringarna påverkar varandra
 
 LCP på dashboarden gick från 0,94 s (efter 1.1, hero-bilden) till 1,09 s efter lazy
