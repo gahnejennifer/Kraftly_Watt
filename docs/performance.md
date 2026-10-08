@@ -102,7 +102,6 @@ en enda funktion, `debounce`. Vi ersatte den med en egen `debounce` i
 | JS dashboarden totalt (gzip) | 119.43 kB | 92.22 kB |
 | JS /login (gzip)             | 41.42 kB  | 41.41 kB |
 
-
 ### Hur optimeringarna påverkar varandra
 
 LCP på dashboarden gick från 0,94 s (efter 1.1, hero-bilden) till 1,09 s efter lazy
