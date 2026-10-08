@@ -16,3 +16,23 @@ dashboarden). JavaScript: gzip i `npm run build`.
 | LCP-element            | `img.hero` (hero.jpg, 96 kB, 2400 × 1200 px)         |
 | JS /login (gzip)       | 141,82 kB – en fil för alla sidor                    |
 | JS dashboarden (gzip)  | 141,82 kB – samma fil                                |
+
+## Optimeringarna
+
+### Spår 1 • Bilden och det som hoppar
+
+### 1.1 Hero-bilden som WebP
+
+LCP-elementet är `img.hero`. Bilden var en JPG på 96 kB och 2400 × 1200 px, men visas
+som mest ca 900 px bred, och den saknade `width`/`height`. Vi konverterade till WebP,
+skalade ner till 1200 px (räcker för 2× skärmar), lade till `width`/`height` +
+`height: auto` så att browsern reserverar platsen innan bilden laddats, och
+`fetchpriority="high"` så att LCP-bilden hämtas först.
+
+**Fynd:** Bilden gick från 96 kB till 5 kB (5044 byte), minskning på ca 95%.
+
+|                        | Före                        | Efter                       |
+| ---------------------- | --------------------------- | --------------------------- |
+| hero-bilden            | 96 kB (JPG, 2400 × 1200)    | 5 kB (WebP, 1200 × 600)     |
+| LCP dashboard (median) | 1,04 s (1,07 / 1,03 / 1,04) | 0,94 s (0,98 / 0,93 / 0,94) |
+| CLS dashboard (median) | 0,00                        | 0,00                        |
