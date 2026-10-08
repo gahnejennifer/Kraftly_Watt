@@ -43,7 +43,7 @@ När dashboarden laddas visas först "Laddar…" i förbrukningskortet. När
 `/api/v2/consumption` svarat (efter ca 600 ms) byts texten mot diagrammet, som är mycket
 högre, och raden under (`p.hint`, "Källa: din elmätare…") trycktes ner. Vi lade
 "Laddar…" och diagrammet i en `div.chart-box` med `aspect-ratio`, så att platsen är
-reserverad från start och inget under flyttas när svaret kommer. PR: #…
+reserverad från start och inget under flyttas när svaret kommer. PR: #82
 
 Mätt mot main efter lazy routes (#80).
 
@@ -66,7 +66,7 @@ under diagrammet. Justeras när Chart.js-ändringen i spår 2 är klar.
 Alla vyer importerades statiskt i `src/router/index.js`, så `/login` hämtade en enda
 fil på 141,82 kB gzip, inklusive dashboardens diagramkod. Vi bytte till
 `() => import(...)` så att varje vy blir en egen fil som bara hämtas när sidan
-besöks. Routern hade inte lazy routes sedan tidigare.
+besöks. Routern hade inte lazy routes sedan tidigare. PR: 80
 
 |                         | Före      | Efter    |
 | ----------------------- | --------- | -------- |
@@ -82,7 +82,7 @@ innehåller Chart.js och lodash; det tas i nästa optimeringar.
 `ConsumptionChart.vue` importerade `chart.js/auto`, som registrerar alla diagramtyper,
 skalor och plugins. Vi ritar bara ett stapeldiagram och importerar nu `BarController`,
 `BarElement`, `CategoryScale`, `LinearScale` och `Tooltip`. Testernas mock är anpassad
-till den nya importen (`vi.mock('chart.js', …)`).
+till den nya importen (`vi.mock('chart.js', …)`). PR: 81
 
 |                              | Före      | Efter                 |
 | ---------------------------- | --------- | --------------------- |
@@ -109,3 +109,16 @@ routes (2.1). Bilden ligger i `DashboardView.vue`, som nu är en egen fil: brows
 hittar bilden först när både `index-*.js` och `DashboardView-*.js` har hämtats. Det är
 en medveten avvägning – mycket mindre JavaScript på /login, mot något senare LCP på
 dashboarden. LCP ligger fortfarande långt under budgeten på 2,5 s.
+
+## Flaskhalsen vi inte äger
+
+`/api/v2/consumption` väntar 673,8 ms innan den svarar, fast svaret är litet (Waiting
+for server response i nätverksfliken). Fördröjningen finns både i Kraftlys test-API
+(staging) och i mock-API:t lokalt (`setTimeout` på 600 ms). Den äger vi inte – den
+rapporteras till API:ts ägare. Vår del är att resten av sidan inte väntar på den:
+hero-bilden (LCP-elementet) laddas utan att vänta på API:t, och diagrammets plats är
+reserverad (1.2) så att inget hoppar när svaret kommer. Räknas inte som en av våra
+optimeringar.
+
+Bevis: `consumption` startar vid ca 854 ms och svarar efter 677 ms (klar ca 1,53 s),
+medan LCP (hero-bilden) kommer vid 1,12 s – bilden visas innan API:t svarat.
