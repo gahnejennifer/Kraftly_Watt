@@ -94,7 +94,7 @@ till den nya importen (`vi.mock('chart.js', …)`).
 
 `DashboardView.vue` importerade hela lodash (`import _ from 'lodash'`) för att använda
 en enda funktion, `debounce`. Vi ersatte den med en egen `debounce` i
-`src/utils/debounce.js` (6 rader) och avinstallerade `lodash`.
+`src/utils/debounce.js` (6 rader) och avinstallerade `lodash`. PR: 83
 
 |                              | Före      | Efter    |
 | ---------------------------- | --------- | -------- |
