@@ -54,3 +54,16 @@ besöks. Routern hade inte lazy routes sedan tidigare.
 
 Dashboarden är i stort sett oförändrad eftersom `DashboardView` (100,13 kB gzip)
 innehåller Chart.js och lodash; det tas i nästa optimeringar.
+
+### 2.2 Chart.js: bara det vi ritar
+
+`ConsumptionChart.vue` importerade `chart.js/auto`, som registrerar alla diagramtyper,
+skalor och plugins. Vi ritar bara ett stapeldiagram och importerar nu `BarController`,
+`BarElement`, `CategoryScale`, `LinearScale` och `Tooltip`. Testernas mock är anpassad
+till den nya importen (`vi.mock('chart.js', …)`). PR: <länk>
+
+|                              | Före      | Efter                 |
+| ---------------------------- | --------- | --------------------- |
+| DashboardView-chunk (gzip)   | 100,13 kB | 78,92 kB              |
+| JS dashboarden totalt (gzip) | 140,64 kB | 119,43 kB             |
+| JS /login (gzip)             | 41,42 kB  | 41,42 kB (oförändrad) |
