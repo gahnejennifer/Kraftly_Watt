@@ -1,11 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import LoginView from '../views/LoginView.vue'
-import DashboardView from '../views/DashboardView.vue'
-import InvoicesView from '../views/InvoicesView.vue'
-import MoveFormView from '../views/MoveFormView.vue'
-import ProfileView from '../views/ProfileView.vue'
 import { getAccessToken, setAccessToken } from '../services/token'
 import { refresh } from '../services/api'
+
+// Lazy routes: varje vy blir en egen JS-fil som bara hämtas när sidan besöks.
+const LoginView = () => import('../views/LoginView.vue')
+const DashboardView = () => import('../views/DashboardView.vue')
+const InvoicesView = () => import('../views/InvoicesView.vue')
+const MoveFormView = () => import('../views/MoveFormView.vue')
+const ProfileView = () => import('../views/ProfileView.vue')
 
 const router = createRouter({
   history: createWebHistory(),
