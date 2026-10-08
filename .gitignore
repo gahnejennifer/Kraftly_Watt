@@ -5,3 +5,4 @@ dist
 # Hemligheter och lokal konfiguration – aldrig i repot
 .env
 .env.local
+.lighthouseci/

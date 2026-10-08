@@ -5,7 +5,8 @@
 Dashboarden: Chrome DevTools → Performance → Local metrics, produktionsbygget
 (`npm run build && npm run preview` mot lokala mock-API:t), enhetsläge iPhone 12 Pro,
 Fast 4G, CPU no throttling, cache av, median av tre omladdningar (`Cmd+R` direkt på
-dashboarden). JavaScript: gzip i `npm run build`.
+dashboarden). /login: Lighthouse CI (`lighthouserc.json`), tre körningar mot
+produktionsbygget, i pipelinen på varje PR. JavaScript: gzip i `npm run build`.
 
 ## Före (main)
 
@@ -16,6 +17,24 @@ dashboarden). JavaScript: gzip i `npm run build`.
 | LCP-element            | `img.hero` (hero.jpg, 96 kB, 2400 × 1200 px)         |
 | JS /login (gzip)       | 141,82 kB – en fil för alla sidor                    |
 | JS dashboarden (gzip)  | 141,82 kB – samma fil                                |
+
+## Budgeten
+
+Vaktas av jobbet **Prestandabudget (Lighthouse)** i CI, som är required check på main.
+`error` = PR:en blir röd, `warn` = varning.
+
+| Mått                | Budget             | Var         | Varför just den                                                                                                                                    |
+| ------------------- | ------------------ | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| LCP                 | ≤ 2,5 s            | /login i CI | Googles gräns för "bra". /login ligger på 1,38 s (median av tre), så den fångar en stor regression utan att slå larm för brus.                     |
+| CLS                 | ≤ 0,1              | /login i CI | Googles gräns för "bra". /login ligger på 0,0008.                                                                                                  |
+| JavaScript          | ≤ 45 kB            | /login i CI | vi ligger på 43,0 kB (index 40,6 + LoginView 1,5 + config.js 0,6 + hjälpfil 0,4) – ca 5 % marginal, så en ny tung import i `index` blir röd direkt |
+| Total Blocking Time | ≤ 200 ms (varning) | /login i CI | varnar om huvudtråden blockeras, men stoppar inte                                                                                                  |
+| Performance-poäng   | ≥ 0,9 (varning)    | /login i CI | sammanfattande poäng, för brusig för att stoppa en PR                                                                                              |
+
+Budgeten mäter bara /login, eftersom dashboarden kräver inloggning. Dashboarden mäts
+manuellt (se Före och Optimeringarna). Lighthouse simulerar en långsammare mobil än
+våra manuella DevTools-mätningar, så /login-siffrorna i CI går inte att jämföra rakt av
+med dashboardens.
 
 ## Optimeringarna
 
@@ -101,6 +120,24 @@ en enda funktion, `debounce`. Vi ersatte den med en egen `debounce` i
 | DashboardView-chunk (gzip)   | 78.92 kB  | 51.72 kB |
 | JS dashboarden totalt (gzip) | 119.43 kB | 92.22 kB |
 | JS /login (gzip)             | 41.42 kB  | 41.41 kB |
+
+### Spår 3 • Budgeten och servern
+
+### 3.1 Prestandabudget i CI
+
+Budgeten var bara siffror i ett dokument – inget hindrade en PR från att göra /login
+tyngre igen. Nu kör jobbet `lighthouse` Lighthouse CI tre gånger mot produktionsbygget
+(artefakten `dist` från `build`) på varje PR, och `publish` har `needs: [quality, e2e,
+lighthouse]`: ingen image utan godkänd budget. PR: #…
+
+|                                    | Före      | Efter                                                   |
+| ---------------------------------- | --------- | ------------------------------------------------------- |
+| Vad stoppar en tyngre /login?      | ingenting | jobbet blir rött över 45 kB JS, 2,5 s LCP eller 0,1 CLS |
+| JS /login (Lighthouse, över nätet) | –         | 43,0 kB (tak 45 kB)                                     |
+
+**Lärdom:** första lokala körningen gav 71 kB och röd budget. Rapporten visade fel
+filnamn: en gammal `npm run preview` från ett annat repo låg kvar på port 4173, så
+Lighthouse mätte fel app. Vi kontrollerar nu vilka filer som mättes, inte bara siffran.
 
 ### Hur optimeringarna påverkar varandra
 
