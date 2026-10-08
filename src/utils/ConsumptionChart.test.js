@@ -3,30 +3,28 @@ import { mount } from '@vue/test-utils'
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import ConsumptionChart from '../components/ConsumptionChart.vue'
 
-// 1. Skapa en mock-funktion för destroy så vi kan kontrollera om den anropas
-const mockDestroy = vi.fn()
-
-// 2. Mocka hela chart.js/auto
-/* vi.mock('chart.js/auto', () => {
-  return {
-    default: vi.fn().mockImplementation(() => {
-      return { destroy: mockDestroy }
-    })
-  }
-}) */
-
-// 2.1 Uppdaterad mock som fungerar med "new" (Constructor)
-vi.mock('chart.js/auto', () => {
+// vi.hoisted körs före alla importer, så mocken och mockDestroy finns
+// garanterat när vi.mock-fabriken och komponenten laddas.
+const { mockDestroy, MockChart } = vi.hoisted(() => {
+  const mockDestroy = vi.fn()
   const MockChart = vi.fn(function () {
     return { destroy: mockDestroy }
   })
-
-  return {
-    default: MockChart,
-  }
+  MockChart.register = vi.fn()
+  return { mockDestroy, MockChart }
 })
 
-import Chart from 'chart.js/auto'
+// Mocka chart.js (namngivna importer, se ConsumptionChart.vue)
+vi.mock('chart.js', () => ({
+  Chart: MockChart,
+  BarController: {},
+  BarElement: {},
+  CategoryScale: {},
+  LinearScale: {},
+  Tooltip: {},
+}))
+
+const Chart = MockChart
 
 describe('ConsumptionChart.vue', () => {
   beforeEach(() => {
