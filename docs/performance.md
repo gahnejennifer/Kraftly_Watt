@@ -128,7 +128,7 @@ en enda funktion, `debounce`. Vi ersatte den med en egen `debounce` i
 Budgeten var bara siffror i ett dokument – inget hindrade en PR från att göra /login
 tyngre igen. Nu kör jobbet `lighthouse` Lighthouse CI tre gånger mot produktionsbygget
 (artefakten `dist` från `build`) på varje PR, och `publish` har `needs: [quality, e2e,
-lighthouse]`: ingen image utan godkänd budget. PR: #…
+lighthouse]`: ingen image utan godkänd budget. PR: 85
 
 |                                    | Före      | Efter                                                   |
 | ---------------------------------- | --------- | ------------------------------------------------------- |
@@ -138,6 +138,26 @@ lighthouse]`: ingen image utan godkänd budget. PR: #…
 **Lärdom:** första lokala körningen gav 71 kB och röd budget. Rapporten visade fel
 filnamn: en gammal `npm run preview` från ett annat repo låg kvar på port 4173, så
 Lighthouse mätte fel app. Vi kontrollerar nu vilka filer som mättes, inte bara siffran.
+
+### 3.2 Komprimering
+
+Vi kollade om staging skickar JavaScript komprimerat innan vi rörde nginx. Det gör den:
+Render komprimerar på plattformen (Brotli när browsern ber om det, annars gzip), så vi
+lade inte till `gzip on` i `nginx.conf.template`. Räknas inte som en av våra
+optimeringar – det var redan på plats.
+
+| `assets/index-DNbX3Ezn.js` på staging | Byte över nätet         |
+| ------------------------------------- | ----------------------- |
+| Utan `Accept-Encoding`                | 101 842                 |
+| `Accept-Encoding: gzip`               | 40 034 (ca 61 % mindre) |
+| `Accept-Encoding: gzip, br`           | `content-encoding: br`  |
+
+Mätt med:
+`curl -s -o /dev/null -w "%{size_download}\n" -H 'Accept-Encoding: gzip' https://kraftly-watt-main.onrender.com/assets/index-DNbX3Ezn.js`
+
+**Om vi byter plattform:** vår egen nginx-container komprimerar inte. Lokalt med
+`docker compose` går JS-filerna okomprimerade. Byter vi bort Render behöver `gzip on`
+läggas till i `nginx.conf.template`.
 
 ### Hur optimeringarna påverkar varandra
 
