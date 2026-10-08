@@ -82,13 +82,25 @@ innehåller Chart.js och lodash; det tas i nästa optimeringar.
 `ConsumptionChart.vue` importerade `chart.js/auto`, som registrerar alla diagramtyper,
 skalor och plugins. Vi ritar bara ett stapeldiagram och importerar nu `BarController`,
 `BarElement`, `CategoryScale`, `LinearScale` och `Tooltip`. Testernas mock är anpassad
-till den nya importen (`vi.mock('chart.js', …)`). PR: <länk>
+till den nya importen (`vi.mock('chart.js', …)`).
 
 |                              | Före      | Efter                 |
 | ---------------------------- | --------- | --------------------- |
 | DashboardView-chunk (gzip)   | 100,13 kB | 78,92 kB              |
 | JS dashboarden totalt (gzip) | 140,64 kB | 119,43 kB             |
 | JS /login (gzip)             | 41,42 kB  | 41,42 kB (oförändrad) |
+
+### 2.3 Lodash: bort med hela paketet
+
+`DashboardView.vue` importerade hela lodash (`import _ from 'lodash'`) för att använda
+en enda funktion, `debounce`. Vi ersatte den med en egen `debounce` i
+`src/utils/debounce.js` (6 rader) och avinstallerade `lodash`. PR: 83
+
+|                              | Före      | Efter    |
+| ---------------------------- | --------- | -------- |
+| DashboardView-chunk (gzip)   | 78.92 kB  | 51.72 kB |
+| JS dashboarden totalt (gzip) | 119.43 kB | 92.22 kB |
+| JS /login (gzip)             | 41.42 kB  | 41.41 kB |
 
 ### Hur optimeringarna påverkar varandra
 
