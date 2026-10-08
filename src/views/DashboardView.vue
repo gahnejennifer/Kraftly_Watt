@@ -30,12 +30,14 @@
 
     <div class="card">
       <h2>Din elförbrukning – senaste 12 månaderna</h2>
-      <p v-if="consumptionStore.loading">Laddar…</p>
-      <ConsumptionChart
-        v-else-if="consumptionStore.data"
-        :months="consumptionStore.data.months"
-        :values="consumptionStore.data.values"
-      />
+      <div class="chart-box">
+        <p v-if="consumptionStore.loading">Laddar…</p>
+        <ConsumptionChart
+          v-else-if="consumptionStore.data"
+          :months="consumptionStore.data.months"
+          :values="consumptionStore.data.values"
+        />
+      </div>
       <p class="hint">Källa: din elmätare. Uppdateras varje dygn.</p>
     </div>
 
@@ -97,6 +99,9 @@ const showTips = () => {
   height: auto;
   border-radius: 10px;
   margin-bottom: 18px;
+}
+.chart-box {
+  aspect-ratio: 2 / 1;
 }
 .stats {
   display: grid;
