@@ -17,7 +17,6 @@ dashboarden). JavaScript: gzip i `npm run build`.
 | JS /login (gzip)       | 141,82 kB – en fil för alla sidor                    |
 | JS dashboarden (gzip)  | 141,82 kB – samma fil                                |
 
-
 ## Optimeringarna
 
 ### Spår 1 • Bilden och det som hoppar
@@ -38,7 +37,6 @@ skalade ner till 1200 px (räcker för 2× skärmar), lade till `width`/`height`
 | LCP dashboard (median) | 1,04 s (1,07 / 1,03 / 1,04) | 0,94 s (0,98 / 0,93 / 0,94) |
 | CLS dashboard (median) | 0,00                        | 0,00                        |
 
-
 ### Spår 2 • JavaScript
 
 ### 2.1 Lazy routes
@@ -56,4 +54,3 @@ besöks. Routern hade inte lazy routes sedan tidigare.
 
 Dashboarden är i stort sett oförändrad eftersom `DashboardView` (100,13 kB gzip)
 innehåller Chart.js och lodash; det tas i nästa optimeringar.
-
