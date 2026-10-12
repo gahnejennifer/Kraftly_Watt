@@ -46,7 +46,7 @@ docker compose up --build från ett rent klon startar frontend (localhost:8080) 
 
 # M4
 
-[x] Nyckeln ut ur koden: ingen API-nyckel i src/ och inga hemligheter i VITE_-variabler. Appen anropar /api relativt, och nginx lägger på X-Api-Key från miljön (nginx.conf.template)
+[x] Nyckeln ut ur koden: ingen API-nyckel i src/ och inga hemligheter i VITE\_-variabler. Appen anropar /api relativt, och nginx lägger på X-Api-Key från miljön (nginx.conf.template)
 [x] Den gamla nyckeln är död – och ni har bevisat det: curl mot test-API:t med nyckeln från api.js ger 401, och utskriften står i docs/deploy.md. Teamets nya nyckel finns bara i Render
 [x] Lokalt fungerar som förut: .env.example i repot, .env i .gitignore och .dockerignore. Från en ren klon: cp .env.example .env + docker compose up --build → man kan logga in
 [x] Bygg en gång: pipelinen bygger imagen en gång per commit och pushar den till GHCR taggad med commitens sha – bara från main, aldrig från en PR
@@ -136,7 +136,7 @@ etag: W/"6ab5159c-29"
 [x] Skyddade routes + skyddat API: en route guard skickar utloggade till /login, och ni har visat (curl eller ett test) att /api/v2/invoices svarar 401 utan token – guarden är UX, API:t är skyddet
 [x] Ingen kund ser en annans data: fakturor/förbrukning väljs ur token. Om ni bygger en variant med ?customerNo= eller liknande: visa att den ignoreras (A01/IDOR)
 [x] OWASP-genomgång i docs/security.md: en rad per relevant kategori (minst A01, A02, A05, A07) med vad ni hittade och vad ni gjorde. Använd mallen (Canvas-sidan OWASP-checklista)
-[x] CORS låst: API-anropen går genom er egen proxy (samma origin). Om något behöver riktig CORS: en uttrycklig lista över origins, aldrig * med cookies. Skriv motiveringen i docs/security.md
+[x] CORS låst: API-anropen går genom er egen proxy (samma origin). Om något behöver riktig CORS: en uttrycklig lista över origins, aldrig \* med cookies. Skriv motiveringen i docs/security.md
 [x] Content Security Policy + säkerhetsheaders: CSP (minst default-src 'self'; script-src 'self') plus X-Content-Type-Options, X-Frame-Options/frame-ancestors satt i nginx. curl -I på er staging som visar dem, klistrat i docs/security.md
 [x] Ett beslutsdokument docs/decisions/tokenlagring.md: var access token lagras, alternativen (localStorage / cookie / minne), och varför ni valde som ni valde
 [x] Testerna gröna (inklusive minst ett nytt test på auth-flödet eller att ett skyddat anrop kräver token) · logg i docs/log.md
@@ -182,8 +182,7 @@ etag: W/"6ab5159c-29"
 - Mocken flyttad från `chart.js/auto` till `chart.js` i #81.
 - `npm run test:run`: 24 tester gröna. `npm run test:run 2>&1 | grep -i getcontext` ger ingen träff.
 
-[ ] Ett beslutsdokument docs/decisions/rendering.md: SPA, SSR (Nuxt) eller SSG för portalen – jämförelse, beslut, och när beslutet ska omprövas
-→ docs/decisions/rendering.md (PR #…)
+[x] Ett beslutsdokument docs/decisions/rendering.md: SPA, SSR (Nuxt) eller SSG för portalen – jämförelse, beslut, och när beslutet ska omprövas
 
 [x] Valfritt: gzip/brotli verifierat med curl mot staging
 
