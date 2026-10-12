@@ -75,9 +75,6 @@ LCP oförändrat, som väntat: ändringen rör inte bilden. Hoppet syntes knappt
 mobil eftersom det mesta som flyttades låg under skärmkanten, men på en större skärm
 eller långsammare API flyttas hela resten av sidan.
 
-**Känt:** lådans proportioner matchar inte Chart.js exakt, så det blir lite tom yta
-under diagrammet. Justeras när Chart.js-ändringen i spår 2 är klar.
-
 ### Spår 2 • JavaScript
 
 ### 2.1 Lazy routes
@@ -85,7 +82,7 @@ under diagrammet. Justeras när Chart.js-ändringen i spår 2 är klar.
 Alla vyer importerades statiskt i `src/router/index.js`, så `/login` hämtade en enda
 fil på 141,82 kB gzip, inklusive dashboardens diagramkod. Vi bytte till
 `() => import(...)` så att varje vy blir en egen fil som bara hämtas när sidan
-besöks. Routern hade inte lazy routes sedan tidigare. PR: 80
+besöks. Routern hade inte lazy routes sedan tidigare. PR: #80
 
 |                         | Före      | Efter    |
 | ----------------------- | --------- | -------- |
@@ -101,7 +98,7 @@ innehåller Chart.js och lodash; det tas i nästa optimeringar.
 `ConsumptionChart.vue` importerade `chart.js/auto`, som registrerar alla diagramtyper,
 skalor och plugins. Vi ritar bara ett stapeldiagram och importerar nu `BarController`,
 `BarElement`, `CategoryScale`, `LinearScale` och `Tooltip`. Testernas mock är anpassad
-till den nya importen (`vi.mock('chart.js', …)`). PR: 81
+till den nya importen (`vi.mock('chart.js', …)`). PR: #81
 
 |                              | Före      | Efter                 |
 | ---------------------------- | --------- | --------------------- |
@@ -113,13 +110,13 @@ till den nya importen (`vi.mock('chart.js', …)`). PR: 81
 
 `DashboardView.vue` importerade hela lodash (`import _ from 'lodash'`) för att använda
 en enda funktion, `debounce`. Vi ersatte den med en egen `debounce` i
-`src/utils/debounce.js` (6 rader) och avinstallerade `lodash`. PR: 83
+`src/utils/debounce.js` (6 rader) och avinstallerade `lodash`. PR: #83
 
 |                              | Före      | Efter    |
 | ---------------------------- | --------- | -------- |
-| DashboardView-chunk (gzip)   | 78.92 kB  | 51.72 kB |
-| JS dashboarden totalt (gzip) | 119.43 kB | 92.22 kB |
-| JS /login (gzip)             | 41.42 kB  | 41.41 kB |
+| DashboardView-chunk (gzip)   | 78,92 kB  | 51,72 kB |
+| JS dashboarden totalt (gzip) | 119,43 kB | 92,22 kB |
+| JS /login (gzip)             | 41,42 kB  | 41,41 kB |
 
 ### Spår 3 • Budgeten och servern
 
@@ -128,7 +125,7 @@ en enda funktion, `debounce`. Vi ersatte den med en egen `debounce` i
 Budgeten var bara siffror i ett dokument – inget hindrade en PR från att göra /login
 tyngre igen. Nu kör jobbet `lighthouse` Lighthouse CI tre gånger mot produktionsbygget
 (artefakten `dist` från `build`) på varje PR, och `publish` har `needs: [quality, e2e,
-lighthouse]`: ingen image utan godkänd budget. PR: 85
+lighthouse]`: ingen image utan godkänd budget. PR: #85
 
 |                                    | Före      | Efter                                                   |
 | ---------------------------------- | --------- | ------------------------------------------------------- |
@@ -144,7 +141,7 @@ Lighthouse mätte fel app. Vi kontrollerar nu vilka filer som mättes, inte bara
 Vi kollade om staging skickar JavaScript komprimerat innan vi rörde nginx. Det gör den:
 Render komprimerar på plattformen (Brotli när browsern ber om det, annars gzip), så vi
 lade inte till `gzip on` i `nginx.conf.template`. Räknas inte som en av våra
-optimeringar – det var redan på plats.
+optimeringar – det var redan på plats. PR: #87
 
 | `assets/index-DNbX3Ezn.js` på staging | Byte över nätet         |
 | ------------------------------------- | ----------------------- |
@@ -166,6 +163,23 @@ routes (2.1). Bilden ligger i `DashboardView.vue`, som nu är en egen fil: brows
 hittar bilden först när både `index-*.js` och `DashboardView-*.js` har hämtats. Det är
 en medveten avvägning – mycket mindre JavaScript på /login, mot något senare LCP på
 dashboarden. LCP ligger fortfarande långt under budgeten på 2,5 s.
+
+## Efter (main, alla optimeringar)
+
+Mätt på main efter #87, samma metod som Före.
+
+| Mått                   | Före                            | Efter                       |
+| ---------------------- | ------------------------------- | --------------------------- |
+| LCP dashboard (median) | 1,04 s (1,07 / 1,03 / 1,04)     | 1,07 s (1,08 / 1,07 / 1,06) |
+| CLS dashboard (median) | 0,00 – 1 shift: `p.hint` 0,0008 | 0 – inga shifts             |
+| JS /login (gzip)       | 141,82 kB                       | 41,41 kB                    |
+| JS dashboarden (gzip)  | 141,82 kB                       | 92,22 kB                    |
+
+Dashboarden är inom gränserna (LCP under 2,5 s, CLS under 0,1). LCP är i stort
+sett oförändrad mot Före: bildvinsten (1.1) äts upp av att bilden nu hittas först när
+`DashboardView-*.js` har hämtats (se Hur optimeringarna påverkar varandra). Vinsten
+ligger i JavaScript – /login hämtar 71 % mindre och dashboarden 35 % mindre – och i
+att sidan inte längre hoppar.
 
 ## Flaskhalsen vi inte äger
 

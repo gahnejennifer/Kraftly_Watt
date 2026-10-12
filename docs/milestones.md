@@ -141,3 +141,50 @@ etag: W/"6ab5159c-29"
 [x] Ett beslutsdokument docs/decisions/tokenlagring.md: var access token lagras, alternativen (localStorage / cookie / minne), och varför ni valde som ni valde
 [x] Testerna gröna (inklusive minst ett nytt test på auth-flödet eller att ett skyddat anrop kräver token) · logg i docs/log.md
 [] Valfritt (räknas inte i DoD): byt hela egen-inloggningen mot ett OIDC-login mot en leverantör (Auth0/Entra/Keycloak) och beskriv flödet i docs/security.md – ett starkt VG-samtal · en Sunset-hantering i klienten som varnar när v1 används · rate limiting-test mot login.
+
+# M7
+
+[x] Mätmetoden står skriven: verktyg och inställningar i docs/performance.md (produktionsbygget, enhetsläge, nätverksstrypning, cache av, median av flera körningar) – samma för före och efter
+
+- docs/performance.md, avsnittet "Så mäter vi": `npm run build && npm run preview`, iPhone 12 Pro, Fast 4G, cache av, median av tre.
+
+[x] Minst tre optimeringar med före/efter-mätning i docs/performance.md, varav minst en som förbättrar LCP eller CLS på dashboarden och minst en som minskar mängden JavaScript. Varje optimering har en egen PR, länkad i dokumentet
+
+**LCP/CLS:**
+
+- #79 Hero-bilden som WebP: bild 96 kB → 5 kB, LCP 1,04 s → 0,94 s
+- #82 Reserverad plats för diagrammet: CLS 1 shift (`p.hint` 0,0008) → 0, inga shifts
+
+**JavaScript:**
+
+- #80 Lazy routes: JS /login 141,82 kB → 41,42 kB
+- #81 Chart.js utan auto: DashboardView-chunk 100,13 kB → 78,92 kB
+- #83 Lodash bort: DashboardView-chunk 78,92 kB → 51,72 kB
+
+[x] Dashboarden inom gränserna: LCP under 2,5 s och CLS under 0,1 (lokalt produktionsbygge, iPhone 12 Pro, Fast 4G, cache av) – siffrorna i dokumentet
+
+- Main efter alla optimeringar: LCP 1,07 s (1,08 / 1,07 / 1,06), CLS 0 (median av tre). docs/performance.md, "Efter (main, alla optimeringar)".
+
+[x] Prestandabudget i CI: lighthouserc.json med minst LCP, CLS och JavaScript-storlek som "error", och jobbet Prestandabudget (Lighthouse) körs på varje PR. Länk till en grön körning i docs/milestones.md
+
+- lighthouserc.json: `largest-contentful-paint` ≤ 2500, `cumulative-layout-shift` ≤ 0.1, `resource-summary:script:size` ≤ 45000, alla "error". Infört i #85.
+- Grön körning: [<LÄNK>](https://github.com/gahnejennifer/Kraftly_Watt/actions/runs/37786645558/job/113343206057)
+
+[x] Budgeten stoppar: jobbet är en required status check på main, och publish väntar på det (needs). JavaScript-taket ligger strax över er faktiska siffra, motiverat i dokumentet
+
+- Required check i rulesetet för main: Prestandabudget (Lighthouse).
+- ci.yml: `publish: needs: [quality, e2e, lighthouse]`
+- Tak 45 kB mot uppmätt 43,0 kB (ca 5 % marginal), motiverat i docs/performance.md, "Budgeten".
+- Röd körning med taket sänkt till 30 000 på en test-PR (stängd, ej mergad): [<LÄNK>](https://github.com/gahnejennifer/Kraftly_Watt/actions/runs/37785342926/job/113338707393?pr=86)
+
+[x] Testerna gröna – och om ni bytt import av ett bibliotek som mockas i testerna, är mocken flyttad med (inga getContext-fel i testloggen)
+
+- Mocken flyttad från `chart.js/auto` till `chart.js` i #81.
+- `npm run test:run`: 24 tester gröna. `npm run test:run 2>&1 | grep -i getcontext` ger ingen träff.
+
+[ ] Ett beslutsdokument docs/decisions/rendering.md: SPA, SSR (Nuxt) eller SSG för portalen – jämförelse, beslut, och när beslutet ska omprövas
+→ docs/decisions/rendering.md (PR #…)
+
+[x] Valfritt: gzip/brotli verifierat med curl mot staging
+
+- index-DNbX3Ezn.js: 101 842 byte → 40 034 byte med gzip, `content-encoding: br`. docs/performance.md, 3.2 (#87).
