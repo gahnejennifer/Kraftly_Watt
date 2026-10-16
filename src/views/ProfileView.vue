@@ -6,9 +6,12 @@
         <span class="field-label">Kundnummer</span>
         <span>{{ store.user.customerNo }}</span>
       </div>
-      <input v-model="name" type="text" />
-      <input v-model="email" type="text" />
-      <input v-model="address" type="text" />
+      <label for="name">Namn</label>
+      <input id="name" v-model="name" type="text" />
+      <label for="email">Mejladress</label>
+      <input id="email" v-model="email" type="text" />
+      <label for="address">Postadress</label>
+      <input id="address" v-model="address" type="text" />
       <AppButton color="#12b76a" @click="save">Spara ändringar</AppButton>
       <button class="button-secondary" style="margin-left: 10px" @click="reset">Ångra</button>
     </div>
