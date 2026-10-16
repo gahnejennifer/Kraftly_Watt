@@ -18,13 +18,17 @@ och en genomgång med tangentbordet. Storybook och axe körs lokalt (i pipelinen
 | ------------------------------------------------------------------ | ------------------------------ | --------------------------------------- | -------------------------------------------- |
 | `<html lang="en">` – sidan är på svenska                           | index.html                     | kodläsning – **inte** axe               | #94                                          |
 | Sidtiteln är "Vite App"                                            | index.html                     | kodläsning                              | #94                                          |
-| `<th>` saknar `scope`                                              | InvoicesView (fakturatabellen) | kodläsning – **inte** axe               |                                              |
+| `<th>` saknar `scope`                                              | InvoicesView (fakturatabellen) | kodläsning – **inte** axe               | `scope="col"` på varje `<th>` + test (#…)    |
 | `*:focus { outline: none }` – fokus syns inte                      | styles.css                     | tangentbordet – **inte** axe            | `:focus-visible`, vit ring i toppmenyn (#94) |
 | Låg kontrast StatusChip Betald (`#12b76a` på `#ecfdf3`): 2,48:1    | StatusChip                     | Accessibility-fliken (`color-contrast`) | `#067647` → 5,39:1, Violations 1 → 0 (#95)   |
 | Låg kontrast StatusChip Obetald (`#e35d6a` på `#fff1f0`): 3,16:1   | StatusChip                     | Accessibility-fliken (`color-contrast`) | `#b42318` → 5,97:1, Violations 1 → 0 (#95)   |
 | Låg kontrast `.hint` (`#b8c0cf` på vitt): 1,83:1                   | styles.css (inloggningen)      | kodläsning, beräknat                    | `#5c6679` → 5,78:1 (#95)                     |
 | Låg kontrast etiketter (`#7c8698` på vitt): 3,67:1                 | ProfileView, DashboardView     | kodläsning, beräknat                    | `#5c6679` → 5,78:1 (#95)                     |
 | Låg kontrast kvitto efter flyttanmälan (`#12b76a` på vitt): 2,62:1 | MoveFormView                   | kodläsning, beräknat                    | `#067647` → 5,69:1 (#95)                     |
+| Tom kolumnrubrik i fakturatabellen                                 | InvoicesView                   | axe (`empty-table-header`, minor)       | dold text "Åtgärd" (#…)                      |
+| Ladda ner säger inte vilken faktura                                | InvoicesView                   | kodläsning                              | dold text "faktura F-…" i knappen (#…)       |
+| `<tr>` direkt i `<table>`, utan `thead`/`tbody`                    | InvoicesView                   | Vite-varning vid testkörning            | `thead` + `tbody` (#…)                       |
+| Logotypen i toppmenyn saknar alt                                   | App.vue                        | kodläsning (grep `<img`)                | `alt="Kraftly"` (#…)                         |
 
 ## Tangentbordsgenomgång
 
