@@ -5,7 +5,7 @@
       class="hero"
       width="1200"
       height="600"
-      alt=""
+      alt="Abstract illustration över vindsnurror på en terräng av kullar"
       fetchpriority="high"
     />
     <h1 v-if="userStore.user">Hej {{ userStore.user.name.split(' ')[0] }}!</h1>

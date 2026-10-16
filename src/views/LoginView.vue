@@ -1,10 +1,12 @@
 <template>
   <div class="login-wrap">
     <div class="card login-card">
-      <img src="../assets/logo-dark.svg" class="login-logo" />
+      <img src="../assets/logo-dark.svg" class="login-logo" alt="Kraftly-logga" />
       <h1>Logga in på Mina sidor</h1>
-      <input v-model="email" type="text" placeholder="E-postadress" />
-      <input v-model="password" type="password" placeholder="Lösenord" />
+      <label for="email">E-postadress</label>
+      <input id="email" v-model="email" type="text" placeholder="E-postadress" />
+      <label for="password">Lösenord</label>
+      <input id="password" v-model="password" type="password" placeholder="Lösenord" />
       <button class="btn" style="width: 100%" :disabled="loading" @click="handleLogin">
         Logga in
       </button>

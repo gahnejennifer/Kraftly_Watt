@@ -3,11 +3,21 @@
     <h1>Flyttanmälan</h1>
     <div class="card" style="max-width: 560px">
       <p style="margin-bottom: 14px">Fyll i uppgifterna nedan så flyttar vi ditt elavtal.</p>
-      <input v-model="form.address" type="text" placeholder="Ny adress" />
-      <input v-model="form.zip" type="text" placeholder="Postnummer" />
-      <input v-model="form.city" type="text" placeholder="Ort" />
-      <input v-model="form.date" type="text" placeholder="Inflyttningsdatum (ÅÅÅÅ-MM-DD)" />
-      <select v-model="form.contract">
+      <label for="new-address">Ny adress</label>
+      <input id="new-address" v-model="form.address" type="text" placeholder="Ny adress" />
+      <label for="sip-code">Postnummer</label>
+      <input id="sip-code" v-model="form.zip" type="text" placeholder="Postnummer" />
+      <label for="town">Ort</label>
+      <input id="town" v-model="form.city" type="text" placeholder="Ort" />
+      <label for="moving-in-date">Inflyttningsdatum</label>
+      <input
+        id="moving-in-date"
+        v-model="form.date"
+        type="text"
+        placeholder="Inflyttningsdatum (ÅÅÅÅ-MM-DD)"
+      />
+      <label for="contract">Avtal</label>
+      <select id="contract" v-model="form.contract">
         <option disabled value="">Välj avtal</option>
         <option>Rörligt pris</option>
         <option>Fast pris 1 år</option>
