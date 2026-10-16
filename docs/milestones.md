@@ -192,7 +192,14 @@ etag: W/"6ab5159c-29"
 
 - [ ] Gemensamma komponenter extraherade: EN Button-komponent (KButton) ersätter alla tre varianter och div-knapparna. Inga BaseButton, AppButton, .btn eller .button-secondary kvar, och inget element med @click som inte är en knapp eller länk
 
-  _Bevis kommer i spår 1: grep-utskriften (tom) + inventeringen i PR:en._
+På main efter #98, 16/10:
+
+```
+  $ grep -rnE 'BaseButton|AppButton|button-secondary|class="btn' src
+  (ingen utskrift)
+```
+
+Alla `@click` i `src` sitter på en `KButton`. Inventeringen av vad som fanns före står i #93 (div- och span-knapparna) och #98 (BaseButton, AppButton, `.btn`, `.button-secondary`).
 
 - [ ] Labels, fokusstilar, kontrast och lang åtgärdade: varje fält har en kopplad label (inte bara placeholder), fokus syns vid Tab överallt (`:focus-visible`, ingen `outline: none` kvar), text klarar 4,5:1, `<html lang="sv">`. Även alt-texter och fakturatabellens scope. `<label for>` + id räcker – KField är inte ett krav i M8
 
@@ -213,10 +220,10 @@ etag: W/"6ab5159c-29"
   │   - Local:                http://localhost:6006/
 ```
 
-| Komponent  | Storyfil                               | Lägen           | Violations före               | Violations efter |
-| ---------- | -------------------------------------- | --------------- | ----------------------------- | ---------------- |
-| StatusChip | `src/components/StatusChip.stories.js` | Betald, Obetald | 1 per läge (`color-contrast`) | 0.               |
-| KButton    | –                                      | –               | –                             | – (spår 1)       |
+| Komponent  | Storyfil                               | Lägen                               | Violations före               | Violations efter |
+| ---------- | -------------------------------------- | ----------------------------------- | ----------------------------- | ---------------- |
+| StatusChip | `src/components/StatusChip.stories.js` | Betald, Obetald                     | 1 per läge (`color-contrast`) | 0 (#95)          |
+| KButton    | `src/components/KButton.stories.js`    | Primär, Sekundär, Text, Inaktiverad | – (ny komponent, #93)         | 0                |
 
 - [ ] axe-tester gröna lokalt: ett `*.a11y.test.js` för KButton och ett för inloggningen (axe + getByLabelText); `npm run test:a11y` och `npm run test:run` gröna. Klistra in sista raderna ur körningen
 

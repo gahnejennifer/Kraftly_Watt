@@ -102,3 +102,19 @@ Från idag är Ilona nästa tech-lead för kommande 3 veckor. Spår 1 och spår 
 ## Datum: 2026-10-02
 
 Samlades digitalt vid 9 och fyllde på milestones med DoD för M6, checkade av det vi gjort hitintills och la in bevisen från gårdagen. Vi fyllde tokenlagring.md med våra beslut och motiveringar.
+
+## Datum: 2026-10-16
+
+M8 – Komponentbibliotek. Jennifer och Natassja jobbade, Ilona (tech lead) och Truc var borta. Övning 3 publicerades först under förmiddagen, så vi började med att titta på klipp 3 (axe) och lägga upp arbetet utifrån uppgiften.
+
+Jennifer gjorde verktygen (Storybook + jest-axe, #90), spår 1 (KButton, #93 och #98) och spår 3 (fokus och lang #94, kontrast #95, tabell och alt #97). Natassja gjorde tangentbordsgenomgången före (#92) och spår 2 (labels och inloggningstestet, #96, #99, #100).
+
+**Svårt / lärdomar:**
+
+- Vår portal skiljer sig från övningens startkod: ingen `tests/setup.js`, ingen StatusChip-komponent, och fälten i flyttanmälan saknade labels.
+- `@pinia/testing` kräver Pinia 4 och vi har Pinia 2, så inloggningstestet körs utan den.
+- Testing Library städade inte mellan testerna (vi har inte `globals: true`). Det löstes med `cleanup()` i `tests/setup.js`.
+- ESLint granskade `storybook-static/` lokalt (29 000 fel). Mappen är nu ignorerad.
+- Tab nådde inga knappar på en av våra datorer, inte ens på en tom testsida, så det var datorn och inte koden.
+
+**Kvar till taggen:** tangentbordsgenomgången efter (Natassja), utdrag ur `test:a11y` och `test:run` på main, taggen och överlämningen till nästa tech lead.
