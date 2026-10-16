@@ -215,7 +215,7 @@ etag: W/"6ab5159c-29"
 
 | Komponent  | Storyfil                               | Lägen           | Violations före               | Violations efter |
 | ---------- | -------------------------------------- | --------------- | ----------------------------- | ---------------- |
-| StatusChip | `src/components/StatusChip.stories.js` | Betald, Obetald | 1 per läge (`color-contrast`) | – (spår 3)       |
+| StatusChip | `src/components/StatusChip.stories.js` | Betald, Obetald | 1 per läge (`color-contrast`) | 0.               |
 | KButton    | –                                      | –               | –                             | – (spår 1)       |
 
 - [ ] axe-tester gröna lokalt: ett `*.a11y.test.js` för KButton och ett för inloggningen (axe + getByLabelText); `npm run test:a11y` och `npm run test:run` gröna. Klistra in sista raderna ur körningen
