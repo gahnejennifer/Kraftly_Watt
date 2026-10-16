@@ -12,15 +12,15 @@
       <input id="profile-email" v-model="email" type="email" autocomplete="email" />
       <label for="profile-address">Adress</label>
       <input id="profile-address" v-model="address" type="text" autocomplete="street-address" />
-      <AppButton color="#12b76a" @click="save">Spara ändringar</AppButton>
-      <button class="button-secondary" style="margin-left: 10px" @click="reset">Ångra</button>
+      <KButton @click="save">Spara ändringar</KButton>
+      <KButton variant="secondary" style="margin-left: 10px" @click="reset">Ångra</KButton>
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import AppButton from '../components/AppButton.vue'
+import KButton from '../components/KButton.vue'
 import { useUserStore } from '../stores/user'
 
 const store = useUserStore()
@@ -45,6 +45,12 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+label {
+  display: block;
+  font-size: 13px;
+  color: #4a5468;
+  margin-bottom: 4px;
+}
 .field {
   display: flex;
   justify-content: space-between;
