@@ -20,9 +20,9 @@
             <StatusChip :invoice="invoice" />
           </td>
           <td>
-            <div v-if="invoice.downloadable" class="download" @click="downloadInvoice(invoice)">
-              Ladda ner
-            </div>
+            <KButton v-if="invoice.downloadable" variant="text" @click="downloadInvoice(invoice)"
+              >Ladda ner</KButton
+            >
           </td>
           <!-- Bara synas om fakturan finns som URL -->
         </tr>
@@ -35,6 +35,7 @@
 import { ref, onMounted } from 'vue'
 import { fetchInvoices } from '../services/api'
 import StatusChip from '../components/StatusChip.vue'
+import KButton from '../components/KButton.vue'
 
 const invoices = ref([])
 
@@ -48,11 +49,3 @@ const downloadInvoice = (invoice) => {
   alert('Nedladdning kommer snart')
 }
 </script>
-
-<style scoped>
-.download {
-  color: #2f54eb;
-  cursor: pointer;
-  font-size: 14px;
-}
-</style>

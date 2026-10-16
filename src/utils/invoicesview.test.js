@@ -32,7 +32,7 @@ describe('InvoicesView – nedladdningsknapp', () => {
     const f001Row = rows.find((tr) => tr.text().includes('F-001'))
     const f002Row = rows.find((tr) => tr.text().includes('F-002'))
 
-    expect(f001Row.find('.download').exists()).toBe(true)
-    expect(f002Row.find('.download').exists()).toBe(false)
+    expect(f001Row.find('button').exists()).toBe(true)
+    expect(f002Row.find('button').exists()).toBe(false)
   })
 })
