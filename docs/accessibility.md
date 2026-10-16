@@ -5,9 +5,10 @@ och en genomgång med tangentbordet. Storybook och axe körs lokalt (i pipelinen
 
 ## Komponentbiblioteket
 
-| Komponent | Ersätter | API |
-| --------- | -------- | --- |
-|           |          |     |
+| Komponent    | Ersätter                                                        | API                                                                                           |
+| ------------ | --------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
+| `KButton`    | BaseButton, AppButton, `.btn`, `.button-secondary`, div-knappar | `variant`: primary · secondary · text, `type` (standard `button`), `block`, texten är en slot |
+| `StatusChip` | `<span class="status-chip">` direkt i fakturavyn                | `invoice` (objekt med `status` och `due`)                                                     |
 
     npm run storybook    # komponenterna med stories, fliken Accessibility
     npm run test:a11y    # axe-testerna (filerna *.a11y.test.js)
@@ -16,19 +17,19 @@ och en genomgång med tangentbordet. Storybook och axe körs lokalt (i pipelinen
 
 | Brist                                                              | Var                            | Hittades med                            | Åtgärd (PR)                                  |
 | ------------------------------------------------------------------ | ------------------------------ | --------------------------------------- | -------------------------------------------- |
-| `<html lang="en">` – sidan är på svenska                           | index.html                     | kodläsning – **inte** axe               | #94                                          |
-| Sidtiteln är "Vite App"                                            | index.html                     | kodläsning                              | #94                                          |
-| `<th>` saknar `scope`                                              | InvoicesView (fakturatabellen) | kodläsning – **inte** axe               | `scope="col"` på varje `<th>` + test (#…)    |
+| `<html lang="en">` – sidan är på svenska                           | index.html                     | kodläsning – **inte** axe               | `lang="sv"` (#94)                            |
+| Sidtiteln är "Vite App"                                            | index.html                     | kodläsning                              | `Mina sidor – Kraftly` (#94)                 |
+| `<th>` saknar `scope`                                              | InvoicesView (fakturatabellen) | kodläsning – **inte** axe               | `scope="col"` på varje `<th>` + test (#97)   |
 | `*:focus { outline: none }` – fokus syns inte                      | styles.css                     | tangentbordet – **inte** axe            | `:focus-visible`, vit ring i toppmenyn (#94) |
 | Låg kontrast StatusChip Betald (`#12b76a` på `#ecfdf3`): 2,48:1    | StatusChip                     | Accessibility-fliken (`color-contrast`) | `#067647` → 5,39:1, Violations 1 → 0 (#95)   |
 | Låg kontrast StatusChip Obetald (`#e35d6a` på `#fff1f0`): 3,16:1   | StatusChip                     | Accessibility-fliken (`color-contrast`) | `#b42318` → 5,97:1, Violations 1 → 0 (#95)   |
 | Låg kontrast `.hint` (`#b8c0cf` på vitt): 1,83:1                   | styles.css (inloggningen)      | kodläsning, beräknat                    | `#5c6679` → 5,78:1 (#95)                     |
 | Låg kontrast etiketter (`#7c8698` på vitt): 3,67:1                 | ProfileView, DashboardView     | kodläsning, beräknat                    | `#5c6679` → 5,78:1 (#95)                     |
 | Låg kontrast kvitto efter flyttanmälan (`#12b76a` på vitt): 2,62:1 | MoveFormView                   | kodläsning, beräknat                    | `#067647` → 5,69:1 (#95)                     |
-| Tom kolumnrubrik i fakturatabellen                                 | InvoicesView                   | axe (`empty-table-header`, minor)       | dold text "Åtgärd" (#…)                      |
-| Ladda ner säger inte vilken faktura                                | InvoicesView                   | kodläsning                              | dold text "faktura F-…" i knappen (#…)       |
-| `<tr>` direkt i `<table>`, utan `thead`/`tbody`                    | InvoicesView                   | Vite-varning vid testkörning            | `thead` + `tbody` (#…)                       |
-| Logotypen i toppmenyn saknar alt                                   | App.vue                        | kodläsning (grep `<img`)                | `alt="Kraftly"` (#…)                         |
+| Tom kolumnrubrik i fakturatabellen                                 | InvoicesView                   | axe (`empty-table-header`, minor)       | dold text "Åtgärd" (#97)                     |
+| Ladda ner säger inte vilken faktura                                | InvoicesView                   | kodläsning                              | dold text "faktura F-…" i knappen (#97)      |
+| `<tr>` direkt i `<table>`, utan `thead`/`tbody`                    | InvoicesView                   | Vite-varning vid testkörning            | `thead` + `tbody` (#97)                      |
+| Logotypen i toppmenyn saknar alt                                   | App.vue                        | kodläsning (grep `<img`)                | `alt="Kraftly"` (#97)                        |
 
 ## Tangentbordsgenomgång
 
@@ -49,5 +50,6 @@ Bara tangentbordet: Tab, Shift+Tab, Enter, mellanslag.
 - **Fel språk.** `lang="en"` på en svensk sida gör att en skärmläsare läser upp svensk text med engelskt uttal. axe kollar bara att `lang` finns, inte att det stämmer med innehållet. Hittat genom att läsa index.html.
 - **Osynligt fokus.** `outline: none` i styles.css gör att man inte ser var man är när man tabbar. axe testar inte hur sidan ser ut, och i Vitest ritas ingenting. Hittat med tangentbordet.
 - **Saknad `scope`.** axe godkänner en tabell utan `scope` när den är så enkel som vår. Hittat genom att läsa InvoicesView.vue.
+- **Klickbara `<div>` och `<span>`.** Fler spartips, Ladda ner och Logga ut gick inte att nå med Tab, men axe godkände dem, eftersom en `<div @click>` inte ser fel ut i DOM:en. axe ser inte att den borde vara en knapp. Hittat med tangentbordet.
 
 ## Kända brister
