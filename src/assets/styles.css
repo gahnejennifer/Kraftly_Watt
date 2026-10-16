@@ -5,9 +5,13 @@
   padding: 0;
 }
 
-/* the focus ring looked cluttered in the demo, removed it */
-*:focus {
-  outline: none;
+/* Fokus syns vid Tab, inte vid musklick */
+:focus-visible {
+  outline: 3px solid #2f54eb;
+  outline-offset: 2px;
+}
+.topbar :focus-visible {
+  outline-color: #fff;
 }
 
 body {
@@ -72,7 +76,7 @@ select {
 }
 
 .hint {
-  color: #b8c0cf;
+  color: #5c6679;
   font-size: 12px;
 }
 
@@ -95,9 +99,9 @@ td {
 }
 .status-obetald {
   background: #fff1f0;
-  color: #e35d6a;
+  color: #b42318;
 }
 .status-betald {
   background: #ecfdf3;
-  color: #12b76a;
+  color: #067647;
 }
