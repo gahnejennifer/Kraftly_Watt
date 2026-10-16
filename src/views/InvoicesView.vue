@@ -17,15 +17,7 @@
           <td>{{ invoice.amount }} kr</td>
           <td>{{ invoice.due }}</td>
           <td>
-            <span
-              :class="[
-                'status-chip',
-                invoiceStatus(invoice, new Date()) === 'Betald'
-                  ? 'status-betald'
-                  : 'status-obetald',
-              ]"
-              >{{ invoice.status }}</span
-            >
+            <StatusChip :invoice="invoice" />
           </td>
           <td>
             <div v-if="invoice.downloadable" class="download" @click="downloadInvoice(invoice)">
@@ -42,7 +34,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { fetchInvoices } from '../services/api'
-import { invoiceStatus } from '../utils/invoice.js'
+import StatusChip from '../components/StatusChip.vue'
 
 const invoices = ref([])
 
