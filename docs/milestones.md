@@ -187,3 +187,51 @@ etag: W/"6ab5159c-29"
 [x] Valfritt: gzip/brotli verifierat med curl mot staging
 
 - index-DNbX3Ezn.js: 101 842 byte → 40 034 byte med gzip, `content-encoding: br`. docs/performance.md, 3.2 (#87).
+
+# M8
+
+- [ ] Gemensamma komponenter extraherade: EN Button-komponent (KButton) ersätter alla tre varianter och div-knapparna. Inga BaseButton, AppButton, .btn eller .button-secondary kvar, och inget element med @click som inte är en knapp eller länk
+
+  _Bevis kommer i spår 1: grep-utskriften (tom) + inventeringen i PR:en._
+
+- [ ] Labels, fokusstilar, kontrast och lang åtgärdade: varje fält har en kopplad label (inte bara placeholder), fokus syns vid Tab överallt (`:focus-visible`, ingen `outline: none` kvar), text klarar 4,5:1, `<html lang="sv">`. Även alt-texter och fakturatabellens scope. `<label for>` + id räcker – KField är inte ett krav i M8
+
+  _Bevis i `docs/accessibility.md`, Vad vi åtgärdade._
+
+- [ ] Storybook lokalt med stories för KButton och de gemensamma komponenter ni ändrar i M8: `npm run storybook` startar, `npm run build-storybook` lyckas, och Accessibility-fliken visar Violations 0 på varje story
+
+  På main (`935be68`) efter mergen av verktygs-PR:en, 16/10:
+
+```
+  $ npm run build-storybook
+  └  Storybook build completed successfully
+```
+
+```
+  $ npm run storybook
+  │   Storybook ready!
+  │   - Local:                http://localhost:6006/
+```
+
+| Komponent  | Storyfil                               | Lägen           | Violations före               | Violations efter |
+| ---------- | -------------------------------------- | --------------- | ----------------------------- | ---------------- |
+| StatusChip | `src/components/StatusChip.stories.js` | Betald, Obetald | 1 per läge (`color-contrast`) | – (spår 3)       |
+| KButton    | –                                      | –               | –                             | – (spår 1)       |
+
+- [ ] axe-tester gröna lokalt: ett `*.a11y.test.js` för KButton och ett för inloggningen (axe + getByLabelText); `npm run test:a11y` och `npm run test:run` gröna. Klistra in sista raderna ur körningen
+
+  På main (`935be68`) efter mergen av verktygs-PR:en, 16/10:
+
+```
+  $ npm run test:a11y
+   ✓ src/components/StatusChip.a11y.test.js (1 test) 71ms
+
+   Test Files  1 passed (1)
+        Tests  1 passed (1)
+```
+
+_Före taggen: nya utdrag ur `test:a11y` och `test:run` när KButton- och inloggningstestet finns._
+
+- [ ] Tangentbordsnavigering verifierad, dokumenterad i `docs/accessibility.md`: varje vy genomgången med bara tangentbordet, före och efter, med resultat per vy
+
+  _Bevis i `docs/accessibility.md`, Tangentbordsgenomgång._
