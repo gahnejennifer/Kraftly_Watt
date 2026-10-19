@@ -38,17 +38,20 @@ och en genomgång med tangentbordet. Storybook och axe körs lokalt (i pipelinen
 
 ## Tangentbordsgenomgång
 
-16 oktober 2026, Firefox, lokalt (npm run api + npm run dev), main före M8-ändringarna.
-Bara tangentbordet: Tab, Shift+Tab, Enter, mellanslag.
+Före: 16 oktober 2026, Firefox, lokalt (npm run api + npm run dev), main före M8-ändringarna.
 
-| Vy             | Vad vi testade                        | Före                                                                                                                                                                 | Efter |
-| -------------- | ------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----- |
-| Inloggning     | Tabba till fälten, logga in med Enter | Fälten nås med Tab. Fokus syns inte på knappen. Enter på logga-in-knappen loggar in/ger feedback på fel lösenord. Enter i skrivfälten skickar inte.                  |       |
-| Översikt       | Syns fokus? Nås Fler spartips?        | Inget fokus syns. Fyra osynliga tabbstopp (menyn). Fler spartips nås inte. Enter ledde till Fakturor/Flyttanmälan/Mina uppgifter utan att det syntes var fokus stod. |       |
-| Flyttanmälan   | Fyll i och skicka formuläret          | Fälten nås med Tab. Rullgardinen syns inte som fokuserad, pilarna byter val men alternativen visas inte. Knappen nås men syns inte. Enter i fälten skickar inte      |       |
-| Mina uppgifter | Ändra och spara                       | Knapparna nås osynligt och fungerar med Enter. Enter i fälten skickar inte                                                                                           |       |
-| Fakturor       | Nå Ladda ner                          | Fyra osynliga tabbstopp (menyn). Ladda ner nås inte .                                                                                                                |       |
-| Utloggning     | Nå Logga ut i menyn                   | Går inte att tabba till logga ut.                                                                                                                                    |       |
+Efter: 19 oktober 2026, Firefox, lokalt, main efter alla M8-PR:er.
+
+Bara tangentbordet: Tab, Shift+Tab, Enter, mellanslag och pilar.
+
+| Vy             | Vad vi testade                        | Före                                                                                                                                                                                                                  | Efter                                                                                                                                                                                                  |
+| -------------- | ------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Inloggning     | Tabba till fälten, logga in med Enter | ✅ Fälten nås med Tab. ✅ Enter på logga-in-knappen loggar in/ger feedback på fel lösenord. ❌ Fokus syns inte på knappen. ❌ Enter i skrivfälten skickar inte.                                                       | ✅ Det syns med markering att fälten nås med Tab. ✅ Enter på knappen Logga in skickar. ❌ Enter i skrivfälten skickar inte.                                                                           |
+| Översikt       | Syns fokus? Nås Fler spartips?        | ✅ Enter ledde till Fakturor/Flyttanmälan/Mina uppgifter. ✅ Mellanslag hoppar ner på sidan en bit i taget. ❌ Inget fokus syns. ❌ Fyra osynliga tabbstopp (menyn). ❌ Fler spartips nås inte. ❌ Logga ut nås inte. | ✅ Tab når alla knappar inklusive spartips. ✅ Det syns tydligt vad som är markerat. ✅ Enter skickar på alla knappar.                                                                                 |
+| Flyttanmälan   | Fyll i och skicka formuläret          | ✅ Fälten nås med Tab. ✅ Enter på knappar skickar. ❌ Rullgardinen syns inte som fokuserad, men alt + pil fungerar. ❌ Knappar nås men syns inte. ❌ Enter i fälten skickar inte.                                    | ✅ Rullgardinen syns nu som fokuserad. ✅ Knappar och fält syns att de nås med Tab. ✅ Enter på knappen Skicka flyttanmälan skickar. ✅ Enter på knappar skickar. ❌ Enter i skrivfälten skickar inte. |
+| Mina uppgifter | Ändra och spara                       | ✅ Knappar fungerar med Enter. ❌ Knapparna nås, men saknar fokus. ❌ Enter i fälten skickar inte.                                                                                                                    | ✅ Syns nu tydligt vilka knappar och fält man tabbar till. ✅ Enter på knappar skickar. ❌ Enter i fälten skickar inte.                                                                                |
+| Fakturor       | Nå Ladda ner                          | ❌ Fyra osynliga tabbstopp (menyn). ❌ Ladda ner och Logga ut nås inte.                                                                                                                                               | ✅ Nu nås Ladda ner och det är synligt var man tabbar. ✅ Enter fungerar för alla knappar.                                                                                                             |
+| Utloggning     | Nå Logga ut i menyn                   | ❌ Går inte att tabba till logga ut.                                                                                                                                                                                  | ✅ Går att tabba till logga ut nu, och skicka via enter.                                                                                                                                               |
 
 ## Vad axe inte hittar
 
@@ -63,7 +66,7 @@ Det vi har sett men inte lagat i M8, och det vi inte har testat.
 
 **Sett, inte lagat**
 
-- **Enter i textfälten skickar inte formulären.** Inloggningen och flyttanmälan saknar `<form>`, så man måste tabba till knappen. Hittat i tangentbordsgenomgången.
+- **Enter i textfälten skickar inte formulären.** Inloggningen och flyttanmälan och Mina uppgifter saknar `<form>`, så man måste tabba till knappen. Hittat i tangentbordsgenomgången.
 - **Fokus flyttas inte vid ruttbyte.** När routern byter sida står fokus kvar, och en skärmläsare säger ingenting om att sidan har bytts. Valfritt i M8 (`router.afterEach` + `tabindex="-1"` på `<h1>`).
 - **Felen i flyttanmälan visas med `alert()`** och är inte kopplade till fälten med `aria-describedby`. Det görs med KField i Boiler Room 3.
 - **Förbrukningsdiagrammet** (`<canvas>`) har inget textalternativ med siffrorna.
