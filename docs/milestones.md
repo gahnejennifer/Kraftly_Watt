@@ -246,6 +246,6 @@ Alla `@click` i `src` sitter på en `KButton`. Inventeringen av vad som fanns f�
         Tests  35 passed (35)
 ```
 
-- [ ] Tangentbordsnavigering verifierad, dokumenterad i `docs/accessibility.md`: varje vy genomgången med bara tangentbordet, före och efter, med resultat per vy
+- [x] Tangentbordsnavigering verifierad, dokumenterad i `docs/accessibility.md`: varje vy genomgången med bara tangentbordet, före och efter, med resultat per vy
 
   _Bevis i `docs/accessibility.md`, Tangentbordsgenomgång._
