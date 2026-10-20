@@ -118,3 +118,20 @@ Jennifer gjorde verktygen (Storybook + jest-axe, #90), spår 1 (KButton, #93 och
 - Tab nådde inga knappar på en av våra datorer, inte ens på en tom testsida, så det var datorn och inte koden.
 
 **Kvar till taggen:** tangentbordsgenomgången efter (Natassja), utdrag ur `test:a11y` och `test:run` på main, taggen och överlämningen till nästa tech lead.
+
+## Datum: 2026-10-20 • Överlämning techlead inför M9
+
+Överlämning från Ilona till nästa tech lead (Natassja) efter M8.
+
+M8 är klar: alla DoD-punkter är bockade i `docs/milestones.md`, Natassjas tangentbordsgenomgång efter är mergad (#102), och axe-testerna och Storybook-kontrollerna är gröna på main. Hero-bildens alt-text är kvar som känd brist i `docs/accessibility.md`. Vi beslutade att det duger för M8.
+
+Kvar: taggen M8 på main när pipelinen är grön. Jennifer kommer tagga åt Ilona (bortrest).
+
+Till M9 (Storybook och axe i pipelinen): det är inte gjort än. Nästa tech lead: Natassja.
+
+Öppna saker att titta på i M9:
+
+- Enter i textfälten skickar inte formulären (saknar `<form>`).
+- Fokus flyttas inte vid ruttbyte.
+- Felen i flyttanmälan visas med `alert()` och är inte kopplade till fälten.
+- Skärmläsare och zoom till 200 % är inte testade.
