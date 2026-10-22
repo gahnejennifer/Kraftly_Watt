@@ -47,4 +47,17 @@ Vi summerade `index.html` och allt under `assets/` i `dist/` (okomprimerat) och 
 
 ## Etikfall: Chatta med Kraftly
 
-(fylls i på workshopen 15:00)
+**Situationen.** Affärsutveckling vill lägga en chattruta, "Chatta med Kraftly", på översikten för att minska samtalen till kundtjänst veckan efter fakturan. För att kunna svara skickas kundens timförbrukning och fakturor med i varje fråga till en extern AI-leverantör, inte till Kraftlys egna servrar. Leverantören är vald men avtalet är inte klart, och vi vet inte i vilket land datan behandlas. Produktägaren frågar om vi kan bygga en första version i nästa sprint.
+
+**Vårt beslut.** Ja med villkor. Vi bygger inte förrän villkoren nedan är uppfyllda, och inte med timdata.
+
+**Varför.** Att förklara en faktura ligger nära ändamålet datan samlades in för (att fakturera enligt avtalet med kunden), men att skicka den till en extern leverantör är ett nytt sätt att behandla den, och det ska kunden få välja. Dataminimering: för att förstå en faktura räcker dygnssummor. Timdata är fortfarande personuppgifter, inte känsliga i GDPR:s mening, men de visar när någon sover, är hemma eller är bortrest, vilket kan utnyttjas till exempel vid inbrott. Kunden som skriver i rutan tror att hon pratar med Kraftly och att hennes data stannar hos Kraftly, inte att den skickas till ett annat företag, kanske i ett annat land.
+
+**Vad vi gör i stället / villkor.**
+
+- **Data:** bara dygnssummor för de två senaste fakturaperioderna och fakturornas belopp, aldrig timdata, namn eller adress.
+- **Leverantören:** ett signerat personuppgiftsbiträdesavtal som produktägaren har läst innan vi bygger. Datan behandlas inom EU/EES. Leverantören får inte spara frågor eller data efter att svaret skickats, och får inte träna modeller på dem.
+- **Loggning:** Kraftly sparar frågor och svar i högst 30 dagar, för felsökning och klagomål. Bara kundtjänst kommer åt dem. Kunden kan begära ut en kopia av sin chatt.
+- **Samtycke:** chattrutan frågar innan något skickas, med en tydlig förklaring av vilken data som skickas och vart. Rutan är inte förifylld. Säger kunden nej visas kundtjänsts nummer i stället, så att hon ändå kan få hjälp. Samtycket går att ta tillbaka.
+- **Fel svar:** Kraftly ansvarar för svaren, inte leverantören. Rutan visar tydligt att det är en AI som svarar och att den kan ha fel, och varje svar visar siffrorna det bygger på, så att kunden kan kontrollera mot fakturan. Kundtjänsts nummer finns alltid synligt.
+- **Vem bestämmer:** produktägaren beslutar om lansering först när avtalet är signerat och villkoren ovan är kontrollerade av teamet.
