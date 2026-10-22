@@ -254,7 +254,27 @@ Alla `@click` i `src` sitter på en `KButton`. Inventeringen av vad som fanns f�
 
 - [ ] Komponentbiblioteket i pipelinen: KField (label obligatorisk, useId(), aria-describedby för hjälptext och fel, aria-invalid) används i inloggning, profil och flyttanmälan, med story (Violations 0) och test · ett jobb Storybook i ci.yml (npm run build-storybook, artefakt), required check
 
-  _Inventering: BR3-planen (issue). Bevis fylls i efter Boiler Room 3._
+  _Inventering: BR3-planen (issue). KField-bevisen fylls i efter Boiler Room 3._
+
+  **Storybook i pipelinen** (#111, 22/10): jobbet `Storybook` i `ci.yml` kör `npm run build-storybook` och laddar upp artefakten `storybook`. Grön körning: [<länk till körningen>](https://github.com/gahnejennifer/Kraftly_Watt/actions/runs/39794501322/job/119878334177)
+
+```
+  $ npm run build-storybook
+  └  Storybook build completed successfully
+```
+
+Required status checks för main (Settings → Rules), 22/10:
+
+```
+  quality
+  build
+  e2e
+  Image → GHCR
+  Prestandabudget (Lighthouse)
+  Storybook
+```
+
+`AI-granskning (förslag)` står medvetet inte med (DoD 2).
 
 - [ ] Ett AI-steg i pipelinen, utvärderat på riktiga PR:ar: ai-review.yml + scripts/ai-review.mjs postar granskningspunkter som kommentar, som förslag – aldrig required check. Utvärdering på minst tre av teamets riktiga PR:ar: tabellen träff / miss / oavgjord, två exempel (en träff, en miss, med citat) och regeln – allt i `docs/ai-in-pipeline.md`
 
