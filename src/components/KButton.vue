@@ -1,5 +1,9 @@
 <template>
-  <button :type="type" :class="['k-button', `k-button--${variant}`, { 'k-button--block': block }]">
+  <button
+    :type="type"
+    :class="['k-button', `k-button--${variant}`, { 'k-button--block': block }]"
+    :aria-label="ariaLabel"
+  >
     <slot />
   </button>
 </template>
@@ -15,6 +19,7 @@ defineProps({
   // 'button' som standard – annars skickar varje knapp i ett formulär formuläret
   type: { type: String, default: 'button' },
   block: { type: Boolean, default: false },
+  ariaLabel: { type: String, default: undefined },
 })
 </script>
 
