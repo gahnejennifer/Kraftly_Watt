@@ -249,3 +249,24 @@ Alla `@click` i `src` sitter på en `KButton`. Inventeringen av vad som fanns f�
 - [x] Tangentbordsnavigering verifierad, dokumenterad i `docs/accessibility.md`: varje vy genomgången med bara tangentbordet, före och efter, med resultat per vy
 
   _Bevis i `docs/accessibility.md`, Tangentbordsgenomgång._
+
+# M9
+
+- [ ] Komponentbiblioteket i pipelinen: KField (label obligatorisk, useId(), aria-describedby för hjälptext och fel, aria-invalid) används i inloggning, profil och flyttanmälan, med story (Violations 0) och test · ett jobb Storybook i ci.yml (npm run build-storybook, artefakt), required check
+
+  _Inventering: BR3-planen (issue). Bevis fylls i efter Boiler Room 3._
+
+- [ ] Ett AI-steg i pipelinen, utvärderat på riktiga PR:ar: ai-review.yml + scripts/ai-review.mjs postar granskningspunkter som kommentar, som förslag – aldrig required check. Utvärdering på minst tre av teamets riktiga PR:ar: tabellen träff / miss / oavgjord, två exempel (en träff, en miss, med citat) och regeln – allt i `docs/ai-in-pipeline.md`
+
+  Workflowen kom in med #104. Första riktiga PR:en med AI-kommentar: #107 (25 s från push till kommentar). Jobbet `AI-granskning (förslag)` står inte bland required checks. Utvärderingen pågår t.o.m. 27/10 i `docs/ai-in-pipeline.md`.
+
+- [x] Hållbarhetssiffran kopplad till M7 + ett etikfall: `docs/sustainability.md` med tabellen Före M7 / Efter M7 i kB per besök → kg CO2e per månad med `scripts/co2.mjs`, tre meningar om metoden och vad som inte räknas · etikfallet "Chatta med Kraftly": situationen, beslut, varför, villkor
+
+  Uppmätt 22/10 (#105 co2-PR:en, #109 etikfallet):
+
+|                     | kB per besök | kg CO2e per månad (SE) | kg CO2e per månad (globalt) |
+| ------------------- | ------------ | ---------------------- | --------------------------- |
+| Före M7 (taggen M6) | 491          | 3,7                    | 9,1                         |
+| Efter M7 (main)     | 265          | 2,0                    | 4,9                         |
+
+_Fullständiga utskrifter, metod och etikfall i `docs/sustainability.md`._
