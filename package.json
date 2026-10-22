@@ -19,7 +19,7 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "test:a11y": "vitest run a11y",
-    "ai-review": "node scripts/ai-review.mjs"
+    "ai-review": "node scripts/ai-review.mjs",
     "co2": "node scripts/co2.mjs"
   },
   "lint-staged": {
