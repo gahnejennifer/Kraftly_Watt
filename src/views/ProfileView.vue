@@ -6,12 +6,9 @@
         <span class="field-label">Kundnummer</span>
         <span>{{ store.user.customerNo }}</span>
       </div>
-      <label for="profile-name">Namn</label>
-      <input id="profile-name" v-model="name" type="text" autocomplete="name" />
-      <label for="profile-email">E-postadress</label>
-      <input id="profile-email" v-model="email" type="email" autocomplete="email" />
-      <label for="profile-address">Adress</label>
-      <input id="profile-address" v-model="address" type="text" autocomplete="street-address" />
+      <KField v-model="name" label="Namn" type="text" autocomplete="name" />
+      <KField v-model="email" label="E-postadress" type="email" autocomplete="email" />
+      <KField v-model="address" label="Adress" type="text" autocomplete="street-address" />
       <KButton @click="save">Spara ändringar</KButton>
       <KButton variant="secondary" style="margin-left: 10px" @click="reset">Ångra</KButton>
     </div>
@@ -21,6 +18,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import KButton from '../components/KButton.vue'
+import KField from '../components/KField.vue'
 import { useUserStore } from '../stores/user'
 
 const store = useUserStore()
@@ -45,12 +43,6 @@ onMounted(async () => {
 </script>
 
 <style scoped>
-label {
-  display: block;
-  font-size: 13px;
-  color: #4a5468;
-  margin-bottom: 4px;
-}
 .field {
   display: flex;
   justify-content: space-between;
