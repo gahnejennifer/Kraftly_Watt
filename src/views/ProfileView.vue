@@ -6,11 +6,13 @@
         <span class="field-label">Kundnummer</span>
         <span>{{ store.user.customerNo }}</span>
       </div>
-      <KField v-model="name" label="Namn" type="text" autocomplete="name" />
-      <KField v-model="email" label="E-postadress" type="email" autocomplete="email" />
-      <KField v-model="address" label="Adress" type="text" autocomplete="street-address" />
-      <KButton @click="save">Spara ändringar</KButton>
-      <KButton variant="secondary" style="margin-left: 10px" @click="reset">Ångra</KButton>
+      <form @submit.prevent="save">
+        <KField v-model="name" label="Namn" type="text" autocomplete="name" />
+        <KField v-model="email" label="E-postadress" type="email" autocomplete="email" />
+        <KField v-model="address" label="Adress" type="text" autocomplete="street-address" />
+        <KButton type="submit">Spara ändringar</KButton>
+        <KButton variant="secondary" style="margin-left: 10px" @click="reset">Ångra</KButton>
+      </form>
     </div>
   </div>
 </template>

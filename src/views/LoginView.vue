@@ -3,9 +3,16 @@
     <div class="card login-card">
       <img src="../assets/logo-dark.svg" class="login-logo" alt="Kraftly" />
       <h1>Logga in på Mina sidor</h1>
-      <KField v-model="email" label="E-postadress" type="email" autocomplete="username" />
-      <KField v-model="password" label="Lösenord" type="password" autocomplete="current-password" />
-      <KButton block :disabled="loading" @click="handleLogin">Logga in</KButton>
+      <form @submit.prevent="handleLogin">
+        <KField v-model="email" label="E-postadress" type="email" autocomplete="username" />
+        <KField
+          v-model="password"
+          label="Lösenord"
+          type="password"
+          autocomplete="current-password"
+        />
+        <KButton block type="submit" :disabled="loading">Logga in</KButton>
+      </form>
       <p v-if="error" role="alert" class="hint" style="color: #c0392b; margin-top: 10px">
         {{ error }}
       </p>
