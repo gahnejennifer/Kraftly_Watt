@@ -185,4 +185,4 @@ Till M9 (Storybook och axe i pipelinen): det är inte gjort än. Nästa tech lea
   12 AI-granskningar på 6 PR:ar gav 5 träffar och 3 missar. Två av tre lyckade körningar på samma diff i #112 sa "Inget att anmärka på", den tredje hittade ett riktigt fel.
 
 - **Fastnat på:**
-  npm test:run failade, men när vi la in nya nyckeln så löste det problemet.
+  CI föll på `npm ci` i #115 eftersom `npm update` gjorde `package-lock.json` osynkad. Löst. Lighthouse-budgeten för JS på /login sprack med 40 byte (45 040 mot 45 000) i #116, och vi höjde den medvetet till 47 kB och skrev varför i `docs/performance.md`. AI-nyckeln gav 401 flera gånger. Steget blockerade inget, eftersom det inte är required.

@@ -264,10 +264,17 @@ Alla `@click` i `src` sitter på en `KButton`. Inventeringen av vad som fanns f�
 
   Avtal (`<select>`) står kvar, eftersom KField bara är för textfält.
 
-  Flyttanmälan, rött först (#115):
+Flyttanmälan, rött först (#115). Den röda körningen är testet mot `MoveFormView.vue` före #115:
 
 ```
-  <klistra in den röda raden från PR #115>
+  × kopplar felet till fältet – skärmläsaren hör det när fältet får fokus
+  Error: expect(element).toBeInvalid()
+  Tests  1 failed (1)
+```
+
+Efter #115:
+
+```
   ✓ kopplar felet till fältet – skärmläsaren hör det när fältet får fokus
   Tests  1 passed (1)
 ```
@@ -287,7 +294,7 @@ På main (`dd05c77`), 27/10:
   └  Storybook build completed successfully
 ```
 
-**Storybook i pipelinen** (#111, 22/10): jobbet `Storybook` i `ci.yml` kör `npm run build-storybook` och laddar upp artefakten `storybook`. Grön körning: [<Storybook-jobbet>](https://github.com/gahnejennifer/Kraftly_Watt/actions/runs/39794501322/job/119878334177)
+**Storybook i pipelinen** (#111, 22/10): jobbet `Storybook` i `ci.yml` kör `npm run build-storybook` och laddar upp artefakten `storybook`. Grön körning: [Storybook-jobbet](https://github.com/gahnejennifer/Kraftly_Watt/actions/runs/39794501322/job/119878334177)
 
 ```
   $ npm run build-storybook
@@ -311,7 +318,7 @@ Required status checks för main (Settings → Rules), 22/10:
 
   Workflowen kom in med #104. Första riktiga PR:en med AI-kommentar: #107 (25 s från push till kommentar). Jobbet `AI-granskning (förslag)` står inte bland required checks. Utvärderingen pågår t.o.m. 27/10 i `docs/ai-in-pipeline.md`.
 
-  Utvärderat på #107, #112, #113 (+ #114–#116 som visar vad som händer när nyckeln inte fungerar), 12 körningar.
+  Utvärderat på 6 PR:ar (#107, #112–#116), 12 körningar: 5 träffar, 3 missar, 2 falska negativa, 0 oavgjorda.
   Finns tabell, två exempel och Vår regel i `docs/ai-in-pipeline.md`.
 
 - [x] Hållbarhetssiffran kopplad till M7 + ett etikfall: `docs/sustainability.md` med tabellen Före M7 / Efter M7 i kB per besök → kg CO2e per månad med `scripts/co2.mjs`, tre meningar om metoden och vad som inte räknas · etikfallet "Chatta med Kraftly": situationen, beslut, varför, villkor
