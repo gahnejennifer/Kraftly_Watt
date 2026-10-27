@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { nextTick } from 'vue'
 import { getAccessToken, setAccessToken } from '../services/token'
 import { refresh } from '../services/api'
 
@@ -40,6 +41,19 @@ router.beforeEach(async (to) => {
   if (to.path !== '/login' && !getAccessToken()) {
     return '/login'
   }
+})
+
+// Flytta fokus till sidans rubrik vid sidbyte, så att skärmläsare läser upp den nya sidan
+router.afterEach((to, from) => {
+  if (!from.matched.length) return // första laddningen: låt fokus vara
+  if (to.path === from.path) return // bara hash/query ändrades: samma sida
+  nextTick(() => {
+    const h1 = document.querySelector('main h1')
+    if (h1) {
+      h1.setAttribute('tabindex', '-1')
+      h1.focus()
+    }
+  })
 })
 
 export default router

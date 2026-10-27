@@ -23,13 +23,13 @@ produktionsbygget, i pipelinen på varje PR. JavaScript: gzip i `npm run build`.
 Vaktas av jobbet **Prestandabudget (Lighthouse)** i CI, som är required check på main.
 `error` = PR:en blir röd, `warn` = varning.
 
-| Mått                | Budget             | Var         | Varför just den                                                                                                                                    |
-| ------------------- | ------------------ | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
-| LCP                 | ≤ 2,5 s            | /login i CI | Googles gräns för "bra". /login ligger på 1,38 s (median av tre), så den fångar en stor regression utan att slå larm för brus.                     |
-| CLS                 | ≤ 0,1              | /login i CI | Googles gräns för "bra". /login ligger på 0,0008.                                                                                                  |
-| JavaScript          | ≤ 45 kB            | /login i CI | vi ligger på 43,0 kB (index 40,6 + LoginView 1,5 + config.js 0,6 + hjälpfil 0,4) – ca 5 % marginal, så en ny tung import i `index` blir röd direkt |
-| Total Blocking Time | ≤ 200 ms (varning) | /login i CI | varnar om huvudtråden blockeras, men stoppar inte                                                                                                  |
-| Performance-poäng   | ≥ 0,9 (varning)    | /login i CI | sammanfattande poäng, för brusig för att stoppa en PR                                                                                              |
+| Mått                | Budget             | Var         | Varför just den                                                                                                                                                                  |
+| ------------------- | ------------------ | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| LCP                 | ≤ 2,5 s            | /login i CI | Googles gräns för "bra". /login ligger på 1,38 s (median av tre), så den fångar en stor regression utan att slå larm för brus.                                                   |
+| CLS                 | ≤ 0,1              | /login i CI | Googles gräns för "bra". /login ligger på 0,0008.                                                                                                                                |
+| JavaScript          | ≤ 47 kB            | /login i CI | Höjd från 45 kB 27/10: KField (#112–#114) och fokus vid sidbyte gav 45,0 kB på /login, så marginalen var slut. Medvetet beslut: tillgänglighet före 40 byte. Ny marginal ca 4 %. |
+| Total Blocking Time | ≤ 200 ms (varning) | /login i CI | varnar om huvudtråden blockeras, men stoppar inte                                                                                                                                |
+| Performance-poäng   | ≥ 0,9 (varning)    | /login i CI | sammanfattande poäng, för brusig för att stoppa en PR                                                                                                                            |
 
 Budgeten mäter bara /login, eftersom dashboarden kräver inloggning. Dashboarden mäts
 manuellt (se Före och Optimeringarna). Lighthouse simulerar en långsammare mobil än
