@@ -252,11 +252,42 @@ Alla `@click` i `src` sitter på en `KButton`. Inventeringen av vad som fanns f�
 
 # M9
 
-- [ ] Komponentbiblioteket i pipelinen: KField (label obligatorisk, useId(), aria-describedby för hjälptext och fel, aria-invalid) används i inloggning, profil och flyttanmälan, med story (Violations 0) och test · ett jobb Storybook i ci.yml (npm run build-storybook, artefakt), required check
+- [x] Komponentbiblioteket i pipelinen: KField (label obligatorisk, useId(), aria-describedby för hjälptext och fel, aria-invalid) används i inloggning, profil och flyttanmälan, med story (Violations 0) och test · ett jobb Storybook i ci.yml (npm run build-storybook, artefakt), required check
 
-  _Inventering: BR3-planen (issue). KField-bevisen fylls i efter Boiler Room 3._
+  **KField** (#112): label som obligatorisk prop, `useId()`, `aria-describedby` för hjälptext och fel, `aria-invalid`. Test `KField.a11y.test.js` (4 tester) och story `KField.stories.js` (Violations 0).
 
-  **Storybook i pipelinen** (#111, 22/10): jobbet `Storybook` i `ci.yml` kör `npm run build-storybook` och laddar upp artefakten `storybook`. Grön körning: [<länk till körningen>](https://github.com/gahnejennifer/Kraftly_Watt/actions/runs/39794501322/job/119878334177)
+  | Vy           | Fält före (M8: `<label for>` + `<input>`)                           | Nu                          | PR   |
+  | ------------ | ------------------------------------------------------------------- | --------------------------- | ---- |
+  | Inloggning   | E-postadress, Lösenord                                              | KField                      | #113 |
+  | Profil       | Namn, E-postadress, Adress                                          | KField                      | #113 |
+  | Flyttanmälan | Ny adress, Postnummer, Ort, Inflyttningsdatum (felen via `alert()`) | KField med felet vid fältet | #115 |
+
+  Avtal (`<select>`) står kvar, eftersom KField bara är för textfält.
+
+  Flyttanmälan, rött först (#115):
+
+```
+  <klistra in den röda raden från PR #115>
+  ✓ kopplar felet till fältet – skärmläsaren hör det när fältet får fokus
+  Tests  1 passed (1)
+```
+
+På main (`dd05c77`), 27/10:
+
+```
+  $ npm run test:run
+   Test Files  16 passed (16)
+        Tests  40 passed (40)
+
+  $ npm run test:a11y
+   Test Files  6 passed (6)
+        Tests  16 passed (16)
+
+  $ npm run build-storybook
+  └  Storybook build completed successfully
+```
+
+**Storybook i pipelinen** (#111, 22/10): jobbet `Storybook` i `ci.yml` kör `npm run build-storybook` och laddar upp artefakten `storybook`. Grön körning: [<Storybook-jobbet>](https://github.com/gahnejennifer/Kraftly_Watt/actions/runs/39794501322/job/119878334177)
 
 ```
   $ npm run build-storybook
@@ -276,9 +307,12 @@ Required status checks för main (Settings → Rules), 22/10:
 
 `AI-granskning (förslag)` står medvetet inte med (DoD 2).
 
-- [ ] Ett AI-steg i pipelinen, utvärderat på riktiga PR:ar: ai-review.yml + scripts/ai-review.mjs postar granskningspunkter som kommentar, som förslag – aldrig required check. Utvärdering på minst tre av teamets riktiga PR:ar: tabellen träff / miss / oavgjord, två exempel (en träff, en miss, med citat) och regeln – allt i `docs/ai-in-pipeline.md`
+- [x] Ett AI-steg i pipelinen, utvärderat på riktiga PR:ar: ai-review.yml + scripts/ai-review.mjs postar granskningspunkter som kommentar, som förslag – aldrig required check. Utvärdering på minst tre av teamets riktiga PR:ar: tabellen träff / miss / oavgjord, två exempel (en träff, en miss, med citat) och regeln – allt i `docs/ai-in-pipeline.md`
 
   Workflowen kom in med #104. Första riktiga PR:en med AI-kommentar: #107 (25 s från push till kommentar). Jobbet `AI-granskning (förslag)` står inte bland required checks. Utvärderingen pågår t.o.m. 27/10 i `docs/ai-in-pipeline.md`.
+
+  Utvärderat på #107, #112, #113 (+ #114–#116 som visar vad som händer när nyckeln inte fungerar), 12 körningar.
+  Finns tabell, två exempel och Vår regel i `docs/ai-in-pipeline.md`.
 
 - [x] Hållbarhetssiffran kopplad till M7 + ett etikfall: `docs/sustainability.md` med tabellen Före M7 / Efter M7 i kB per besök → kg CO2e per månad med `scripts/co2.mjs`, tre meningar om metoden och vad som inte räknas · etikfallet "Chatta med Kraftly": situationen, beslut, varför, villkor
 
