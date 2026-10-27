@@ -138,13 +138,20 @@ Till M9 (Storybook och axe i pipelinen): det är inte gjort än. Nästa tech lea
 
 ## 2026-10-22 · AI-granskaren + issue till Boiler Room 3
 
-- **Gjort:** Satte upp en AI-granskare i GitHub Actions (`scripts/ai-review.mjs` + `ai-review.yml`, #104). Testade den på övningens test-PR med kända fel, bedömde om det var träff, miss eller oavgjord och ändrade en regel i systemprompten. Första riktiga PR:en med AI-kommentar var #107. Dokumentationen ligger i `docs/ai-in-pipeline.md` (#108). Gjorde också en issue med planen inför Boiler Room 3.
+- **Gjort:**
+- Satte upp en AI-granskare i GitHub Actions (`scripts/ai-review.mjs` + `ai-review.yml`, #104). Testade den på övningens test-PR med kända fel, bedömde om det var träff, miss eller oavgjord och ändrade en regel i systemprompten. Första riktiga PR:en med AI-kommentar var #107. Dokumentationen ligger i `docs/ai-in-pipeline.md` (#108).
+- Gjorde också en issue med planen inför Boiler Room 3.
+- M9-rubriken i `docs/milestones.md` med DoD 3 avbockad (#110)
 
 ## 2026-10-23 · Boiler Room 3
 
-- **Gjort:** Vi lade till ett Storybook-jobb i pipelinen som nu är en required check på main (#111). Vi byggde KField, ett textfält där labeln är obligatorisk och där hjälptext och fel kopplas till fältet med `aria-describedby`, med story och axe-test (#112). KFields story visade Violations 0 i Accessibility-fliken. Skärmdumpar ligger i `docs/screenshots/`. AI-granskningen kunde inte köras eftersom API-nyckeln hade bytts (401), men den blockerade inte merge eftersom den inte är en required check.
+- **Gjort:**
+- Vi lade till ett Storybook-jobb i pipelinen som nu är en required check på main (#111).
+- Vi byggde KField, ett textfält där labeln är obligatorisk och där hjälptext och fel kopplas till fältet med `aria-describedby`, med story och axe-test (#112). KFields story visade Violations 0 i Accessibility-fliken. Skärmdumpar ligger i `docs/screenshots/`.
+- AI-granskningen kunde inte köras eftersom API-nyckeln hade bytts (401), men den blockerade inte merge eftersom den inte är en required check. Den kördes vid senare tillfälle.
+- La in bevis för Storybook-delen av DoD 1 i milestones.md.
 - **Grönt:** [#111 Storybook-jobbet](https://github.com/gahnejennifer/Kraftly_Watt/pull/111) ([körningen](https://github.com/gahnejennifer/Kraftly_Watt/actions/runs/39794501322/job/119878334177)) · [#112 KField](https://github.com/gahnejennifer/Kraftly_Watt/pull/112) · Tests 4 passed (4) · Violations 0 i Storybook
-- **Kvar av Boiler Room:** · axe-test för profilen och flyttanmälan
+- **Kvar av Boiler Room:** byta in KField i inloggning, profil och flyttanmälan
 - **Kvar till M9-taggen tisdag:** byta in KField i inloggning, profil och flyttanmälan · KField-bevisen i `docs/milestones.md` · AI-utvärderingen
 - **En siffra från i dag:** 4/4 tester gröna för KField.
 - **Fastnat på:** att hitta Accessibility-fliken i Storybook.
@@ -152,12 +159,10 @@ Till M9 (Storybook och axe i pipelinen): det är inte gjort än. Nästa tech lea
 ## 2026-10-26 · Boiler Room 3
 
 - **Gjort:**
-- Storybook-jobbet i `ci.yml` (`npm run build-storybook` + artefakten `storybook`), gjort till required check i rulesetet för main (#111)
-- M9-rubriken i `docs/milestones.md` med DoD 3 avbockad och bevis för Storybook-delen av DoD 1 (#110, #111)
 - KField inbytt i inloggning och profil, `label`-stilen borttagen ur vyerna (#113)
 - `<form>` i inloggning och profil, så att Enter skickar formulären. Känd brist från M8 (#114)
 - **Grönt:** [#113 KField i inloggning och profil](https://github.com/gahnejennifer/Kraftly_Watt/pull/113) · [#114 Enter skickar formulären](https://github.com/gahnejennifer/Kraftly_Watt/pull/114)
-- **Kvar av Boiler Room:** · axe-test för profilen och flyttanmälan
+- **Kvar av Boiler Room:** KField i flyttanmälan
 - **Kvar till M9-taggen tisdag:** KField i flyttanmälan · KField-bevisen i `docs/milestones.md` · AI-utvärderingen i `docs/ai-in-pipeline.md`
 - **En siffra från i dag:** Storybook byggs lokalt på 3,5 s. Portalen väger 265 kB per besök efter M7 (491 kB före).
 - **Fastnat på:**
@@ -168,7 +173,7 @@ Till M9 (Storybook och axe i pipelinen): det är inte gjort än. Nästa tech lea
 ## 2026-10-27 · Boiler Room 3 och M9
 
 - **Gjort från Boiler Room:**
-  Vi gjorde klart flyttanmälan som nu använder nu KField för Ny adress, Postnummer, Ort och Inflyttningsdatum (#115). Felen visas vid sitt fält i stället för i en `alert()`, och skärmläsaren läser upp dem när fältet får fokus. Testet `MoveFormView.a11y.test.js` var först rött (`toBeInvalid()` föll) och blev grönt efter ändringen. Därmed används KField i alla tre vyerna. Boiler Room klar!
+  Vi gjorde klart flyttanmälan som nu använder KField för Ny adress, Postnummer, Ort och Inflyttningsdatum (#115). Felen visas vid sitt fält i stället för i en `alert()`, och skärmläsaren läser upp dem när fältet får fokus. Testet `MoveFormView.a11y.test.js` var först rött (`toBeInvalid()` föll) och blev grönt efter ändringen. Därmed används KField i alla tre vyerna. Boiler Room klar!
 
 - **Gjort klart M9:**
   Fokus flyttas nu till sidans `<h1>` vid sidbyte, en känd brist från M8 och en av de valfria punkterna i M9 (#116). Vi bedömde AI-granskningens kommentarer på 6 PR:ar som träff, miss eller oavgjord och skrev två exempel och vår regel i `docs/ai-in-pipeline.md`. Vi svarade också i tråden på #114, där AI:n hade fel om Ångra-knappen. Till sist fyllde vi i bevisen under M9 i `docs/milestones.md`.
