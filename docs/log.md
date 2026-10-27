@@ -135,3 +135,5 @@ Till M9 (Storybook och axe i pipelinen): det är inte gjort än. Nästa tech lea
 - Fokus flyttas inte vid ruttbyte.
 - Felen i flyttanmälan visas med `alert()` och är inte kopplade till fälten.
 - Skärmläsare och zoom till 200 % är inte testade.
+
+## Datum: 2026-10-27
