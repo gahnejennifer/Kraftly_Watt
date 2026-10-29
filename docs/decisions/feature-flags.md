@@ -1,6 +1,6 @@
 # Beslut: feature flags
 
-**Datum:** 2026-09-24<br>
+**Datum:** 24 september 2026
 **Beslut:** Kraftly slår på och av funktioner per miljö med körtidsflaggor: containern läser miljövariabler (t.ex. `FEATURE_NORWAY`) vid start och skriver dem till `config.js`, som appen läser via `isEnabled()`.
 
 ## Bakgrund

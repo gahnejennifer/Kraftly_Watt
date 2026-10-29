@@ -1,6 +1,6 @@
 # Beslut: verktyg för E2E-tester
 
-**Datum:** 2026-08-28
+**Datum:** 28 augusti 2026
 **Beslut:** Vi använder Cypress för end-to-end-tester.
 
 ## Bakgrund
