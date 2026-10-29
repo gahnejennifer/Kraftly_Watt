@@ -1,6 +1,6 @@
 # Beslut: var lagrar vi access token?
 
-**Datum:** <2026-10-02>
+**Datum:** 2 oktober 2026
 **Beslut:** Access token hålls i minnet i browsern. Refresh token ligger i en httpOnly-cookie som API:t sätter.
 
 ## Bakgrund
