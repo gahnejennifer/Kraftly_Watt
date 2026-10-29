@@ -1,37 +1,49 @@
 # Beslut: var lagrar vi access token?
 
-## Vad vi valde
+**Datum:** <2026-10-02>
+**Beslut:** Access token hålls i minnet i browsern. Refresh token ligger i en httpOnly-cookie som API:t sätter.
 
-Access token (JWT, 10 min) hålls **i minnet** – i en Vue `ref` i `src/services/token.js`,
-läst via `getAccessToken()` och satt via `setAccessToken()`. Den skrivs aldrig till
-`localStorage`, `sessionStorage` eller en JS-läsbar cookie. Refresh token hanteras inte av
-oss i klienten: den sätts av API:t i en **httpOnly-cookie** (`/api/v2/auth/login`), som
-JavaScript inte kan läsa, och följer med automatiskt till `/api/v2/auth/refresh`.
+## Bakgrund
 
-## Alternativen vi vägde
+Portalen visar en enskild kunds personliga data, så en stulen token ger tillgång till
+kundens uppgifter. Den ursprungliga lösningen sparade inloggningen i `localStorage`
+(`kraftly_logged_in`), och det var ett av hålen vi bevisade i hackerlabbet (A02). M6
+handlade om att byta bort det. Frågan var vart token skulle ta vägen i stället.
 
-- **localStorage** – enklast, och överlever omladdning och ny flik. Men vilket skript som
-  helst på sidan kan läsa den (`localStorage.getItem(...)`), så vid en XSS kan en angripare
-  stjäla token rakt av. Det var precis hålet vi bevisade i hackerlabbet (A02), och den
-  fejkade `localStorage.kraftly_logged_in` som M6 skulle bort med. Valdes bort.
-- **JS-läsbar cookie** – följer med anrop automatiskt, men om den inte är httpOnly är den
-  lika stöldbar som localStorage, och en cookie som skickas på varje anrop öppnar för CSRF
-  (ännu ett hål vi såg i labbet). Valdes bort för access token.
-- **Minne (valt)** – token finns bara i en variabel i den körande appen. Ett injicerat
-  skript kan fortfarande läsa variabeln under tiden sidan är öppen, men token försvinner vid
-  omladdning och ligger inte kvar i något beständigt lager som kan läsas i efterhand. I
-  kombination med vår CSP (`script-src 'self'`) är det klart svårare att komma åt än
-  localStorage.
+## Alternativ vi jämförde
 
-## Varför, och vad det kostar
+| Alternativ       | För                                                                                                                                                                    | Emot                                                                                                                                                                 |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `localStorage`   | Enklast, och överlever omladdning och ny flik                                                                                                                          | Vilket skript som helst på sidan kan läsa den (`localStorage.getItem(...)`), så vid en XSS kan en angripare stjäla token rakt av. Det var hålet vi bevisade i labbet |
+| JS-läsbar cookie | Följer med anrop automatiskt                                                                                                                                           | Lika stöldbar som localStorage om den inte är httpOnly, och en cookie som skickas på varje anrop öppnar för CSRF (också ett hål vi såg i labbet)                     |
+| **Minne (valt)** | Token ligger inte kvar i något beständigt lager som kan läsas i efterhand. Tillsammans med CSP (`script-src 'self'`) är den klart svårare att komma åt än localStorage | Omladdning tömmer minnet, så en ny token måste hämtas                                                                                                                |
 
-Vi prioriterade att token **inte ska gå att läsa ur ett beständigt lager** – det är den
-vanligaste och allvarligaste läckan (XSS → stulen token). Priset är att en omladdning (F5)
-tömmer minnet, så appen måste be om en ny access token igen. Det löser vi med att den
-kortlivade access-token förnyas mot den httpOnly-cookien via `POST /api/v2/auth/refresh`
-(cookien är beständig och oläsbar för JS), så användaren inte loggas ut av en omladdning.
+## Motivering
 
-> Status: refresh-anropet finns i `api.js`, men är i skrivande stund inte fullt inkopplat
-> att köras automatiskt vid 401 / vid appstart. Tills det är klart tappar en omladdning
-> inloggningen. Spårad som kvarstående punkt för Spår 1. (Uppdatera denna rad när det är
-> gjort.)
+Vi prioriterade att token inte ska gå att läsa ur ett beständigt lager, eftersom det är
+den vanligaste och allvarligaste läckan (XSS leder till stulen token). Ett injicerat
+skript kan fortfarande läsa variabeln medan sidan är öppen, så minne gör det svårare men
+inte omöjligt.
+
+Priset är att en omladdning (F5) tömmer minnet. Det löser vi med refresh-token: den ligger
+i en httpOnly-cookie som JavaScript inte kan läsa, och `src/router/index.js` hämtar en ny
+access token mot `POST /api/v2/auth/refresh` en gång vid appstart, innan routern bestämmer
+om användaren ska till `/login`.
+
+## Konsekvenser
+
+- Access token (JWT, 10 min) finns i en `ref` i `src/services/token.js`, läst med
+  `getAccessToken()` och satt med `setAccessToken()`. Den skrivs aldrig till
+  `localStorage`, `sessionStorage` eller en JS-läsbar cookie.
+- Användaren loggas inte ut av en omladdning, eftersom sessionen återställs vid appstart.
+- Access token förnyas **bara vid appstart**. Går den ut mitt i en session (efter 10 min)
+  får anropen 401 och kastar ett fel i `request` i `api.js`, utan att token förnyas och
+  utan att användaren skickas till `/login`. Det är en känd brist (se `known-issues.md`).
+  Lösningen är att `request` vid 401 anropar `refresh()` en gång och försöker om, och
+  annars skickar användaren till `/login`.
+- **Vi omprövar beslutet om:**
+  - Vi får en egen server (t.ex. en BFF) som kan sätta en sessionscookie. Då kan access
+    token flyttas helt ur JavaScript.
+  - Vi inför SSR, eftersom servern då måste kunna läsa inloggningen (se `rendering.md`).
+  - Vi måste släppa in tredjepartsskript som luckrar upp CSP, så att skyddet via
+    `script-src 'self'` försvagas.

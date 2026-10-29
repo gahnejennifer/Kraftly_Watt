@@ -25,3 +25,8 @@ Vi valde körtidsflagga eftersom det är det enda alternativet som inte bryter m
 - `config.js` är publik: inga hemligheter får hamna där.
 - **När flaggan ska bort:** när Norge-lanseringen är live och flaggan har varit på i prod i en vecka utan problem. Då tas `FEATURE_NORWAY`, `v-if`-villkoret och flaggtesterna bort i en egen PR, och kortet blir en vanlig del av översikten.
 - **Vem ser till det:** den som är tech lead när lanseringen sker lägger in en påminnelse (issue) samma dag som flaggan slås på i prod.
+
+- **Vi omprövar beslutet om:** vi behöver slå på en funktion för en del av användarna
+  (en procent eller vissa kunder) och inte bara per miljö. Då räcker inte miljövariabler,
+  och en flaggtjänst blir aktuell. Det gäller också om antalet flaggor växer så att
+  `config.js` blir svårt att hålla koll på i Render.
