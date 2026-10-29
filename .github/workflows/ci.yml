@@ -167,14 +167,27 @@ jobs:
           done
           echo "::error::Staging kör inte $GITHUB_SHA efter 5 minuter. Kolla Events/Logs i Render."
           exit 1
-      - name: Röktest – går inloggningen genom proxyn?
+      - name: Röktest – går inloggningen genom proxyn, och är v1 stängd?
         env:
           URL: ${{ vars.STAGING_URL }}
         run: |
           URL="${URL%/}"
-          curl -fsS -X POST "$URL/api/login" -H 'Content-Type: application/json' -d '{"email":"a@b.se","password":"x"}'
-          echo
-          echo "✅ /api svarar via nginx med nyckeln från Render"
+          # Fel uppgifter med flit: 401 från API:t betyder att proxyn och nyckeln fungerar.
+          # Säger svaret något om nyckeln är det nyckeln i Render som är fel.
+          RES=$(curl -sS -w '\n%{http_code}' -X POST "$URL/api/v2/auth/login" -H 'Content-Type: application/json' -d '{"email":"a@b.se","password":"x"}')
+          CODE=$(echo "$RES" | tail -n1)
+          echo "$RES"
+          if [ "$CODE" != "401" ] || echo "$RES" | grep -qi "nyckel"; then
+            echo "::error::Inloggningen via proxyn svarade $CODE – kontrollera API_URL och API_KEY i Render"
+            exit 1
+          fi
+          # v1 lämnar ut kunddata utan inloggning – nginx ska stänga den.
+          V1=$(curl -s -o /dev/null -w '%{http_code}' "$URL/api/user")
+          if [ "$V1" != "410" ]; then
+            echo "::error::v1 (/api/user) svarade $V1 – ska vara 410. Kunddata kan läcka."
+            exit 1
+          fi
+          echo "✅ v2 svarar via nginx med nyckeln från Render, och v1 är stängd (410)"
 
   deploy-production:
     name: Deploy → produktion
@@ -228,16 +241,29 @@ jobs:
           echo "::error::Produktion kör fortfarande inte $GITHUB_SHA efter 5 minuter. Kolla Events/Logs i Render."
           exit 1
 
-      - name: Röktest – svarar produktion utan Norge-kortet?
+      - name: Röktest – svarar produktion, är v1 stängd och Norge-kortet av?
         if: steps.hook.outputs.deployed == 'true'
         env:
           URL: ${{ vars.PROD_URL }}
         run: |
           URL="${URL%/}"
-          curl -fsS -X POST "$URL/api/login" -H 'Content-Type: application/json' -d '{"email":"a@b.se","password":"x"}'
-          echo
+          # Fel uppgifter med flit: 401 från API:t betyder att proxyn och nyckeln fungerar.
+          # Säger svaret något om nyckeln är det nyckeln i Render som är fel.
+          RES=$(curl -sS -w '\n%{http_code}' -X POST "$URL/api/v2/auth/login" -H 'Content-Type: application/json' -d '{"email":"a@b.se","password":"x"}')
+          CODE=$(echo "$RES" | tail -n1)
+          echo "$RES"
+          if [ "$CODE" != "401" ] || echo "$RES" | grep -qi "nyckel"; then
+            echo "::error::Inloggningen via proxyn svarade $CODE – kontrollera API_URL och API_KEY i Render"
+            exit 1
+          fi
+          # v1 lämnar ut kunddata utan inloggning – nginx ska stänga den.
+          V1=$(curl -s -o /dev/null -w '%{http_code}' "$URL/api/user")
+          if [ "$V1" != "410" ]; then
+            echo "::error::v1 (/api/user) svarade $V1 – ska vara 410. Kunddata kan läcka."
+            exit 1
+          fi
           if curl -fsS "$URL/config.js" | grep -q "norway: false"; then
-            echo "✅ /api svarar och FEATURE_NORWAY är av i produktion"
+            echo "✅ v2 svarar, v1 är stängd och FEATURE_NORWAY är av i produktion"
           else
             echo "::error::Norge-flaggan är PÅ i produktion – kontrollera FEATURE_NORWAY i Render"
             exit 1

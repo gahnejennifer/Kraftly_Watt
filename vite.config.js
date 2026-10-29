@@ -6,9 +6,10 @@ export default defineConfig(({ mode }) => {
   // här, i Node – de hamnar aldrig i koden som skickas till browsern.
   const env = loadEnv(mode, process.cwd(), '')
 
-  // /api → mock-API:t med nyckeln påsatt – samma jobb som nginx gör i containern
+  // /api/v2 → mock-API:t med nyckeln påsatt – samma jobb som nginx gör i containern.
+  // Bara v2, precis som nginx: v1 lämnar ut kunddata utan inloggning.
   const apiProxy = {
-    '/api': {
+    '/api/v2': {
       target: env.API_URL || 'http://localhost:4000',
       changeOrigin: true,
       headers: { 'X-Api-Key': env.API_KEY || '' },

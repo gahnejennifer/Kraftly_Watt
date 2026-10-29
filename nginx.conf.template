@@ -29,11 +29,19 @@ server {
   location = /config.js  { add_header Cache-Control "no-cache";include /etc/nginx/security-headers.conf; }
   location = /version.txt { add_header Cache-Control "no-cache";include /etc/nginx/security-headers.conf;}
   
-  # /api skickas vidare – och nyckeln läggs på här, på servern.
-  location /api/ {
-    proxy_pass ${API_URL}/api/;
+  # Bara API v2 skickas vidare – och nyckeln läggs på här, på servern.
+  # Appen anropar bara /api/v2/. v1 kräver ingen inloggning och lämnar ut kunddata
+  # till vem som helst som når proxyn, så den stängs här i stället för att litas på.
+  location /api/v2/ {
+    proxy_pass ${API_URL}/api/v2/;
     proxy_set_header X-Api-Key ${API_KEY};
     proxy_ssl_server_name on;   # krävs när API_URL är https
     proxy_read_timeout 90s;     # test-API:t kan sova – första anropet tar upp mot en minut
+  }
+
+  # Allt annat under /api/ (v1) går aldrig vidare till API:t.
+  location /api/ {
+    default_type application/json;
+    return 410 '{"error":"API v1 är avvecklad – använd /api/v2"}';
   }
 }
