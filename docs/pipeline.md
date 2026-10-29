@@ -1,28 +1,53 @@
 # Pipeline – Kraftly Mina sidor
 
+Allt styrs av `.github/workflows/ci.yml`. Pipelinen körs på varje pull request, på varje push till `main` och för hand via _Run workflow_. Hur deployen och rollbacken går till står i [`deploy.md`](deploy.md).
+
 ## Flöde
 
 ```mermaid
 flowchart LR
-    PR[Pull request mot main] --> Q[quality: lint · format · test:run]
-    PR --> B[build: vite build → dist/]
-    Q --> E[e2e: smoke-test]
-    B --> E
-    E --> M{Alla checks gröna + 1 review?}
-    M -- ja --> OK[Merge tillåten]
-    M -- nej --> Stop[Merge-knappen låst]
+  PR["Pull request<br/>eller push till main"] --> Q["quality<br/>lint · format · test:run"]
+  PR --> B["build<br/>vite build → dist/"]
+  PR --> SB["Storybook<br/>build-storybook"]
+  Q --> E["e2e<br/>Cypress"]
+  B --> E
+  B --> L["Prestandabudget<br/>(Lighthouse)"]
+  Q --> IMG["Image → GHCR<br/>push bara från main"]
+  E --> IMG
+  L --> IMG
+  IMG -->|"bara main"| STG["Deploy → staging"]
+  STG -->|"godkännande"| PROD["Deploy → produktion"]
 ```
+
+## Jobben
+
+| Jobb                           | Vad det gör                                                               | Väntar på                | Körs på PR?      | Required check |
+| ------------------------------ | ------------------------------------------------------------------------- | ------------------------ | ---------------- | -------------- |
+| `quality`                      | `npm run lint`, `npm run format:check`, `npm run test:run`                | –                        | ja               | ja             |
+| `build`                        | `vite build`, laddar upp `dist/` som artefakt                             | –                        | ja               | ja             |
+| `e2e`                          | Cypress mot mock-API:t (`npm run e2e:cy`)                                 | quality, build           | ja               | ja             |
+| `Storybook`                    | `npm run build-storybook` – en trasig story stoppar PR:en                 | –                        | ja               | ja             |
+| `Prestandabudget (Lighthouse)` | tre Lighthouse-körningar mot `dist/` – LCP ≤ 2,5 s, CLS ≤ 0,1, JS ≤ 47 kB | build                    | ja               | ja             |
+| `Image → GHCR`                 | bygger imagen med commitens sha. Pushar bara från `main`                  | quality, e2e, Lighthouse | ja (bara bygget) | ja             |
+| `Deploy → staging`             | Render-hooken, väntar på rätt sha i `/version.txt`, röktest               | Image → GHCR             | nej              | nej            |
+| `Deploy → produktion`          | samma image efter godkännande i GitHub-miljön `production`                | Deploy → staging         | nej              | nej            |
+
+AI-granskningen (`ai-review.yml`) körs också på varje PR, men kommenterar bara och är medvetet **inte** en required check – se [`ai-in-pipeline.md`](ai-in-pipeline.md).
 
 ## Beslut 1 · Jobb: parallellt eller i serie?
 
 Vi valde att köra e2e i serie efter quality och build via needs, eftersom det sparar CI-minuter — en PR med lintfel eller trasigt bygge stoppas innan vi lägger tid på att starta mock-API, dev-server och Cypress. Nackdelen är längre svarstid: en PR som redan är grön på quality/build väntar ändå ut de jobben innan e2e ens börjar, istället för att köra allt samtidigt.
 
+Lighthouse (M7) och Storybook (M9) lades till senare. Storybook körs parallellt eftersom det inte beror på något annat jobb, och Lighthouse väntar bara på `build` eftersom den mäter samma `dist/`. Imagen byggs först när quality, e2e och Lighthouse är gröna, så att bara kod som klarat testerna och budgeten kan bli en image.
+
 ## Beslut 2 · Vad krävs för merge?
 
-- Required checks: quality, build, e2e
+- Required checks: `quality`, `build`, `e2e`, `Storybook`, `Prestandabudget (Lighthouse)`, `Image → GHCR`
 - Approvals: 1
 - Up to date: ja
 - Bypass: ingen, inte ens tech lead
+
+Deploy-jobben är inte required checks, eftersom de bara körs på `main` – efter mergen.
 
 ## Beslut 3 · Protokoll vid röd main
 
