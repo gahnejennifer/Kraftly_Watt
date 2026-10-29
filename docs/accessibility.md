@@ -73,11 +73,20 @@ Det vi har sett men inte lagat i M8, och det vi inte har testat.
 - **Hero-bilden** på översikten har en beskrivande alt-text, fast den är dekoration. `alt=""` hade varit rätt, så att skärmläsaren hoppar över den.
 - **E2E-testet för inloggningen** (`cypress/e2e/smoke.cy.js`) är bortkommenterat, så inloggningen täcks bara av komponenttestet.
 
-**Inte testat**
+## Kända brister
 
-- Skärmläsare (VoiceOver eller NVDA)
-- Zoom till 200 %
-- Storybook och axe i pipelinen (M9). Idag körs axe-testerna i CI via `npm run test:run`, men Accessibility-fliken bara lokalt.
-- Stories för NorwayNotice och ConsumptionChart (Boiler Room 3)
+Det vi såg eller inte testade i M8, och vad som hänt sedan. Det som fortfarande gäller står samlat i [`docs/known-issues.md`](known-issues.md).
+
+| Brist (M8)                                                          | Status               | Var                      |
+| ------------------------------------------------------------------- | -------------------- | ------------------------ |
+| Enter i textfälten skickar inte formulären                          | Fixat                | #114                     |
+| Felen i flyttanmälan visas med `alert()`, inte kopplade till fälten | Fixat med KField     | #115                     |
+| Förbrukningsdiagrammet (`<canvas>`) saknar textalternativ           | Kvar                 | `known-issues.md`, rad 6 |
+| Hero-bilden har beskrivande alt-text fast den är dekoration         | Kvar                 | `known-issues.md`, rad 7 |
+| E2E-testet för inloggningen är bortkommenterat                      | Kvar                 | `known-issues.md`, rad 4 |
+| Skärmläsare (VoiceOver, NVDA) inte testad                           | Kvar                 | `known-issues.md`, rad 5 |
+| Zoom till 200 % inte testad                                         | Ej testat            | `known-issues.md`, rad 5 |
+| Storybook och axe i pipelinen                                       | Fixat (M9)           | #111                     |
+| Stories för NorwayNotice och ConsumptionChart                       | Utgår (beslut 12/10) | –                        |
 
 **Att tänka på vid testning:** på en av våra datorer (Mac) nådde Tab inga knappar alls, inte ens på en tom testsida med två knappar. Det var en inställning på datorn och inte koden, men det betyder att tangentbordsgenomgången bör göras på mer än en dator.

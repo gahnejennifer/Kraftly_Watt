@@ -1,5 +1,7 @@
 # Felsökning Kraftly
 
+> **Inventeringen från M0, inte uppdaterad sedan dess.** Den visar skulden vi tog över från Webbmakarna. Det mesta är åtgärdat i M1–M9. Det som är kvar står i [`docs/known-issues.md`](known-issues.md), rad 14–17.
+
 ## Allmänt
 
 - Basebutton används inte som komponent, olika buttons överallt på hemsidan
