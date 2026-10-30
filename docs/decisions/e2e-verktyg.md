@@ -1,6 +1,6 @@
 # Beslut: verktyg för E2E-tester
 
-**Datum:** 28 augusti 2026
+**Datum:** 2026-08-28
 **Beslut:** Vi använder Cypress för end-to-end-tester.
 
 ## Bakgrund
@@ -8,7 +8,9 @@
 Vi behöver ett E2E-smoketest i CI (M2) och vill kunna mocka API:et.
 Teamet kan Cypress sedan tidigare. Playwright utvärderades idag.
 
-## Vad vi såg (våra observationer – inte tutorialens)
+## Alternativ vi jämförde
+
+Våra egna observationer – inte tutorialens.
 
 |                            | Cypress                                                                                                                    | Playwright                                                                                                                                                                   |
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -28,7 +30,11 @@ Vi känner oss tryggare med Cypress eftersom vi har bekantat oss med det tidigar
 - Ingen automatisk serverstart i configen — CY kräver start-server-and-test i package.json, medan Playwrights webServer-block gör det direkt i configen. Lite mer att underhålla i CI-pipelinen.
 - Ett test per fil körs i samma webbläsarkontext som standard — Playwright har inbyggt stöd för att köra tester parallellt i isolerade kontexter enklare, vilket kan bli relevant om testsviten växer.
 - cy.visit() är begränsad till en origin per test som standard — kan bli ett problem om vi i framtiden behöver testa flöden som går mellan olika domäner (t.ex. en betalningsleverantör iom att vi har fakturor på hemsidan som visar betald/obetald).
-  **Vad som krävs för att byta senare:**
+
+**Vad som krävs för att byta senare:**
+
 - Testerna är skrivna med Cypress-specifik syntax (cy.get(), cy.contains(), cy.intercept()) som inte är kompatibel med Playwrights API (page.getByRole(), page.route()) — allt testinnehåll skulle behöva skrivas om, inte bara konfigurationen.
 - Eftersom vi redan har en fungerande playwright.config.js och ett smoke-test i Playwright (från er utvärdering), skulle grundstrukturen finnas kvar — det är själva testfallen som måste porteras.
 - Ingen data eller CI-integration är låst till Cypress specifikt (start-server-and-test-scriptet kan återanvändas för Playwright också), så det är framför allt testkoden i sig som är kostnaden.
+
+**Vi omprövar beslutet om:** vi måste garantera att portalen fungerar i Safari, testsviten blir så stor att den behöver köras parallellt, eller vi behöver testa flöden som går mellan olika domäner (t.ex. en betalningsleverantör för fakturorna).
