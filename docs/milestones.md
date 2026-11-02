@@ -331,3 +331,49 @@ Required status checks för main (Settings → Rules), 22/10:
 | Efter M7 (main)     | 265          | 2,0                    | 4,9                         |
 
 _Fullständiga utskrifter, metod och etikfall i `docs/sustainability.md`._
+
+# M10
+
+- [x] Dokumentationen komplett: README klarar nya kollegan-testet, arkitekturskissen, minst tre beslutsdokument med index, och README har en dokumentationstabell som pekar på allt i `docs/`
+
+  **Partnerteamets issue:** [Nya kollegan-testet 29/10](https://github.com/gahnejennifer/Kraftly_Watt/issues/120) från team Tesla – stängd 29/10 med en kommentar per punkt.
+
+  | Punkt i issuen                                     | Åtgärdad i                                                                                                                                                                                     |
+  | -------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+  | Stopp: kommer inte förbi inloggning · fråga 1      | [#123](https://github.com/gahnejennifer/Kraftly_Watt/pull/123) – testkonton och _Så vet du att den fungerar_ i README                                                                          |
+  | Stopp: hemligheter · fråga 2                       | [#122](https://github.com/gahnejennifer/Kraftly_Watt/pull/122) – variabeltabell och _Hur får jag hemligheterna?_ i `docs/deploy.md`                                                            |
+  | Stopp: hur jag får ut i prod · fråga 3             | [#122](https://github.com/gahnejennifer/Kraftly_Watt/pull/122) – _En ändring till produktion_ och _Rollback_ i `docs/deploy.md`                                                                |
+  | Fråga 4: länk till besluten, ingen arkitekturskiss | [#123](https://github.com/gahnejennifer/Kraftly_Watt/pull/123), [#124](https://github.com/gahnejennifer/Kraftly_Watt/pull/124), [#125](https://github.com/gahnejennifer/Kraftly_Watt/pull/125) |
+  | Fråga 4: datum och Omprövas om i besluten          | [#124](https://github.com/gahnejennifer/Kraftly_Watt/pull/124), [#127](https://github.com/gahnejennifer/Kraftly_Watt/pull/127), [#130](https://github.com/gahnejennifer/Kraftly_Watt/pull/130) |
+  | Fråga 5: ingen samlad lista över brister           | [#129](https://github.com/gahnejennifer/Kraftly_Watt/pull/129) – `docs/known-issues.md`                                                                                                        |
+
+  **De fem frågorna – var svaret står:**
+
+  | Fråga                                                      | Var svaret står                                                                                                       |
+  | ---------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
+  | 1. Starta lokalt, och hur vet jag att den fungerar?        | README, _Kom igång_ + _Så vet du att den fungerar_                                                                    |
+  | 2. Var bor hemligheterna, och hur får jag dem?             | README, _Hemligheter, deploy och rollback_ → [`docs/deploy.md`](deploy.md), _Konfiguration – var bor vad?_            |
+  | 3. Hur når en ändring prod – och hur rullar man tillbaka?  | README, _Hemligheter, deploy och rollback_ → [`docs/deploy.md`](deploy.md), _En ändring till produktion_ + _Rollback_ |
+  | 4. Varför ser arkitekturen ut så här – var finns besluten? | [`docs/architecture.md`](architecture.md), [`docs/decisions/README.md`](decisions/README.md)                          |
+  | 5. Vad är känt trasigt eller medvetet ogjort?              | [`docs/known-issues.md`](known-issues.md), [`docs/readiness.md`](readiness.md)                                        |
+
+  **Arkitekturskissen:** [`docs/architecture.md`](https://github.com/gahnejennifer/Kraftly_Watt/blob/main/docs/architecture.md) (#125) – Översikt, Lagren i frontend (med undantaget för tre vyer), Ett flöde: inloggningen, Miljöer, Beslut. Mermaid renderas på GitHub.
+
+  **Besluten:** [`docs/decisions/README.md`](decisions/README.md) listar fem beslut. De tre viktigaste är rendering, tokenlagring och feature flags – de är dyrast att göra om och det är dem nästa team ifrågasätter först. Alla fem har _Alternativ vi jämförde_ och _Vi omprövar beslutet om_.
+
+  **Dokumentationstabellen:** README, _Dokumentation_ – en rad per fil i `docs/`.
+
+- [x] Inga kända kritiska brister: `docs/readiness.md` med status och bevis på varje rad, `docs/known-issues.md` med brist · påverkan · varför
+
+  [`docs/readiness.md`](readiness.md) – hela checklistan med status och bevis, ingen rad utan status. [`docs/known-issues.md`](known-issues.md) – 17 kända brister med påverkan, ägare och kostnad, och _Vad vi hade gjort med två veckor till_ (#129).
+
+  Ingenting kritiskt står kvar. De fyra punkterna är kontrollerade 29/10 och står i ingressen till `readiness.md`. Två av dem var kritiska när vi kontrollerade, och båda är åtgärdade med PR före taggen:
+
+  - **Teamnyckeln låg i klartext** i en curl-utskrift i `docs/deploy.md`. Borttagen och roterad 29/10 ([#122](https://github.com/gahnejennifer/Kraftly_Watt/pull/122)) – den gamla och den läckta nyckeln ger `401`.
+  - **API v1 lämnade ut kunddata utan inloggning** via vår nginx-proxy: `/api/user` i prod svarade `200` med Annas uppgifter. Stängt 29/10 ([#128](https://github.com/gahnejennifer/Kraftly_Watt/pull/128)) – nginx skickar bara `/api/v2/` vidare och v1 svarar `410`. Röktestet i staging och prod blir rött om v1 öppnas igen.
+
+- [x] Demon förberedd: `docs/demo.md` med körschema, förberedelser och reservplan, generalrepetition genomförd och loggad, demo-ansvarig utsedd
+
+  **Demo-ansvarig:** Ilona. **Körschemat:** [`docs/demo.md`](demo.md) – 10 min i prod, ett demo-ögonblick per område, flikarna i ordning och _Om något går fel_. **Reserven:** skärmdumpar i `docs/screenshots/demo/`.
+
+  **Generalrepetitionen** 2/11: 6 m, 39 s (mål 10), loggad i [`docs/log.md`](log.md). Vad som ändrades: inget i demo.md ändrades men vi testade med lite olika manus/formuleringar.
