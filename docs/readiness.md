@@ -1,6 +1,6 @@
 # Readiness – Produktionsfärdig app
 
-Gäller `main` på taggen `M10` (29/10, efter #128). Förra taggen `M9` sattes 27/10, och nästa tagg `M10` sätts 3/11. Status per rad i checklistan _Produktionsfärdig app_: klart, känd brist och saknas (båda i `docs/known-issues.md`), utgår (beslut 12/10) för det som ströks ur kursen, eller v.12 för raden _Release_.
+Gäller taggen `M10` (2/11). Förra taggen `M9` sattes 27/10. Status per rad i checklistan _Produktionsfärdig app_: klart, känd brist och saknas (båda i `docs/known-issues.md`), utgår (beslut 12/10) för det som ströks ur kursen, eller v.12 för raden _Release_.
 
 Ingen rad är kritisk – vi har kontrollerat:
 
