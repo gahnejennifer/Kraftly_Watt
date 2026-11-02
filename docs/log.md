@@ -190,6 +190,6 @@ Till M9 (Storybook och axe i pipelinen): det är inte gjort än. Nästa tech lea
 ## 2026-11-02 – generalrepetition slutdemon
 
 - Vilka var med: Ilona (demo-ansvarig), Jennifer, Natassja
-- Hur lång den blev: 6 m,69 s (mål 10)
+- Hur lång den blev: 6 m,39 s (mål 10)
 - Vad som ändrades i körschemat: Vi ändrade ingenting i körschemat, det fungerade bra. Nu när vi övar så kör vi digitalt och Ilona sköter skärmdelningen och visar, på kommande övning och under demon kommer varje person dema sin egen del.
 - Reserven provad: ja / nej – ja (varje person vet vilka printscreens de ska visa vid backup).
